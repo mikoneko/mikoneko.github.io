@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<!--[if IE 7]><html class="ie ie7" lang="ja"><![endif]-->
+<!--[if IE 8]><html class="ie ie8" lang="ja"><![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!--><html lang="ja"><!--<![endif]-->
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Objective-C 2.0 最速入門 ─ 基礎文法最速マスター | MaryCore</title>
+<meta property="og:type" content="article"><meta property="og:site_name" content="MaryCore 言語知能総合研究所"><meta property="og:url" content="http://marycore.jp/prog/objective-c/basic-syntax/"><meta property="og:title" content="Objective-C 2.0 最速入門 ─ 基礎文法最速マスター"><meta property="og:description" content="Objective-C 入門 Objective-CはC言語とのハイブリッド言語であるため、ここではC言語の説明は極力省き、Ob・・・"><!--[if lt IE 9]><script src="http://marycore.jp/wp/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script><![endif]-->
+<link rel='stylesheet' id='twentytwelve-style-css'  href='http://marycore.jp/wp/wp-content/themes/marycore/style.css?ver=4.9.9' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='http://marycore.jp/wp/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<link rel="canonical" href="http://marycore.jp/prog/objective-c/basic-syntax/" />
+</head>
+<body class="post-template-default single single-post postid-30 single-format-standard"><div id="page" class="hfeed site"><header id="masthead" class="site-header" role="banner"><hgroup><h1 class="site-title"><a href="http://marycore.jp/" title="ヽ( ・ω・)ノ Don&#039;t feel. THINK! ~ Presented by MaryCore ~" rel="home">MaryCore</a></h1></hgroup><nav id="site-navigation" class="main-navigation" role="navigation"><button class="menu-toggle">メニュー</button><a class="assistive-text" href="#content" title="コンテンツへ移動">コンテンツへ移動</a><div class="menu-%e3%83%a1%e3%83%8b%e3%83%a5%e3%83%bc-1-container"><ul id="menu-%e3%83%a1%e3%83%8b%e3%83%a5%e3%83%bc-1" class="nav-menu"><li id="menu-item-2763" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2763"><a title="McTap／キーボード拡張アプリ" href="http://marycore.jp/mctap/">新作ソフトウェア<sup class="badge-info-invert">New!</sup></a></li>
+<li id="menu-item-515" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-515"><a title="制作したアプリ／Our Applications" href="http://marycore.jp/apps/">アプリ</a></li>
+<li id="menu-item-86" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-86"><a title="サイトについて／About this site" href="http://marycore.jp/about/">サイトについて</a></li>
+<li id="menu-item-87" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-87"><a title="Contact／お問い合わせ" href="http://marycore.jp/contact/">お問い合わせ</a></li>
+<li id="menu-item-242" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-242"><a title="Sitemap／サイトマップ" href="http://marycore.jp/sitemap/">サイトマップ</a></li>
+<li id="menu-item-3180" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3180"><a target="_blank" href="https://cse.google.com:443/cse/publicurl?cx=009489372983289696163:xjk7xgk_hm4">検索</a></li>
+</ul></div></nav></header><div id="main" class="wrapper"><div style="margin-bottom: 18px; margin-bottom: 1.2857142857rem;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_header_00" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="5089572954" data-ad-format="horizontal"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div id="breadcrumb" class="breadcrumb"><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/" itemprop="url"><span itemprop="title">Home</span></a> › </div><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/prog/" itemprop="url"><span itemprop="title">プログラミング言語</span></a> › </div><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/prog/objective-c/" itemprop="url"><span itemprop="title">Objective-C</span></a></div></div>
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+						<article id="post-30" class="post-30 post type-post status-publish format-standard hentry category-objective-c tag-tag-programming-basic tag-tag-programming-specification tag-tag-programming-detail">
+				<header class="entry-header">
+									<h1 class="entry-title">Objective-C 2.0 最速入門 ─ 基礎文法最速マスター</h1>
+			
+<style>.mc-social-buttons{font-family:Helvetica,Arial,sans-serif}.mc-social-buttons{margin-top:16px;margin-top:1.1428571429rem}.mc-social-buttons ul{margin:0;padding:0}.mc-social-buttons li{display:inline-block;margin:0 6px 16px 0;margin:0 0.4285714286rem 1.1428571429rem 0}.mc-social-buttons a{color:#f9f9ff;text-decoration:none}.mc-social-buttons a:visited{color:#f9f9ff}.mc-social-buttons a:hover{opacity:.7}.mc-social-button{padding:4px 6px;border-radius:3px;font-weight:700;font-size:10.5px;padding:0.2857142857rem 0.4285714286rem;border-radius:0.2142857143rem;font-size:.75rem}.a{background-color:rgba(27,149,224,0.9)}.a:after{content:'ツイート'}.c{background-color:rgba(66,103,178,0.9)}.c:after{content:'シェア'}.d{background-color:rgba(0,164,222,0.9)}.d:after{content:'Ｂ! クマ'}.e{background-color:rgba(219,68,55,0.9)}.e:after{content:'Ｇ＋'}.f{background-color:rgba(0,187,0,0.9)}.f:after{content:'LINE'}.c:before{content:"f";background-color:#f9f9ff;color:rgba(66,103,178,.9);border-radius:1px;padding:0 4px 0 6px;margin-right:3px;padding:0 0.2857142857rem 0 0.4285714286rem;margin-right:0.2142857143rem}.mc-social-buttons li:last-child{margin-right:0}@media print{.mc-social-buttons{display:none}}</style>
+<div class="mc-social-buttons"><ul><li><a target="_blank" href="https://twitter.com/share?url=http%3A%2F%2Fmarycore.jp%2Fprog%2Fobjective-c%2Fbasic-syntax%2F&tw_p=tweetbutton&text=Objective-C+2.0+%E6%9C%80%E9%80%9F%E5%85%A5%E9%96%80+%E2%94%80+%E5%9F%BA%E7%A4%8E%E6%96%87%E6%B3%95%E6%9C%80%E9%80%9F%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC" class="mc-social-button a" onclick="return mc_social_buttons_open(this.href,550,258)"></a></li><li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmarycore.jp%2Fprog%2Fobjective-c%2Fbasic-syntax%2F&t=Objective-C+2.0+%E6%9C%80%E9%80%9F%E5%85%A5%E9%96%80+%E2%94%80+%E5%9F%BA%E7%A4%8E%E6%96%87%E6%B3%95%E6%9C%80%E9%80%9F%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC" class="mc-social-button c" onclick="return mc_social_buttons_open(this.href,555,365)"></a></li><li><a target="_blank" href="http://b.hatena.ne.jp/add?mode=confirm&url=http%3A%2F%2Fmarycore.jp%2Fprog%2Fobjective-c%2Fbasic-syntax%2F" class="mc-social-button d" onclick="return mc_social_buttons_open(this.href,550,330)"></a></li><li><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fmarycore.jp%2Fprog%2Fobjective-c%2Fbasic-syntax%2F" class="mc-social-button e" onclick="return mc_social_buttons_open(this.href,400,440)"></a></li><li><a target="_blank" href="https://lineit.line.me/share/ui?url=http%3A%2F%2Fmarycore.jp%2Fprog%2Fobjective-c%2Fbasic-syntax%2F" class="mc-social-button f" onclick="return mc_social_buttons_open(this.href,550,600)"></a></li></ul></div>
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+		    			<!--<h1 id="Objective-C%E3%82%92%E5%A7%8B%E3%82%81%E3%82%8B">Objective-Cを始める</h1>-->
+<h1 id="Objective-C%20%E5%85%A5%E9%96%80">Objective-C 入門</h1>
+<p>Objective-CはC言語とのハイブリッド言語であるため、ここではC言語の説明は極力省き、Objective-C特有の構文や仕組みを説明します。</p>
+<p>なお、本記事は言語経験のある方がスムーズにObjective-Cの概要を掴めるよう構成されています。もちろんプログラミング初心者であってもObjective-Cの雰囲気は十分感じられる内容なのではないかと思います。Objective-Cの入門記事やチュートリアルとしても活用できます。</p>
+<h4 id="%E7%9B%AE%E6%AC%A1">目次</h4>
+<div class="col-2">
+<ol>
+  <li><a href="#Objective-C%E3%81%A8%E3%81%AF">Objective-Cとは</a></li>
+  <li><a href="#%E5%87%BA%E5%8A%9B">出力</a></li>
+  <li><a href="#%E5%80%A4%E3%83%BB%E5%A4%89%E6%95%B0">値・変数</a>
+    <ul>
+      <li><a href="#%E3%83%97%E3%83%AA%E3%83%9F%E3%83%86%E3%82%A3%E3%83%96%E5%9E%8B">プリミティブ型</a></li>
+      <li><a href="#%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%9E%8B">オブジェクト型</a></li>
+    </ul>
+  </li>
+  <li><a href="#%E6%96%87%E5%AD%97%E5%88%97">文字列</a></li>
+  <li><a href="#%E5%8F%AF%E5%A4%89%E9%95%B7%E6%96%87%E5%AD%97%E5%88%97">可変長文字列</a></li>
+  <li><a href="#%E9%85%8D%E5%88%97">配列</a></li>
+  <li><a href="#%E5%8F%AF%E5%A4%89%E9%95%B7%E9%85%8D%E5%88%97">可変長配列</a></li>
+  <li><a href="#%E9%80%A3%E6%83%B3%E9%85%8D%E5%88%97">連想配列</a></li>
+  <li><a href="#%E5%8F%AF%E5%A4%89%E9%80%A3%E6%83%B3%E9%85%8D%E5%88%97">可変連想配列</a></li>
+  <li><a href="#%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B2%90">条件分岐</a></li>
+  <li><a href="#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E6%96%87">繰り返し文</a></li>
+  <li><a href="#%E3%82%AF%E3%83%A9%E3%82%B9">クラス</a>
+    <ul>
+      <li><a href="#%E3%82%AF%E3%83%A9%E3%82%B9%E4%BD%9C%E6%88%90">クラス作成</a></li>
+      <li><a href="#%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%AE%9F%E8%A3%85">メソッド実装</a></li>
+      <li><a href="#%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3%E3%83%BB%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%A4%89%E6%95%B0">プロパティ・インスタンス変数</a>
+        <ul>
+          <li><a href="#%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3%E3%83%BB%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%A4%89%E6%95%B0%E3%81%B8%E3%81%AE%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9">プロパティ・インスタンス変数へのアクセス</a></li>
+        </ul>
+      </li>
+      <li><a href="#%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%BC%95%E6%95%B0">メソッド引数</a></li>
+      <li><a href="#%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%BC%95%E6%95%B0%EF%BC%88%E8%A4%87%E6%95%B0%EF%BC%89">メソッド引数（複数）</a></li>
+    </ul>
+  </li>
+  <li><a href="#%E9%96%A2%E6%95%B0">関数</a></li>
+</ul>
+</div>
+<div class="dbl-rc"><div class="content_toc content_toc_01" style="margin-bottom:18px;margin-bottom:1.2857142857rem"><style type="text/css">.slot_content_toc_01{width:300px;height:250px}@media (min-width:375px){.slot_content_toc_01{width:336px;height:280px}}@media (min-width:950px){.slot_content_toc_01{width:300px;height:250px}}@media (min-width:1075px){.slot_content_toc_01{width:336px;height:280px}}</style><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_content_toc_01" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="2558316956" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div><div class="content_toc content_toc_02" style="margin-bottom:18px;margin-bottom:1.2857142857rem"><style type="text/css">.slot_content_toc_02{width:300px;height:250px}@media (min-width:375px){.slot_content_toc_02{width:336px;height:280px}}@media (min-width:950px){.slot_content_toc_02{width:300px;height:250px}}@media (min-width:1075px){.slot_content_toc_02{width:336px;height:280px}}</style><ins class="adsbygoogle slot_content_toc_02" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="3352115982" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div></div><div style="clear:both"></div><style>.dbl-rc>div{width:50%;float:left}@media (max-width:950px){.dbl-rc>div:last-child{display:none}.dbl-rc>div{witdh:100%}}</style>
+<h1 id="Objective-C%E3%81%A8%E3%81%AF">Objective-Cとは</h1>
+<p>Objective-CはC言語にオブジェクト指向のシステムを取り入れたプログラミング言語です。そのためC言語に対して上位互換性を持つという特徴があります。よってC言語で書かれたコードやライブラリも、Objective-C上で活用することが可能です。</p>
+<p>現在はCocoa/Cocoa Touchフレームワークと共に、macOSやiOS向けのアプリケーション開発で利用されています。</p>
+<h1 id="%E5%87%BA%E5%8A%9B">出力</h1>
+<p>C言語標準のprintf関数を用いる方法とObjective-Cのログ関数NSLogを用いる方法の２種類があります。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"%s %d"</span>, <span class="code-attr-keyword">"Shop"</span>, 99);  <span class="code-attr-comment">// "Shop 99"</span>
+<span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@ %d"</span>, <span class="code-attr-keyword">@"Shop"</span>, 99); <span class="code-attr-comment">// "Shop 99"</span>
+</code></pre>
+<p>NSLogで出力された内容はデバイス側（Mac, iPhone等）のログファイルにも書き出されますので注意してください。</p>
+<h4 id="%2Fvar%2Flog%2Fsystem.log">/var/log/system.log</h4>
+<pre class="alert alert-1">12/21/16 19:56:46.519 a.out[3718]: Shop 99</pre>
+<h1 id="%E5%80%A4%E3%83%BB%E5%A4%89%E6%95%B0">値・変数</h1>
+<p>Objective-CはC言語とのハイブリッドな言語であるため、C言語由来のプリミティブ型（基本型）とObjective-C規格のオブジェクト型の２種類の型が存在します。</p>
+<h2 id="%E3%83%97%E3%83%AA%E3%83%9F%E3%83%86%E3%82%A3%E3%83%96%E5%9E%8B">プリミティブ型</h2>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-object">NSInteger</span> val = 1;  <span class="code-attr-comment">// 整数型</span>
+<span class="code-attr-object">CGFloat</span> pi = 3.14;  <span class="code-attr-comment">// 実数型</span>
+<span class="code-attr-object"><span class="code-attr-keyword">BOOL</span></span> flag = <span class="code-attr-object"><span class="code-attr-keyword">YES</span></span>;    <span class="code-attr-comment">// 論理型</span>
+<span class="code-attr-keyword">const</span> <span class="code-attr-type">char</span> *chars = <span class="code-attr-keyword">"Shop"</span>; <span class="code-attr-comment">// 文字列ポインタ</span>
+
+<span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"%s %.2lf"</span>, chars, val + pi); <span class="code-attr-comment">// Shop 4.14</span>
+</code></pre>
+<h4 id="NSInteger">NSInteger</h4>
+<p>Objective-Cではint型やlong型の代わりに<b class="b b-1">NSInteger</b>型が使われています。NSIntegerは基本的にlong型の別名として定義されています（32bit OS環境ではint型の別名）。</p>
+<h4 id="CGFloat%E3%80%81BOOL%E3%80%81%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF">CGFloat、BOOL、ポインタ</h4>
+<p><b class="b b-1">CGFloat</b>はdouble型の代替型です（32bit環境ではfloat型の代替）。
+boolean型(true/false)の代替としては<b class="b b-1">BOOL</b>型（YES/NO）が使われています。
+<b class="b b-1">char *</b>等のポインタ型を扱うこともできます。</p>
+<h2 id="%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%9E%8B">オブジェクト型</h2>
+<p>Objective-Cのオブジェクトを利用する際には、値の先頭に<code class="inline-code inline-code-1">@</code>記号を付けて宣言します。
+また、オブジェクトはポインタとして扱う必要があるため、変数名の先頭には<code class="inline-code inline-code-1">*</code>記号を付ける必要があります。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-object">NSNumber</span> *num  = @1;
+<span class="code-attr-object">NSNumber</span> *pi   = @3.14;
+<span class="code-attr-object">NSNumber</span> *flag = @<span class="code-attr-object"><span class="code-attr-keyword">YES</span></span>;
+<span class="code-attr-object">NSString</span> *str  = <span class="code-attr-keyword">@"Shop"</span>;
+
+<span class="code-attr-object">NSInteger</span> v = [num integerValue];
+<span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@ %lf"</span>, str, v + pi.doubleValue); <span class="code-attr-comment">// Shop 4.14</span>
+</code></pre>
+<h3 id="%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97">メソッド呼び出し</h3>
+<p>ここで作成したNSNumberのオブジェクト<code class="inline-code inline-code-1">num</code>はプリミティブ型（longやdouble）のラッパーであるため、実際にそれらの値を取得するためにNSNumberオブジェクトのメソッドを呼び出す必要があります。</p>
+<p>ここではnumオブジェクトの値を<code class="inline-code inline-code-1">[num integerValue]</code>という形式で取得しています。<code class="inline-code inline-code-1">[num doubleValue]</code>と記述すればdouble型として値を取得することも出来ます。</p>
+<h3 id="%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97">プロパティ呼び出し</h3>
+<p>サンプルコードにある<code class="inline-code inline-code-1">pi.doubleValue</code>という記述は<code class="inline-code inline-code-1">[pi doubleValue]</code>と同じ意味です。引数なしのメソッドに関してはこのドット記法によるメソッド呼び出しが可能となっており、後に説明する「プロパティ」の仕組みとも深く関係します。
+</p>
+
+<pre class="alert alert-1">このドット記法は結局のところ同名のメソッドを呼び出すだけです。</pre>
+<pre class="alert alert-2">このドット記法による呼び出しはプロパティアクセスと呼ばれることもありますがあまり一般的な呼び方ではないかもしれません。</pre>
+<h3 id="%E5%BC%95%E6%95%B0%E3%82%92%E6%8C%81%E3%81%A4%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AE%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97">引数を持つメソッドの呼び出し</h3>
+<pre><code class="code code-2 lang-default"><span class="code-attr-object">NSNumber</span> *num = @1;
+
+<span class="code-attr-comment">// 従来の引数無し</span>
+[num doubleValue]; <span class="code-attr-comment">// 1.0</span>
+[num stringValue]; <span class="code-attr-comment">// "1"</span>
+<span class="code-attr-comment">// 引数あり</span>
+[num <span class="code-attr-label">isEqualToNumber</span>:@1]; <span class="code-attr-comment">// true</span>
+[num <span class="code-attr-label">isEqualToNumber</span>:@2]; <span class="code-attr-comment">// false</span>
+</code></pre>
+<p>引数を受け取るメソッドはこのように<code class="inline-code inline-code-1">[オブジェクト メソッド名:引数]</code>という形式で呼び出します。</p>
+
+<h3 id="%E5%BC%95%E6%95%B0%E3%82%92%E8%A4%87%E6%95%B0%E6%8C%81%E3%81%A4%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AE%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97">引数を複数持つメソッドの呼び出し</h3>
+<pre><code class="code code-2 lang-default"><span class="code-attr-comment">// 引数無し</span>
+[<span class="code-attr-keyword">@"2"</span> doubleValue]; <span class="code-attr-comment">// 2.0</span>
+<span class="code-attr-comment">// 第１引数のみ</span>
+[<span class="code-attr-keyword">@"a"</span> <span class="code-attr-label">isEqualToString</span>:<span class="code-attr-keyword">@"A"</span>]; <span class="code-attr-comment">// false</span>
+<span class="code-attr-comment">// 第２引数あり</span>
+[<span class="code-attr-keyword">@"AbC"</span> <span class="code-attr-label">stringByReplacingOccurrencesOfString</span>:<span class="code-attr-keyword">@"b"</span> <span class="code-attr-label">withString</span>:<span class="code-attr-keyword">@"B"</span>]; <span class="code-attr-comment">// "ABC"</span>
+</code></pre>
+<p>第２引数を受け取るメソッドは上記サンプルのように<code class="inline-code inline-code-1">[オブジェクト メソッド名:第１引数 ラベル名:第２引数]</code>の形式で呼び出します。
+</p>
+
+<p>ちなみに<code class="inline-code inline-code-1">stringByReplacingOccurrencesOfString</code>メソッドはJava言語で言うところの<code class="inline-code inline-code-1">replace</code>メソッドに相当する物です。
+</p>
+
+<pre><code class="code code-2 lang-default"><span class="code-attr-comment">// Java</span>
+<span class="code-attr-keyword">"AbC"</span>.<span class="code-attr-method">replace</span>(<span class="code-attr-keyword">"b"</span>, <span class="code-attr-keyword">"B"</span>)
+<span class="code-attr-comment">// Objective-C</span>
+[<span class="code-attr-keyword">@"AbC"</span> <span class="code-attr-label">stringByReplacingOccurrencesOfString</span>:<span class="code-attr-keyword">@"b"</span> <span class="code-attr-label">withString</span>:<span class="code-attr-keyword">@"B"</span>]
+</code></pre>
+<h1 id="%E6%96%87%E5%AD%97%E5%88%97">文字列</h1>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-comment">/* 生成 */</span>
+<span class="code-attr-object">NSString</span> *str = <span class="code-attr-keyword">@"こんにちは世界"</span>;
+str = [<span class="code-attr-object">NSString</span> stringWithUTF8String:<span class="code-attr-keyword">"Shop 99"</span>]; <span class="code-attr-comment">// "Shop 99"</span>
+str = [<span class="code-attr-object">NSString</span> <span class="code-attr-label">stringWithFormat</span>:<span class="code-attr-keyword">@"%@ %@"</span>, <span class="code-attr-keyword">@"こんにちは"</span>, str]; <span class="code-attr-comment">// "こんにちは Shop 99"</span>
+
+<span class="code-attr-comment">/* 長さ */</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> length]; <span class="code-attr-comment">// 7</span>
+
+<span class="code-attr-comment">/* 比較 */</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> <span class="code-attr-label">isEqualToString</span>:<span class="code-attr-keyword">@"Shop 99"</span>]; <span class="code-attr-comment">// true</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> <span class="code-attr-label">hasSuffix</span>:<span class="code-attr-keyword">@"99"</span>];            <span class="code-attr-comment">// true</span>
+
+<span class="code-attr-comment">/* 結合 */</span>
+[<span class="code-attr-keyword">@"Shop"</span> <span class="code-attr-label">stringByAppendingString</span>:<span class="code-attr-keyword">@" 99"</span>];             <span class="code-attr-comment">// "Shop 99"</span>
+[<span class="code-attr-object">NSString</span> <span class="code-attr-label">stringWithFormat</span>:<span class="code-attr-keyword">@"%@ %@"</span>, <span class="code-attr-keyword">@"Shop"</span>, <span class="code-attr-keyword">@"99"</span>]; <span class="code-attr-comment">// "Shop 99"</span>
+
+<span class="code-attr-comment">/* 分割 */</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> <span class="code-attr-label">componentsSeparatedByString</span>:<span class="code-attr-keyword">@" "</span>]; <span class="code-attr-comment">// ["Shop", "99"]</span>
+
+<span class="code-attr-comment">/* 検索 */</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> <span class="code-attr-label">containsString</span>:<span class="code-attr-keyword">@"Shop"</span>]; <span class="code-attr-comment">// true</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> <span class="code-attr-label">rangeOfString</span>:<span class="code-attr-keyword">@"99"</span>];    <span class="code-attr-comment">// {5, 2}</span>
+
+<span class="code-attr-comment">/* 置き換え */</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> <span class="code-attr-label">stringByReplacingOccurrencesOfString</span>:<span class="code-attr-keyword">@"99"</span> <span class="code-attr-label">withString</span>:<span class="code-attr-keyword">@"108"</span>]; <span class="code-attr-comment">// "Shop 108"</span>
+
+<span class="code-attr-comment">/* 切り取り */</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> <span class="code-attr-label">substringFromIndex</span>:5]; <span class="code-attr-comment">// "99"</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> <span class="code-attr-label">substringToIndex</span>:4];   <span class="code-attr-comment">// "Shop"</span>
+[<span class="code-attr-keyword">@"Shop 99"</span> <span class="code-attr-label">substringWithRange</span>:<span class="code-attr-method">NSMakeRange</span>(2, 2)]; <span class="code-attr-comment">// "op"</span>
+</code></pre>
+<h1 id="%E5%8F%AF%E5%A4%89%E9%95%B7%E6%96%87%E5%AD%97%E5%88%97">可変長文字列</h1>
+<p>Objective-Cの基本型は<b class="b b-1">イミュータブル（不変的）</b>なものがほとんどです。つまり一度生成したオブジェクトの内容を変化させることは出来ません。</p>
+<p>NSStringも同様にイミュータブル型であるため、代わりの型を使用する必要があります。</p>
+<p>文字列の内容を動的に変化させたい場合は<b class="b b-2">NSMutableString</b>という<b class="b b-1">ミュータブル（変動的）</b>な型を使用します。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-object">NSMutableString</span> *ms = [<span class="code-attr-object">NSMutableString</span> string];
+[ms <span class="code-attr-label">appendString</span>:<span class="code-attr-keyword">@"9"</span>];               <span class="code-attr-comment">// "9"</span>
+[ms <span class="code-attr-label">appendString</span>:<span class="code-attr-keyword">@"8"</span>];               <span class="code-attr-comment">// "98"</span>
+[ms <span class="code-attr-label">insertString</span>:<span class="code-attr-keyword">@"Shop "</span> <span class="code-attr-label">atIndex</span>:0]; <span class="code-attr-comment">// "Shop 98"</span>
+</code></pre>
+<h1 id="%E9%85%8D%E5%88%97">配列</h1>
+<p>NSStringやNSNumberの時と同様に@記号を配列リテラルの先頭に記述します。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-comment">/* 生成 */</span>
+<span class="code-attr-object">NSArray</span> *ary = @[<span class="code-attr-keyword">@"Shop"</span>, <span class="code-attr-keyword">@"99"</span>];
+
+<span class="code-attr-comment">/* 長さ */</span>
+[ary count];           <span class="code-attr-comment">// 2</span>
+
+<span class="code-attr-comment">/* アクセス */</span>
+ary[0];                <span class="code-attr-comment">// "Shop"</span>
+[ary <span class="code-attr-label">objectAtIndex</span>:1]; <span class="code-attr-comment">// "99"</span>
+[ary firstObject];     <span class="code-attr-comment">// "Shop"</span>
+[ary lastObject];      <span class="code-attr-comment">// "99"</span>
+
+<span class="code-attr-comment">/* 探索 */</span>
+[ary <span class="code-attr-label">containsObject</span>:<span class="code-attr-keyword">@"99"</span>];  <span class="code-attr-comment">// true</span>
+[ary <span class="code-attr-label">containsObject</span>:<span class="code-attr-keyword">@"100"</span>]; <span class="code-attr-comment">// false</span>
+[ary <span class="code-attr-label">indexOfObject</span>:<span class="code-attr-keyword">@"99"</span>];   <span class="code-attr-comment">// 1</span>
+
+<span class="code-attr-comment">/* 結合 */</span>
+[ary <span class="code-attr-label">arrayByAddingObjectsFromArray</span>:@[<span class="code-attr-keyword">@"DAISO"</span>, <span class="code-attr-keyword">@"100"</span>]]; <span class="code-attr-comment">// ["Shop", "99", "DAISO", "100"]</span>
+</code></pre>
+<h1 id="%E5%8F%AF%E5%A4%89%E9%95%B7%E9%85%8D%E5%88%97">可変長配列</h1>
+<p>NSString同様NSArrayにもミュータブル版のNSMutableArrayが存在します。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-object">NSMutableArray</span> *list = <span class="code-attr-object">NSMutableArray</span>.array;
+[list <span class="code-attr-label">addObject</span>:<span class="code-attr-keyword">@"Shop"</span>]; <span class="code-attr-comment">// ["Shop"]</span>
+[list <span class="code-attr-label">addObject</span>:<span class="code-attr-keyword">@"99"</span>];   <span class="code-attr-comment">// ["Shop", "99"]</span>
+</code></pre>
+<h1 id="%E9%80%A3%E6%83%B3%E9%85%8D%E5%88%97">連想配列</h1>
+<p>Objective-Cの世界では連想配列のことを<b class="b b-1">辞書型</b>と呼びます。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-comment">/* 生成 */</span>
+<span class="code-attr-object">NSDictionary</span> *dic = @{<span class="code-attr-keyword">@"name"</span>: <span class="code-attr-keyword">@"Shop 99"</span>, <span class="code-attr-keyword">@"price"</span>: @99};
+
+<span class="code-attr-comment">/* 長さ */</span>
+[dic count];   <span class="code-attr-comment">// 2</span>
+
+<span class="code-attr-comment">/* アクセス */</span>
+dic[<span class="code-attr-keyword">@"name"</span>];  <span class="code-attr-comment">// "Shop 99"</span>
+dic[<span class="code-attr-keyword">@"price"</span>]; <span class="code-attr-comment">// 99</span>
+dic.allKeys;   <span class="code-attr-comment">// ["name", "price"]</span>
+dic.allValues; <span class="code-attr-comment">// ["Shop 99", 99]</span>
+
+<span class="code-attr-comment">/* 探索 */</span>
+[dic.allValues <span class="code-attr-label">containsObject</span>:@99]; <span class="code-attr-comment">// true</span>
+</code></pre>
+<h1 id="%E5%8F%AF%E5%A4%89%E9%80%A3%E6%83%B3%E9%85%8D%E5%88%97">可変連想配列</h1>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-object">NSMutableDictionary</span> *dic = <span class="code-attr-object">NSMutableDictionary</span>.dictionary;
+dic[<span class="code-attr-keyword">@"name"</span>] = <span class="code-attr-keyword">@"Shop 99"</span>;         <span class="code-attr-comment">// {name: "Shop 99"}</span>
+dic[<span class="code-attr-keyword">@"price"</span>] = @99;               <span class="code-attr-comment">// {name: "Shop 99", price: 99}</span>
+[dic <span class="code-attr-label">removeObjectForKey</span>:<span class="code-attr-keyword">@"price"</span>]; <span class="code-attr-comment">// {name: "Shop 99"}</span>
+</code></pre>
+<h1 id="%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B2%90">条件分岐</h1>
+<p><code class="inline-code inline-code-1">if (条件式) { 文1; } else { 文2; }</code>の形式で記述します。
+<code class="inline-code inline-code-1">else</code>の後にif文を繋げることで複数条件の判断も可能です。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-object">NSInteger</span> val = 99;
+<span class="code-attr-keyword">if</span> (val == 99) {
+   <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"Shop 99"</span>);
+} <span class="code-attr-keyword">else</span> <span class="code-attr-keyword">if</span> (val == 108) {
+   <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"DAISO"</span>);
+} <span class="code-attr-keyword">else</span> {
+   <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"unknown"</span>);
+}
+</code></pre>
+<p>Java言語やSwift言語とは違い、if文の条件式の値が0以上となる場合はtrue式として解釈されます。
+</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-object">NSInteger</span> val = 99;
+<span class="code-attr-keyword">if</span> (val) {
+   <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"true"</span>);  <span class="code-attr-comment">// valの値が0以上の場合表示</span>
+} <span class="code-attr-keyword">else</span> {
+   <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"false"</span>); <span class="code-attr-comment">// valの値が0の場合表示</span>
+}
+</code></pre>
+<p>オブジェクトが空（nil）の場合は0と同じ意味になるため、true式とはなりません。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-object">NSString</span> *str = <span class="code-attr-type">nil</span>;
+<span class="code-attr-keyword">if</span> (str) {
+   <span class="code-attr-method">print</span>(<span class="code-attr-keyword">"true"</span>); <span class="code-attr-comment">// strはnilのため表示されない</span>
+}
+</code></pre>
+<h2 id="nil%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AB%E5%AF%BE%E3%81%99%E3%82%8B%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97">nilオブジェクトに対するメソッド呼び出し</h2>
+<p>Objective-Cの世界ではnilが代入されたオブジェクトに対して、メソッド呼び出しを行うことができます。</p>
+<p>エラーは発生せず、代わりにメソッドの戻り値型に応じて、nilと等価な値（0, NULL, false, NO, 等々）が返されます。
+</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-object">NSString</span> *str = <span class="code-attr-type">nil</span>;
+<span class="code-attr-keyword">if</span> (str.length == 0) {
+   <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"文字列の長さが0もしくはnilである可能性があります。"</span>);
+}
+</code></pre>
+<h1 id="%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E6%96%87">繰り返し文</h1>
+<p>C言語スタイルfor文の他に<b class="b b-2">高速列挙</b>と呼ばれるObjective-Cオブジェクト専用の仕組みが存在します。</p>
+
+<pre><code class="code code-1 lang-objc"><span class="code-attr-comment">/* C言語スタイル for */</span>
+<span class="code-attr-keyword">for</span> (<span class="code-attr-object">NSInteger</span> i = 0; i &lt; 3; i++) {
+   <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"Shop 99"</span>); <span class="code-attr-comment">// 3回 "Shop 99"が表示される</span>
+}
+
+<span class="code-attr-comment">/* while文も使える */</span>
+<span class="code-attr-type">int</span> i = 3;
+<span class="code-attr-keyword">while</span> (i--) {
+   <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"Shop 99"</span>); <span class="code-attr-comment">// 3回 "Shop 99"が表示される</span>
+}
+
+<span class="code-attr-comment">/* Objective-C 高速列挙 */</span>
+<span class="code-attr-object">NSArray</span> *ary = @[<span class="code-attr-keyword">@"Shop 99"</span>, <span class="code-attr-keyword">@"DAISO"</span>];
+<span class="code-attr-keyword">for</span> (<span class="code-attr-object">NSString</span> *shop in ary) {
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@"</span>, shop); <span class="code-attr-comment">// "Shop 99", "DAISO"の順で表示される</span>
+}
+
+<span class="code-attr-comment">/* Objective-C 高速列挙 辞書型の場合はキーが渡される */</span>
+<span class="code-attr-object">NSDictionary</span> *dic = @{<span class="code-attr-keyword">@"name"</span>: <span class="code-attr-keyword">@"Shop 99"</span>, <span class="code-attr-keyword">@"price"</span>: @99};
+<span class="code-attr-keyword">for</span> (<span class="code-attr-object">NSString</span> *key in dic) {
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@: %@"</span>, key, dic[key]); <span class="code-attr-comment">// "name: Shop 99", "price: 99"の順で表示</span>
+}
+</code></pre>
+<h1 id="%E3%82%AF%E3%83%A9%E3%82%B9">クラス</h1>
+<h2 id="%E3%82%AF%E3%83%A9%E3%82%B9%E4%BD%9C%E6%88%90">クラス作成</h2>
+<p>ヘッダーファイル<code class="inline-code inline-code-1">Shop.h</code>と実装ファイル<code class="inline-code inline-code-1">Shop.m</code>の２つのファイルを作成する必要があります。</p>
+<h4 id="Shop.h">Shop.h</h4>
+<pre><code class="code code-1 lang-objc">#<span class="code-attr-keyword">import</span> &lt;<span class="code-attr-object">Foundation</span>/<span class="code-attr-object">Foundation</span>.h&gt;
+
+<span class="code-attr-label">@interface</span> <span class="code-attr-object">Shop</span> : <span class="code-attr-object">NSObject</span>
+<span class="code-attr-comment">// ここにプロパティやメソッドを宣言する</span>
+<span class="code-attr-label">@end</span>
+</code></pre>
+<h4 id="Shop.m">Shop.m</h4>
+<pre><code class="code code-1 lang-objc">#<span class="code-attr-keyword">import</span> <span class="code-attr-keyword">"Shop.h"</span>
+
+<span class="code-attr-label">@implementation</span> <span class="code-attr-object">Shop</span>
+<span class="code-attr-comment">// ここでメソッドを実装する</span>
+<span class="code-attr-label">@end</span>
+</code></pre>
+<h2 id="%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%AE%9F%E8%A3%85">メソッド実装</h2>
+<p>メソッドの宣言は<code class="inline-code inline-code-1">- (戻り値)名前;</code>という形式で行います。
+<code class="inline-code inline-code-1">+ (戻り値)名前;</code>という形式で宣言した場合はクラスメソッドとなります。</p>
+<h4 id="Shop.h">Shop.h</h4>
+<pre><code class="code code-1 lang-objc">#<span class="code-attr-keyword">import</span> &lt;<span class="code-attr-object">Foundation</span>/<span class="code-attr-object">Foundation</span>.h&gt;
+
+<span class="code-attr-label">@interface</span> <span class="code-attr-object">Shop</span> : <span class="code-attr-object">NSObject</span>
+- (<span class="code-attr-object">NSString</span> *)name;  <span class="code-attr-comment">// インスタンスメソッド</span>
+- (<span class="code-attr-object">NSString</span> *)test;  <span class="code-attr-comment">// インスタンスメソッド</span>
++ (<span class="code-attr-object">NSString</span> *)name;  <span class="code-attr-comment">// クラスメソッド</span>
+<span class="code-attr-label">@end</span>
+</code></pre>
+<p>メソッドの定義は実装ファイル側で行います。</p>
+<h4 id="Shop.m">Shop.m</h4>
+<pre><code class="code code-1 lang-objc">#<span class="code-attr-keyword">import</span> <span class="code-attr-keyword">"Shop.h"</span>
+
+<span class="code-attr-label">@implementation</span> <span class="code-attr-object">Shop</span>
+
+- (<span class="code-attr-object">NSString</span> *)name { <span class="code-attr-comment">/* インスタンスメソッド */</span>
+   <span class="code-attr-keyword">return</span> <span class="code-attr-keyword">@"Hello 99"</span>;
+}
+
+- (<span class="code-attr-object">NSString</span> *)test {
+   <span class="code-attr-keyword">return</span> [<span class="code-attr-type">self</span> name]; <span class="code-attr-comment">// self構文で自身のメソッドにアクセス</span>
+}
+
++ (<span class="code-attr-object">NSString</span> *)name { <span class="code-attr-comment">/* クラスメソッド */</span>
+   <span class="code-attr-keyword">return</span> <span class="code-attr-keyword">@"Shop 108"</span>;
+}
+
++ (<span class="code-attr-keyword">void</span>)load {
+   <span class="code-attr-object">Shop</span> *hoge = [<span class="code-attr-object">Shop</span> new];                  <span class="code-attr-comment">// オブジェクト生成</span>
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@"</span>, [hoge name]); <span class="code-attr-comment">// @"Shop 99"  // メソッド呼び出し</span>
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@"</span>, [hoge test]); <span class="code-attr-comment">// @"Shop 99"</span>
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@"</span>, [<span class="code-attr-object">Shop</span> name]); <span class="code-attr-comment">// @"Shop 108" // クラスメソッド呼び出し</span>
+}
+<span class="code-attr-label">@end</span>
+</code></pre>
+<p>クラスからオブジェクト（インスタンス）を生成する際にはShopクラスの<code class="inline-code inline-code-1">new</code>メソッドを呼び出します。
+メソッドの呼び出しは<code class="inline-code inline-code-1">[オブジェクト メソッド名]</code>、
+クラス・メソッドの実行は<code class="inline-code inline-code-1">[クラス メソッド名]</code>の形式で行います。</p>
+<p>メソッド内から自身のメソッドにアクセスする際には自身のインスタンスを表す<code class="inline-code inline-code-1">self</code>を使用します。</p>
+<pre class="alert alert-2">Objective-Cの世界ではメソッド呼び出し時の式をメッセージ式と呼びます。</pre>
+<h2 id="%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3%E3%83%BB%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%A4%89%E6%95%B0">プロパティ・インスタンス変数</h2>
+<p>プロパティはヘッダーファイル側に<code class="inline-code inline-code-1">@property</code>構文を用いて宣言します。
+インスタンス変数の場合はブレース（<code class="inline-code inline-code-1">{}</code>）内に記述する必要があります。</p>
+
+<h4 id="Shop.h">Shop.h</h4>
+<pre><code class="code code-1 lang-objc">#<span class="code-attr-keyword">import</span> &lt;<span class="code-attr-object">Foundation</span>/<span class="code-attr-object">Foundation</span>.h&gt;
+
+<span class="code-attr-label">@interface</span> <span class="code-attr-object">Shop</span> : <span class="code-attr-object">NSObject</span> {
+   <span class="code-attr-object">NSNumber</span> *_price; <span class="code-attr-comment">// インスタンス変数</span>
+}
+<span class="code-attr-label">@property</span> (nonatomic) <span class="code-attr-object">NSString</span> *name; <span class="code-attr-comment">// プロパティ</span>
+<span class="code-attr-label">@end</span>
+</code></pre>
+<h4 id="Shop.m">Shop.m</h4>
+<pre><code class="code code-1 lang-objc">#<span class="code-attr-keyword">import</span> <span class="code-attr-keyword">"Shop.h"</span>
+
+<span class="code-attr-label">@implementation</span> <span class="code-attr-object">Shop</span>
+
++ (<span class="code-attr-keyword">void</span>)load {
+   <span class="code-attr-object">Shop</span> *shop = [<span class="code-attr-object">Shop</span> new];
+   shop.name = <span class="code-attr-keyword">@"Shop 99"</span>;
+   shop-&gt;_price = @99;
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@%d"</span>, shop.name, shop-&gt;_price.intValue); <span class="code-attr-comment">// "Shop 9999"</span>
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@"</span>, [shop test]); <span class="code-attr-comment">// "Shop 99Shop 99"</span>
+}
+
+- (<span class="code-attr-object">NSString</span> *)test {
+   <span class="code-attr-object">NSString</span> *n1 = <span class="code-attr-type">self</span>.name; <span class="code-attr-comment">// self構文で自身のプロパティにアクセス</span>
+   <span class="code-attr-object">NSString</span> *n2 = _name;     <span class="code-attr-comment">// nameプロパティが保有するインスタンス変数に直接アクセス</span>
+   <span class="code-attr-keyword">return</span> [n1 <span class="code-attr-label">stringByAppendingString</span>:n2];
+}
+
+<span class="code-attr-label">@end</span>
+</code></pre>
+<h4 id="%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3%E3%83%BB%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%A4%89%E6%95%B0%E3%81%B8%E3%81%AE%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9">プロパティ・インスタンス変数へのアクセス</h4>
+<p>プロパティへのアクセスは<code class="inline-code inline-code-1">オブジェクト.プロパティ名</code>、インスタンス変数へのアクセスは<code class="inline-code inline-code-1">オブジェクト-&gt;インスタンス変数名</code>形式で行います。</p>
+<p>メソッド内から自身のプロパティにアクセスする際には自身のインスタンスを表す<code class="inline-code inline-code-1">self</code>を使用します。</p>
+<p>ちなみに<code class="inline-code inline-code-1">_name</code>という見慣れない変数は@property構文がnameプロパティ用に自動作成したインスタンス変数です。また、クラス自身のメソッドからであれば、<code class="inline-code inline-code-1">self-&gt;_name</code>形式でのアクセスは不要です。</p>
+<pre class="alert alert-2">@property構文は_nameインスタンス変数とそれを戻り値として返すnameメソッドを自動生成しているのです。ちなみに以前、プロパティ呼び出しは単に同名のメソッドを呼び出しているだけだという趣旨の説明をしましたが。あれはまさにこの@propertyの仕組みを実現するための仕様でもあります。</pre>
+<h3 id="%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%BC%95%E6%95%B0">メソッド引数</h3>
+<p>引数を受け取るメソッドは<code class="inline-code inline-code-1">- (戻値型)メソッド名:(引数型)引数名;</code>という形式で記述します。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-label">@implementation</span> <span class="code-attr-object">Shop</span> {
+   <span class="code-attr-object">NSString</span> *_name; <span class="code-attr-comment">// インスタンス変数は実装ファイル側でも宣言できる</span>
+}
+
+- (<span class="code-attr-keyword">void</span>)<span class="code-attr-label">setName</span>:(<span class="code-attr-object">NSString</span> *)name {
+   _name = name;
+}
+
+- (<span class="code-attr-object">NSString</span> *)name { <span class="code-attr-keyword">return</span> _name; }
+
++ (<span class="code-attr-keyword">void</span>)load {
+   <span class="code-attr-object">Shop</span> *shop = [<span class="code-attr-object">Shop</span> new];
+   [shop <span class="code-attr-label">setName</span>: <span class="code-attr-keyword">@"DAISO"</span>];
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@"</span>, [shop name]); <span class="code-attr-comment">// "DAISO"</span>
+   shop.name = <span class="code-attr-keyword">@"Shop 99"</span>;    <span class="code-attr-comment">// プロパティ形式による代入も可能（setName:が呼ばれる）</span>
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@"</span>, [shop name]); <span class="code-attr-comment">// "Shop 99"</span>
+}
+
+<span class="code-attr-label">@end</span>
+</code></pre>
+<p>今回サンプルとして実装したメソッドはヘッダーファイルにnameプロパティ（<code class="inline-code inline-code-1">@property (nonatomic) NSString *name;</code>）を宣言した際に自動生成されるメソッドと同等のものです。
+Objective-C 2.0以前は@property構文がなかったため、このように手作業でアクセサ・メソッドを実装する必要がありました。</p>
+<h3 id="%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%BC%95%E6%95%B0%EF%BC%88%E8%A4%87%E6%95%B0%EF%BC%89">メソッド引数（複数）</h3>
+<p>複数の引数を受け取るメソッドは<code class="inline-code inline-code-1">- (戻り値)メソッド名:(型)引数名1 ラベル名1:(型)引数名2;</code>という形式で記述します。
+メソッドの呼び出しは<code class="inline-code inline-code-1">[オブジェクト メソッド名:引数1 ラベル名1:引数2]</code>という形式で行います。</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-label">@implementation</span> <span class="code-attr-object">Shop</span> {
+   <span class="code-attr-object">NSString</span> *_name;
+   <span class="code-attr-object">NSNumber</span> *_price;
+}
+
+- (<span class="code-attr-keyword">void</span>)<span class="code-attr-label">setName</span>:(<span class="code-attr-object">NSString</span> *)name <span class="code-attr-label">price</span>:(<span class="code-attr-object">NSNumber</span> *)price {
+   _name = name;
+   _price = price;
+}
+
+- (<span class="code-attr-object">NSString</span> *)description {
+   <span class="code-attr-keyword">return</span> [<span class="code-attr-object">NSString</span> <span class="code-attr-label">stringWithFormat</span>:<span class="code-attr-keyword">@"%@ %@"</span>, _name, _price];
+}
+
++ (<span class="code-attr-keyword">void</span>)load {
+   <span class="code-attr-object">Shop</span> *shop = [<span class="code-attr-object">Shop</span> new];
+   [shop <span class="code-attr-label">setName</span>:<span class="code-attr-keyword">@"Shop"</span> <span class="code-attr-label">price</span>:@(99)];
+   <span class="code-attr-method">NSLog</span>(<span class="code-attr-keyword">@"%@"</span>, shop); <span class="code-attr-comment">// "Shop 99"</span>
+}
+
+<span class="code-attr-label">@end</span>
+</code></pre>
+<h4 id="description%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">descriptionメソッド</h4>
+<p>上記サンプルの<code class="inline-code inline-code-1">description</code>という見慣れないメソッドは、Java/JavaScriptの世界で言う<code class="inline-code inline-code-1">toString</code>メソッドのようなものです。
+NSLogのようなフォーマット関数等にオブジェクトを渡すと、オブジェクトの文字列化を行うために、関数内部でdescriptionメソッドが強制的に呼ばれます。</p>
+<p>実際、今回の<code class="inline-code inline-code-1">NSLog(@"%@", shop);</code>でも、NSLog関数内部で<code class="inline-code inline-code-1">[shop description]</code>呼び出し処理が行われています。</p>
+<h1 id="%E9%96%A2%E6%95%B0">関数</h1>
+<p>C言語のネイティブ関数を作成することも出来ます。
+Objective-Cのメソッドよりも高速で呼び出されるという特徴があります。</p>
+<p>Objective-Cの実装ファイルに記述する際には<code class="inline-code inline-code-1">static</code>キーワードを付けた状態で宣言しましょう。
+複数の実装ファイルで同名の関数が宣言されていても、名前衝突が起こらず、別関数として定義されます。</p>
+<pre><code class="code code-1 lang-objc">static <span class="code-attr-object">NSNumber</span> *<span class="code-attr-method">shop</span>() {
+   <span class="code-attr-keyword">return</span> @99;
+}
+</code></pre>
+<p>またインライン関数を宣言することも可能です。この場合shop関数呼び出し箇所ではマクロと同等のインライン展開が行われるようになります。マクロが必要なケースでは極力インライン関数で代用するようにすると良いでしょう。
+</p>
+<pre><code class="code code-1 lang-objc">NS_INLINE <span class="code-attr-object">NSNumber</span> *<span class="code-attr-method">shop</span>() {
+   <span class="code-attr-keyword">return</span> @99;
+}
+</code></pre>					</div><!-- .entry-content -->
+				
+		<div><div style="font-size:90%;margin-bottom:5px;line-height:1.714285714">広告</div><style type="text/css">.slot_footer{width:300px;height:250px}@media (min-width:375px){.slot_footer{width:336px;height:280px}}@media (min-width:950px){.slot_footer{width:300px;height:250px}}@media (min-width:1075px){.slot_footer{width:336px;height:280px}}</style><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_footer" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="6809444154" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>				
+		<footer class="entry-meta" style="float: right;">
+			カテゴリー: <a href="http://marycore.jp/prog/objective-c/" rel="category tag">Objective-C</a> | タグ: <a href="http://marycore.jp/tag/tag-programming-basic/" rel="tag">基礎知識</a>, <a href="http://marycore.jp/tag/tag-programming-specification/" rel="tag">言語仕様</a>, <a href="http://marycore.jp/tag/tag-programming-detail/" rel="tag">詳細解説</a> | 投稿日: <a href="http://marycore.jp/prog/objective-c/basic-syntax/" title="19:03" rel="bookmark"><time class="entry-date" datetime="2015-02-18T19:03:58+00:00">2015.02.18</time></a><span class="updated"> | 更新日: <a href="http://marycore.jp/prog/objective-c/basic-syntax/" title="12:36" rel="bookmark"><time class="updated" datetime="2018-12-28T12:36:23+00:00">2018.12.28</time></a></span> | <span class="by-author">投稿者: <span class="author vcard" itemprop="author"><a class="url fn n" href="http://marycore.jp/author/marycore/" title="MaryCore の投稿をすべて表示" rel="author">MaryCore</a></span></span>								</footer><!-- .entry-meta -->
+		<div style="clear: both;"></div>
+	</article><!-- #post -->
+	
+				<nav class="nav-single">
+					<h3 class="assistive-text">投稿ナビゲーション</h3>
+					<span class="nav-previous"></span>
+					<span class="nav-next"><a href="http://marycore.jp/prog/objective-c/madness-of-objective-c-and-swift/" rel="next">Objective-Cの気持ち悪さとSwiftの気持ち悪さは少し違う <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				<div class="matched_content" style="margin: 16px 0; margin: 1.2857142857rem 0;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-5613714714878183" data-ad-slot="5313922550"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+				
+<div id="comments" class="comments-area">
+
+	
+	
+	
+</div><!-- #comments .comments-area -->
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+						<aside id="categoryrecents-2" class="widget mc_widget_category_recent_entries"><h3 class="widget-title">Objective-C</h3><ul><li><a href="http://marycore.jp/prog/objective-c/objc-dangerous-and-anti-pattern/">Objective-C初心者がやりがちなミスやバッドノウハウまとめ</a></li><li><a href="http://marycore.jp/prog/objective-c/convert-unichar-to-nsstring/">unicharとNSSringの相互変換【文字 ⇔ 文字列】</a></li><li><a href="http://marycore.jp/prog/objective-c/objcpp-ns-object-wrapper/">【Objective-C++】NSObjectラッパークラスで快適コーディングを実現する</a></li><li><a href="http://marycore.jp/prog/objective-c/send-message-from-conditional-operator/">レシーバの分岐とメッセージ送信を一行で書く【ダークサイドObjective-C】</a></li><li><a href="http://marycore.jp/prog/objective-c/objcpp-ns-range-wrapper/">【Objective-C++】NSRangeを拡張する【Rangeラッパークラスの作り方】</a></li><li><a href="http://marycore.jp/prog/objective-c/objcpp-helper-function/">Objective-C++でヘルパー関数を自作する【メソッド名を短くする】</a></li><li><a href="http://marycore.jp/prog/objective-c/objcpp-basics/">Objective-C++ 取扱説明書 〜始め方から使い方、注意点まで〜【完全保存版】</a></li><li><a href="http://marycore.jp/prog/objective-c/wrap-objc-class-in-struct-and-cpp-class/">Objective-Cのクラスを構造体やC++のクラスで保持する方法【Objective-C++】</a></li><li><a href="http://marycore.jp/prog/objective-c/wrap-cpp-class-in-objc/">C++のクラスや資産をObjective-Cで活用する【ラップ方法とライフサイクルについて】</a></li><li><a href="http://marycore.jp/prog/objective-c/wrap-cpp-object-pointer-in-objc/">C++のオブジェクトをポインタとして保持／管理する方法【Objective-C++】</a></li></ul><p class="mc_widget_category_recent_entries_more"><a href="http://marycore.jp/prog/objective-c/page/2/" target="_blank">もっと見る...</a></p></aside><aside id="text-3" class="widget widget_text"><h3 class="widget-title">スポンサーリンク</h3>			<div class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<style type="text/css">
+@media (min-width:600px) { .adslot_side { width: 160px; }
+@media (min-width:1000px) { .adslot_side { width: 300px; } }</style>
+<ins class="adsbygoogle adslot_side" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="8227805750" data-ad-format="auto"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+		</aside>		<aside id="mc-recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">最近の投稿</h3>		<ul>
+											<li>
+					<a href="http://marycore.jp/net/twitter-tips-special/">ツイッター表現辞典｜番外編【なう、にゃーん、尊い、その他の表現】</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/anime/wizardbarristers/">ウィザード・バリスターズ～弁魔士セシル【アニメ紹介・レビュー・感想】</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/society/bruised-princess/">プリンセス駅伝の感動ドラマに得体の知れない恐怖を感じた</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/irony/choco-freak/">森永チョコフレークと日清シスコを食べ比べたオタクの感想</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/c-lang/convert-number-to-binary-octal-decimal-hex-c-string/">【C言語】数値を 2進数 8進数 10進数 16進数 文字列に変換する方法</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/cpp/convert-number-to-binary-octal-decimal-hex-string/">C++ 数値を 2進数 8進数 10進数 16進数 文字列に変換する方法</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/irony/mawaru-takaya/">ラーメン店「回高屋」の読み方は？ 店舗数は？ チェーン店って本当？</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/think/human-rights-first/">レディーファーストは女性差別なのか｜盲目的善意と慈悲的差別</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/php/call-to-undefined-function/">【PHP】Fatal error: Call to undefined function f() の原因と対処</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/society/tokyo-volunteer-revolution/">五輪ボランティア批判と格差社会への不満｜オリンピックやりがい搾取</a>
+									</li>
+					</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">カテゴリー</h3>		<ul>
+	<li class="cat-item cat-item-31"><a href="http://marycore.jp/prog/cpp/" >C++</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://marycore.jp/prog/cocoa/" >Cocoa</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://marycore.jp/prog/c-lang/" >C言語</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://marycore.jp/affiliate/adsense/" >Googleアドセンス</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://marycore.jp/prog/css/" >HTML/CSS</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://marycore.jp/prog/js/" >JavaScript</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://marycore.jp/prog/mamp/" >MAMP</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://marycore.jp/news/" >News</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://marycore.jp/prog/objective-c/" >Objective-C</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://marycore.jp/prog/php/" >PHP</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://marycore.jp/prog/ruby/" >Ruby</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://marycore.jp/prog/swift/" >Swift</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://marycore.jp/wordpress/" >WordPress</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://marycore.jp/prog/xcode/" >Xcode &amp; Clang</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://marycore.jp/code/" >コード</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://marycore.jp/design/" >デザイン</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://marycore.jp/net/" >ネット文化</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://marycore.jp/mac/" >パソコン・Mac</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://marycore.jp/programmer/" >プログラマ</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://marycore.jp/coding/" >プログラミング／コーディング</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://marycore.jp/smart/" >ライフハック</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://marycore.jp/ascii-art/" >今週のAA</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://marycore.jp/yurume/" >今週の一言</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://marycore.jp/works/" >創作</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://marycore.jp/irony/" >戯言</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://marycore.jp/essay/" >日記・雑文</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://marycore.jp/anime/" >漫画・アニメ</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://marycore.jp/society/" >社会</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://marycore.jp/think/" >考察</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://marycore.jp/language/" >言語</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://marycore.jp/music/" >音楽</a>
+</li>
+		</ul>
+</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h3 class="widget-title">タグ</h3><div class="tagcloud"><a href="http://marycore.jp/tag/tag-it-culture/" class="tag-cloud-link tag-link-63 tag-link-position-1" style="font-size: 12.745762711864pt;" aria-label="IT教養 (29個の項目)">IT教養</a>
+<a href="http://marycore.jp/tag/tag-programming-technique/" class="tag-cloud-link tag-link-36 tag-link-position-2" style="font-size: 17.847457627119pt;" aria-label="テクニック (80個の項目)">テクニック</a>
+<a href="http://marycore.jp/tag/tag-programming-neta/" class="tag-cloud-link tag-link-29 tag-link-position-3" style="font-size: 16.661016949153pt;" aria-label="ネタ (63個の項目)">ネタ</a>
+<a href="http://marycore.jp/tag/tag-marketing/" class="tag-cloud-link tag-link-51 tag-link-position-4" style="font-size: 8pt;" aria-label="マーケティング (11個の項目)">マーケティング</a>
+<a href="http://marycore.jp/tag/tag-review/" class="tag-cloud-link tag-link-61 tag-link-position-5" style="font-size: 13.457627118644pt;" aria-label="レビュー (34個の項目)">レビュー</a>
+<a href="http://marycore.jp/tag/tag-programming-deal/" class="tag-cloud-link tag-link-43 tag-link-position-6" style="font-size: 18.322033898305pt;" aria-label="問題対処 (89個の項目)">問題対処</a>
+<a href="http://marycore.jp/tag/tag-programming-basic/" class="tag-cloud-link tag-link-38 tag-link-position-7" style="font-size: 20.576271186441pt;" aria-label="基礎知識 (137個の項目)">基礎知識</a>
+<a href="http://marycore.jp/tag/tag-tech-essay/" class="tag-cloud-link tag-link-52 tag-link-position-8" style="font-size: 16.067796610169pt;" aria-label="技術エッセイ (56個の項目)">技術エッセイ</a>
+<a href="http://marycore.jp/tag/tag-tech-column/" class="tag-cloud-link tag-link-34 tag-link-position-9" style="font-size: 16.779661016949pt;" aria-label="技術コラム (65個の項目)">技術コラム</a>
+<a href="http://marycore.jp/tag/tag-society/" class="tag-cloud-link tag-link-48 tag-link-position-10" style="font-size: 14.28813559322pt;" aria-label="文化社会 (40個の項目)">文化社会</a>
+<a href="http://marycore.jp/tag/tag-programming-methodology/" class="tag-cloud-link tag-link-39 tag-link-position-11" style="font-size: 17.491525423729pt;" aria-label="方法論 (75個の項目)">方法論</a>
+<a href="http://marycore.jp/tag/tag-daily/" class="tag-cloud-link tag-link-47 tag-link-position-12" style="font-size: 13.813559322034pt;" aria-label="日常 (36個の項目)">日常</a>
+<a href="http://marycore.jp/tag/tag-future/" class="tag-cloud-link tag-link-32 tag-link-position-13" style="font-size: 13.338983050847pt;" aria-label="未来考察 (33個の項目)">未来考察</a>
+<a href="http://marycore.jp/tag/tag-programming-specification/" class="tag-cloud-link tag-link-42 tag-link-position-14" style="font-size: 19.627118644068pt;" aria-label="言語仕様 (115個の項目)">言語仕様</a>
+<a href="http://marycore.jp/tag/tag-programming-detail/" class="tag-cloud-link tag-link-37 tag-link-position-15" style="font-size: 22pt;" aria-label="詳細解説 (182個の項目)">詳細解説</a>
+<a href="http://marycore.jp/tag/tag-programming-wisdom/" class="tag-cloud-link tag-link-40 tag-link-position-16" style="font-size: 21.050847457627pt;" aria-label="豆知識 (151個の項目)">豆知識</a></div>
+</aside><aside id="text-4" class="widget widget_text"><h3 class="widget-title">自作アプリ</h3>			<div class="textwidget"><h4 class="widget-sub-title">キーボード拡張アプリ</h4>
+<div style="margin-left: 12px; margin-left: 0.8571428571rem;"><a href="http://marycore.jp/mctap/" target="_blank">McTap</a></div>
+<h4 class="widget-sub-title">テキストエディタ</h4>
+<div style="margin-left: 12px; margin-left: 0.8571428571rem; margin-bottom: 6px; margin-bottom: 0.4285714286rem;"><a href="http://marycore.jp/apps/" target="_blank">McEditor</a></div></div>
+		</aside><aside id="text-7" class="widget widget_text"><h3 class="widget-title">寄付・支援</h3>			<div class="textwidget"><div style="margin:0 0 8px 0"><span>Amazon: </span><a class="inline-code-1" style="padding:4px 8px" href="http://goo.gl/R1E6WB" target="_blank">ほしい物リスト</a> <a class="inline-code-1" style="padding:4px 8px" href="http://goo.gl/8NYx4T" target="_blank">干し芋のリスト</a></div>
+<div style="margin:0 0 12px 0"><span>Bitcoin: <code class="inline-code inline-code-2 our-bitcoin-address" style="padding:4px 8px">32dzgrtFGQ1jDphJcu9iFozujbQ2JKYDXs</code></span></div>
+<div style="margin:0 0 8px 0"><a href="https://bitflyer.jp/?bf=q1by3zso" target="_blank"><img style="border-radius: unset; padding: 18px; background-color: #fff;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHUAAAB1AQAAAABYf5MRAAAAtElEQVR4AZzHoWEEQRTFMMNj7r/LB5c5JA38EROAUivgd75lGmQ9HJ2MKb7dhfR+pz2+VGha9wP+A+6vQh1W3/kmABvQ7/x0UqOx+yFwlOj9Rkk02P2Jk4i273zaGujQ3/3OaoZ7+CQIGtt3vuEGttX9ky0zhd/5pDKIenu2TVjf+aVsDfDpBdNMfucDMtfU3W85ghn77kdxOMC3N8JNf283asbDy1Aidj+guRL4zu9vKOAHABV0xOWkC7DVAAAAAElFTkSuQmCC"></a></div>
+</div>
+		</aside><aside id="mc_widget_214850853-2" class="widget widget_mc_widget_214850853"><h3 class="widget-title">よい物リスト</h3><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01C0Q2WZC%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/51qiQZJeSmL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01C0Q2WZC%2Fref%3Dnosim" target="_blank">Ted2 ぬいぐるみXL プレミアム Part3</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3DTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3DTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3DTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">早くこれになりたい</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01F8M9CCQ%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/416xVIJvJLL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01F8M9CCQ%2Fref%3Dnosim" target="_blank">東プレ キーボード REALFORCE91UG-S 日本語カナなし 91keyテンキーレスUSB 静電容量無接点 昇華印刷 静音モデル ALL30g荷重 ブラック/グレー NG31BS</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3DREALFORCE%2520ALL30g%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FREALFORCE%2520ALL30g%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3DREALFORCE%2520ALL30g" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3DREALFORCE%2520ALL30g%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">ガチ勢が使うキーボード</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01MTEAV6O%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/51gOrE1xIkL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01MTEAV6O%2Fref%3Dnosim" target="_blank">【Amazon.co.jp限定】はごろも ポポロスパ7分 5kg 1.6mm</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">筋トレ用</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB00DCKF4OC%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/61fkY7esaZL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB00DCKF4OC%2Fref%3Dnosim" target="_blank">キユーピー あえるパスタソース6種 [カルボナーラ1袋(2食入)、たらこ1袋(2食入)、ミートソース フォン・ド・ヴォー1袋(2食入)、バジル1袋(2食入)、ツナマヨ1袋(2食入)、きのこの醤油バター1袋(2食入り)]</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">独身プログラマの強い味方</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB074C9NPDL%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/31ojuKtDw0L._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB074C9NPDL%2Fref%3Dnosim" target="_blank">アルタ 抱き枕 もっちり 床ごこち 添い寝  クマ ごろう AR0628121</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">休日の旦那</div></div></div><div style="clear:both"></div></div></aside>					</div><!-- #secondary -->
+	</div><footer id="colophon" role="contentinfo"><div class="site-info">Copyright (C) 2012-2018 <a href="http://marycore.jp/" title="Think Difficult. (；･`д･´)">MaryCore</a>. All rights reserved.</div></footer></div>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-37354401-1','auto');ga('send','pageview');</script><script>
+(function(){var c=document.getElementById("site-navigation");if(c){var a=c.getElementsByTagName("button")[0];if(a){var b=c.getElementsByTagName("ul")[0];if(!b||!b.childNodes.length)return a.style.display="none";a.onclick=function(){-1===b.className.indexOf("nav-menu")&&(b.className="nav-menu");-1!==a.className.indexOf("toggled-on")?(a.className=a.className.replace(" toggled-on",""),b.className=b.className.replace(" toggled-on","")):(a.className+=" toggled-on",b.className+=" toggled-on")}}}})();</script>
+<script>function mc_social_buttons_open(a,w,h){open(a,'_blank','width='+w+',height='+h+',left='+(screen.availWidth-w)/2+',top='+(screen.availHeight-h)/2);return!1}</script>
+</body></html>

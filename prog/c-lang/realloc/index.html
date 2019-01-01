@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<!--[if IE 7]><html class="ie ie7" lang="ja"><![endif]-->
+<!--[if IE 8]><html class="ie ie8" lang="ja"><![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!--><html lang="ja"><!--<![endif]-->
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>【C言語】realloc関数｜正しい使い方と注意点 メモリ断片化など | MaryCore</title>
+<meta property="og:type" content="article"><meta property="og:site_name" content="MaryCore 言語知能総合研究所"><meta property="og:url" content="http://marycore.jp/prog/c-lang/realloc/"><meta property="og:title" content="【C言語】realloc関数｜正しい使い方と注意点 メモリ断片化など"><meta property="og:description" content="realloc関数 reallocはメモリを再割り当て／再確保するための関数です。既存のメモリ領域のサイズを拡張／縮小する用途に・・・"><!--[if lt IE 9]><script src="http://marycore.jp/wp/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script><![endif]-->
+<link rel='stylesheet' id='twentytwelve-style-css'  href='http://marycore.jp/wp/wp-content/themes/marycore/style.css?ver=4.9.9' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='http://marycore.jp/wp/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<link rel="canonical" href="http://marycore.jp/prog/c-lang/realloc/" />
+</head>
+<body class="post-template-default single single-post postid-2652 single-format-standard"><div id="page" class="hfeed site"><header id="masthead" class="site-header" role="banner"><hgroup><h1 class="site-title"><a href="http://marycore.jp/" title="ヽ( ・ω・)ノ Don&#039;t feel. THINK! ~ Presented by MaryCore ~" rel="home">MaryCore</a></h1></hgroup><nav id="site-navigation" class="main-navigation" role="navigation"><button class="menu-toggle">メニュー</button><a class="assistive-text" href="#content" title="コンテンツへ移動">コンテンツへ移動</a><div class="menu-%e3%83%a1%e3%83%8b%e3%83%a5%e3%83%bc-1-container"><ul id="menu-%e3%83%a1%e3%83%8b%e3%83%a5%e3%83%bc-1" class="nav-menu"><li id="menu-item-2763" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2763"><a title="McTap／キーボード拡張アプリ" href="http://marycore.jp/mctap/">新作ソフトウェア<sup class="badge-info-invert">New!</sup></a></li>
+<li id="menu-item-515" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-515"><a title="制作したアプリ／Our Applications" href="http://marycore.jp/apps/">アプリ</a></li>
+<li id="menu-item-86" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-86"><a title="サイトについて／About this site" href="http://marycore.jp/about/">サイトについて</a></li>
+<li id="menu-item-87" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-87"><a title="Contact／お問い合わせ" href="http://marycore.jp/contact/">お問い合わせ</a></li>
+<li id="menu-item-242" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-242"><a title="Sitemap／サイトマップ" href="http://marycore.jp/sitemap/">サイトマップ</a></li>
+<li id="menu-item-3180" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3180"><a target="_blank" href="https://cse.google.com:443/cse/publicurl?cx=009489372983289696163:xjk7xgk_hm4">検索</a></li>
+</ul></div></nav></header><div id="main" class="wrapper"><div style="margin-bottom: 18px; margin-bottom: 1.2857142857rem;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_header_00" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="5089572954" data-ad-format="horizontal"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div id="breadcrumb" class="breadcrumb"><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/" itemprop="url"><span itemprop="title">Home</span></a> › </div><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/prog/" itemprop="url"><span itemprop="title">プログラミング言語</span></a> › </div><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/prog/c-lang/" itemprop="url"><span itemprop="title">C言語</span></a></div></div>
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+						<article id="post-2652" class="post-2652 post type-post status-publish format-standard hentry category-c-lang tag-tag-programming-basic tag-tag-programming-specification tag-tag-programming-detail tag-tag-programming-wisdom">
+				<header class="entry-header">
+									<h1 class="entry-title">【C言語】realloc関数｜正しい使い方と注意点 メモリ断片化など</h1>
+			
+<style>.mc-social-buttons{font-family:Helvetica,Arial,sans-serif}.mc-social-buttons{margin-top:16px;margin-top:1.1428571429rem}.mc-social-buttons ul{margin:0;padding:0}.mc-social-buttons li{display:inline-block;margin:0 6px 16px 0;margin:0 0.4285714286rem 1.1428571429rem 0}.mc-social-buttons a{color:#f9f9ff;text-decoration:none}.mc-social-buttons a:visited{color:#f9f9ff}.mc-social-buttons a:hover{opacity:.7}.mc-social-button{padding:4px 6px;border-radius:3px;font-weight:700;font-size:10.5px;padding:0.2857142857rem 0.4285714286rem;border-radius:0.2142857143rem;font-size:.75rem}.a{background-color:rgba(27,149,224,0.9)}.a:after{content:'ツイート'}.c{background-color:rgba(66,103,178,0.9)}.c:after{content:'シェア'}.d{background-color:rgba(0,164,222,0.9)}.d:after{content:'Ｂ! クマ'}.e{background-color:rgba(219,68,55,0.9)}.e:after{content:'Ｇ＋'}.f{background-color:rgba(0,187,0,0.9)}.f:after{content:'LINE'}.c:before{content:"f";background-color:#f9f9ff;color:rgba(66,103,178,.9);border-radius:1px;padding:0 4px 0 6px;margin-right:3px;padding:0 0.2857142857rem 0 0.4285714286rem;margin-right:0.2142857143rem}.mc-social-buttons li:last-child{margin-right:0}@media print{.mc-social-buttons{display:none}}</style>
+<div class="mc-social-buttons"><ul><li><a target="_blank" href="https://twitter.com/share?url=http%3A%2F%2Fmarycore.jp%2Fprog%2Fc-lang%2Frealloc%2F&tw_p=tweetbutton&text=%E3%80%90C%E8%A8%80%E8%AA%9E%E3%80%91realloc%E9%96%A2%E6%95%B0%EF%BD%9C%E6%AD%A3%E3%81%97%E3%81%84%E4%BD%BF%E3%81%84%E6%96%B9%E3%81%A8%E6%B3%A8%E6%84%8F%E7%82%B9+%E3%83%A1%E3%83%A2%E3%83%AA%E6%96%AD%E7%89%87%E5%8C%96%E3%81%AA%E3%81%A9" class="mc-social-button a" onclick="return mc_social_buttons_open(this.href,550,258)"></a></li><li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmarycore.jp%2Fprog%2Fc-lang%2Frealloc%2F&t=%E3%80%90C%E8%A8%80%E8%AA%9E%E3%80%91realloc%E9%96%A2%E6%95%B0%EF%BD%9C%E6%AD%A3%E3%81%97%E3%81%84%E4%BD%BF%E3%81%84%E6%96%B9%E3%81%A8%E6%B3%A8%E6%84%8F%E7%82%B9+%E3%83%A1%E3%83%A2%E3%83%AA%E6%96%AD%E7%89%87%E5%8C%96%E3%81%AA%E3%81%A9" class="mc-social-button c" onclick="return mc_social_buttons_open(this.href,555,365)"></a></li><li><a target="_blank" href="http://b.hatena.ne.jp/add?mode=confirm&url=http%3A%2F%2Fmarycore.jp%2Fprog%2Fc-lang%2Frealloc%2F" class="mc-social-button d" onclick="return mc_social_buttons_open(this.href,550,330)"></a></li><li><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fmarycore.jp%2Fprog%2Fc-lang%2Frealloc%2F" class="mc-social-button e" onclick="return mc_social_buttons_open(this.href,400,440)"></a></li><li><a target="_blank" href="https://lineit.line.me/share/ui?url=http%3A%2F%2Fmarycore.jp%2Fprog%2Fc-lang%2Frealloc%2F" class="mc-social-button f" onclick="return mc_social_buttons_open(this.href,550,600)"></a></li></ul></div>
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+		    			<h1 id="realloc%E9%96%A2%E6%95%B0">realloc関数</h1>
+<p>reallocはメモリを再割り当て／再確保するための関数です。既存のメモリ領域のサイズを拡張／縮小する用途に利用します。</p>
+<pre><code class="code code-2 lang-default">#inlcude &lt;stdlib.h&gt;
+<span class="code-attr-keyword">void</span> *<span class="code-attr-method">realloc</span>(<span class="code-attr-keyword">void</span> *ptr, <span class="code-attr-type">size_t</span> size);</code></pre>
+<table>
+  <tr><td>第一引数</td><td>ptr</td><td>メモリオブジェクトへのポインタ（NULL可）</td></tr>
+  <tr><td>第二引数</td><td>size</td><td>変更後のメモリサイズ（バイト単位）</td></tr>
+  <tr><td>戻り値</td><td>──</td><td>再確保後のアドレス（失敗時NULL）</td></tr>
+</table>
+<h2 id="%E5%9F%BA%E6%9C%AC%E5%8B%95%E4%BD%9C">基本動作</h2>
+<p>第一引数に指定されたメモリブロックのサイズを、第二引数に指定されたメモリサイズへと拡張／縮小します。なお第一引数にNULLポインタが渡された場合には、<code class="inline-code inline-code-1">malloc</code>関数と同等の働きをします（<code class="inline-code inline-code-1">malloc(size)</code>相当）。</p>
+
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">void</span> *a = <span class="code-attr-method">realloc</span>(<span class="code-attr-keyword">NULL</span>, 1); <span class="code-attr-comment">// `malloc(1)`と同等（メモリ領域の確保）</span>
+<span class="code-attr-keyword">void</span> *b = <span class="code-attr-method">realloc</span>(a, 2);    <span class="code-attr-comment">// メモリ領域の拡張</span></code></pre>
+<h2 id="%E4%BB%95%E6%A7%98">仕様</h2>
+<p>reallocは第一引数に与えられたメモリオブジェクトを解放し、新たなオブジェクトへのポインタを戻り値として返します。その際、元オブジェクトの値は新たなオブジェクトへとコピーされます。</p>
+<p>ただし、第一引数に指定したポインタのアドレスと戻り値のアドレスが同一のアドレスになる場合もあります。また、メモリ確保の失敗時にはNULLが返されるため、reallocの使い方にはちょっとしたコツや注意が必要となります。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">void</span> *a = <span class="code-attr-method">realloc</span>(<span class="code-attr-keyword">NULL</span>, 1); <span class="code-attr-comment">// メモリ確保</span>
+<span class="code-attr-keyword">void</span> *b = <span class="code-attr-method">realloc</span>(a, 2);    <span class="code-attr-comment">// メモリ拡張</span>
+
+<span class="code-attr-keyword">if</span> (b == <span class="code-attr-keyword">NULL</span>) {      <span class="code-attr-comment-block">/* 失敗時 */</span>
+  <span class="code-attr-method">free</span>(a);            <span class="code-attr-comment">// 必要に応じて元のアドレスを手動で解放</span>
+  <span class="code-attr-method">exit</span>(<span class="code-attr-object"><span class="code-attr-keyword">EXIT_FAILURE</span></span>); <span class="code-attr-comment">// 必要に応じてプログラムを終了</span>
+}
+
+<span class="code-attr-keyword">if</span> (a != b) {         <span class="code-attr-comment-block">/* アドレスが変化した場合 */</span>
+  <span class="code-attr-comment">// memcpy(b, a, 1); // コピーは不要（既にコピー済み）</span>
+  <span class="code-attr-comment">// free(a);         // 元オブジェクトは解放済みのため不要</span>
+  a = b;              <span class="code-attr-comment">// 必要に応じてポインタ変数を更新</span>
+}
+
+<span class="code-attr-method">free</span>(a);</code></pre>
+<h3 id="%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E5%A4%89%E5%8C%96%E6%99%82%E3%81%AE%E6%8C%99%E5%8B%95">アドレス変化時の挙動</h3>
+<p>ポインタのアドレスが変化した場合には、元のオブジェクトは自動的に解放されます。その際、元オブジェクトのデータは移動先のオブジェクトへと自動的にコピーされます。</p>
+<h3 id="%E6%8B%A1%E5%BC%B5%E6%99%82%EF%BC%8F%E7%B8%AE%E5%B0%8F%E6%99%82%E3%81%AE%E6%8C%99%E5%8B%95">拡張時／縮小時の挙動</h3>
+<p>reallocによって拡張された分の領域には、初期値は指定されず、不定な値が充てられます。逆にサイズが縮小された場合には、縮んだ分の領域は不定なものとなります。</p>
+<h3 id="%E5%A4%B1%E6%95%97%E6%99%82%E3%81%AE%E6%8C%99%E5%8B%95">失敗時の挙動</h3>
+<p>再割り当てが失敗した場合には、元オブジェクトの値が変化することは無く、またオブジェクトが解放されることもありません。なおrealloc関数の戻り値は空ポインタ（NULL）となります。</p>
+<h1 id="%E3%83%A1%E3%83%A2%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%AF%E3%81%AE%E7%99%BA%E7%94%9F%E3%81%AB%E6%B3%A8%E6%84%8F%E3%81%99%E3%82%8B">メモリリークの発生に注意する</h1>
+<p>これはrealloc関数利用時に陥りがちな罠なのですが、realloc関数の戻り値を元オブジェクトのポインタ変数に対して即時代入してはいけません。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">void</span> *ptr = <span class="code-attr-method">malloc</span>(1);
+ptr = <span class="code-attr-method">realloc</span>(ptr, 2); <span class="code-attr-comment-block">/* 再確保が失敗したと仮定 */</span>
+ptr; <span class="code-attr-comment">// ptrはNULL</span>
+     <span class="code-attr-comment">// mallocで確保したアドレスにはもうアクセスできない</span>
+     <span class="code-attr-comment">// そのため元オブジェクトは解放されないままとなる</span>
+     <span class="code-attr-comment">// よってこのような記述はメモリリークの原因となる</span>
+<span class="code-attr-method">free</span>(ptr); <span class="code-attr-comment">// free(NULL)はエラーにならない</span>
+           <span class="code-attr-comment">// そのためメモリリークの発見も遅れやすい</span></code></pre>
+<p>realloc関数では、再割り当てが失敗した際には元オブジェクトのポインタが解放されないままとなります。上記の例ではポインタ変数<code class="inline-code inline-code-1">ptr</code>のアドレスは空ポインタとなるため、元オブジェクトへのアドレスが失われてしまいます。そのため上記のmalloc関数で確保したオブジェクトは解放されないままとなり、メモリリークが発生することになります。</p>
+<p>realloc関数利用時には必ず、一時変数を利用して空ポインタのチェックを行うようにし、再確保の失敗時には必要に応じて元オブジェクトを解放する必要があります<span class="s s-2">（解放せずにそのまま使い続けることも可能です）</span>。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">void</span> *ptr = <span class="code-attr-method">malloc</span>(1);
+<span class="code-attr-keyword">void</span> *tmp = <span class="code-attr-method">realloc</span>(ptr, 2);
+<span class="code-attr-keyword">if</span> (tmp == <span class="code-attr-keyword">NULL</span>) { <span class="code-attr-comment-block">/* 失敗時 */</span>
+  <span class="code-attr-method">free</span>(ptr); <span class="code-attr-comment">// 必要に応じて元オブジェクトを解放</span>
+  <span class="code-attr-keyword">return</span> <span class="code-attr-keyword">NULL</span>;
+} <span class="code-attr-keyword">else</span> {
+  ptr = tmp;
+}</code></pre>
+
+<h1 id="%E3%83%A1%E3%83%A2%E3%83%AA%E3%81%AE%E6%96%AD%E7%89%87%E5%8C%96%E3%82%92%E5%BC%95%E3%81%8D%E8%B5%B7%E3%81%93%E3%81%97%E3%82%84%E3%81%99%E3%81%84">メモリの断片化を引き起こしやすい</h1>
+<p>reallocでは、元のメモリのアドレスと、再確保後のメモリのアドレスが異なるアドレスになる場合があります。これは、realloc時にメモリの空きブロックが足りず、元のメモリブロックを十分な長さに拡張できないような場合に、より広いメモリ領域にメモリブロックが移動されるためです。</p>
+<p>その際、メモリブロックの余計な移動作業やコピーが発生するため、余計な処理コストの発生やパフォーマンスの低下に繋がるほか、頻繁な移動によってメモリの断片化（フラグメンテーション）を引き起こしやすくなる場合があります。また頻繁なreallocの利用は断片化の影響を受けやすいという懸念もあります。</p>
+<p>これらの問題を回避するには、事前に大きめのメモリサイズを確保し、再確保の回数を極力減らすような工夫が必要となります。</p>
+<h1 id="realloc%28ptr%2C%200%29%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">realloc(ptr, 0)について</h1>
+<p>realloc関数の第一引数に指定された元オブジェクトが空ポインタ以外の場合でかつ、第二引数のサイズに0が指定された場合の処理（<code class="inline-code inline-code-1">realloc(ptr, 0)</code>）について、以前は元オブジェクトに対する解放処理（<code class="inline-code inline-code-1">free(ptr)</code>）が働くと言われていましたが、現在では異なる挙動をとる場合があるため、誤って利用しないよう注意する必要があります。</p>
+<p>実際に、現在では処理系によって異なる挙動がとられています。手元のClangコンパイラでは同処理系における<code class="inline-code inline-code-1">malloc(0)</code>と同等の挙動を取るようです。元オブジェクトは解放されますが、戻り値はNULLではなく、新たに割り当てられたオブジェクトとなります。</p>
+
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">void</span> *a = <span class="code-attr-method">malloc</span>(1);
+<span class="code-attr-keyword">void</span> *b = <span class="code-attr-method">realloc</span>(a, 0);
+<span class="code-attr-method">assert</span>(b != <span class="code-attr-keyword">NULL</span> &amp;&amp; a != b);
+<span class="code-attr-method">free</span>(b);
+<span class="code-attr-method">free</span>(b); <span class="code-attr-comment">// error for object 0x0000000100403ab0</span>
+<span class="code-attr-method">free</span>(a); <span class="code-attr-comment">// error for object 0x0000000100402170</span></code></pre>
+<p>コードの移植性を考慮する場合、reallocの解放処理としての利用は極力避ける必要があります。</p>
+					</div><!-- .entry-content -->
+				
+		<div class="dbl-rc"><div><div style="font-size:90%;margin-bottom:5px;line-height:1.714285714">広告</div><style type="text/css">.slot_footer{width:300px;height:250px}@media (min-width:375px){.slot_footer{width:336px;height:280px}}@media (min-width:950px){.slot_footer{width:300px;height:250px}}@media (min-width:1075px){.slot_footer{width:336px;height:280px}}</style><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_footer" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="6809444154" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div><div><div style="font-size:90%;margin-bottom:5px;line-height:1.714285714;visibility:hidden">広告</div><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><style type="text/css">.slot_footer{width:300px;height:250px}@media (min-width:375px){.slot_footer{width:336px;height:280px}}@media (min-width:950px){.slot_footer{width:300px;height:250px}}@media (min-width:1075px){.slot_footer{width:336px;height:280px}}</style><ins class="adsbygoogle slot_footer" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="2202989148" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div></div><div style="clear:both"></div><style>.dbl-rc>div{width:50%;float:left}@media (max-width:950px){.dbl-rc>div:last-child{display:none}.dbl-rc>div{witdh:100%}}</style>				
+		<footer class="entry-meta" style="float: right;">
+			カテゴリー: <a href="http://marycore.jp/prog/c-lang/" rel="category tag">C言語</a> | タグ: <a href="http://marycore.jp/tag/tag-programming-basic/" rel="tag">基礎知識</a>, <a href="http://marycore.jp/tag/tag-programming-specification/" rel="tag">言語仕様</a>, <a href="http://marycore.jp/tag/tag-programming-detail/" rel="tag">詳細解説</a>, <a href="http://marycore.jp/tag/tag-programming-wisdom/" rel="tag">豆知識</a> | 投稿日: <a href="http://marycore.jp/prog/c-lang/realloc/" title="10:00" rel="bookmark"><time class="entry-date" datetime="2017-05-04T10:00:58+00:00">2017.05.04</time></a><span class="updated"> | 更新日: <a href="http://marycore.jp/prog/c-lang/realloc/" title="22:44" rel="bookmark"><time class="updated" datetime="2017-12-08T22:44:01+00:00">2017.12.08</time></a></span> | <span class="by-author">投稿者: <span class="author vcard" itemprop="author"><a class="url fn n" href="http://marycore.jp/author/marycore/" title="MaryCore の投稿をすべて表示" rel="author">MaryCore</a></span></span>								</footer><!-- .entry-meta -->
+		<div style="clear: both;"></div>
+	</article><!-- #post -->
+	
+				<nav class="nav-single">
+					<h3 class="assistive-text">投稿ナビゲーション</h3>
+					<span class="nav-previous"><a href="http://marycore.jp/prog/c-lang/here-document-in-c-and-cpp/" rel="prev"><span class="meta-nav">&larr;</span> C/C++のヒアドキュメント／複数行文字列【特殊な文字列リテラル】</a></span>
+					<span class="nav-next"><a href="http://marycore.jp/prog/c-lang/dangerous-gets-safely-gets/" rel="next">gets関数｜危険性と代替関数【gets_s/fgets/scanfによる代替処理】 <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				<div class="matched_content" style="margin: 16px 0; margin: 1.2857142857rem 0;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-5613714714878183" data-ad-slot="5313922550"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+				
+<div id="comments" class="comments-area">
+
+	
+	
+	
+</div><!-- #comments .comments-area -->
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+						<aside id="categoryrecents-2" class="widget mc_widget_category_recent_entries"><h3 class="widget-title">C言語</h3><ul><li><a href="http://marycore.jp/prog/c-lang/convert-number-to-binary-octal-decimal-hex-c-string/">数値を 2進数 8進数 10進数 16進数 文字列に変換する方法</a></li><li><a href="http://marycore.jp/prog/c-lang/copy-c-string/">文字列をコピーする方法【危険なstrcpy関数と安全な文字列複製】</a></li><li><a href="http://marycore.jp/prog/c-lang/string-strcpy-strncpy/">strcpy関数／strncpy関数【詳解｜危険性と注意点 strlcpyの脆弱性】</a></li><li><a href="http://marycore.jp/prog/c-lang/concat-c-string/">文字列を連結・結合する【strcatの危険性とsnprintfの安全性】</a></li><li><a href="http://marycore.jp/prog/c-lang/string-strcat-strncat/">strcat関数／strncat関数【完全解説｜危険性と注意点】</a></li><li><a href="http://marycore.jp/prog/c-lang/typedef-struct/">typedef struct による構造体の定義｜一般的な宣言との違いや目的</a></li><li><a href="http://marycore.jp/prog/c-lang/compound-literal/">複合リテラル【完全解説、生存期間、注意点、構造体／配列リテラル】</a></li><li><a href="http://marycore.jp/prog/c-lang/printf-format-substring/">文字列の一部を表示する｜部分文字列の出力【printf substringイディオム】</a></li><li><a href="http://marycore.jp/prog/c-lang/modulo-floating-point-number/">fmod関数｜float/double型の割り算の余りを求める方法【浮動小数点数の剰余】</a></li><li><a href="http://marycore.jp/prog/c-lang/convert-binary-octal-decimal-hex-string-to-number/">2進数 8進数 10進数 16進数 文字列を数値に変換する方法</a></li></ul><p class="mc_widget_category_recent_entries_more"><a href="http://marycore.jp/prog/c-lang/page/2/" target="_blank">もっと見る...</a></p></aside><aside id="text-3" class="widget widget_text"><h3 class="widget-title">スポンサーリンク</h3>			<div class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<style type="text/css">
+@media (min-width:600px) { .adslot_side { width: 160px; }
+@media (min-width:1000px) { .adslot_side { width: 300px; } }</style>
+<ins class="adsbygoogle adslot_side" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="8227805750" data-ad-format="auto"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+		</aside>		<aside id="mc-recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">最近の投稿</h3>		<ul>
+											<li>
+					<a href="http://marycore.jp/net/twitter-tips-special/">ツイッター表現辞典｜番外編【なう、にゃーん、尊い、その他の表現】</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/anime/wizardbarristers/">ウィザード・バリスターズ～弁魔士セシル【アニメ紹介・レビュー・感想】</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/society/bruised-princess/">プリンセス駅伝の感動ドラマに得体の知れない恐怖を感じた</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/irony/choco-freak/">森永チョコフレークと日清シスコを食べ比べたオタクの感想</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/c-lang/convert-number-to-binary-octal-decimal-hex-c-string/">【C言語】数値を 2進数 8進数 10進数 16進数 文字列に変換する方法</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/cpp/convert-number-to-binary-octal-decimal-hex-string/">C++ 数値を 2進数 8進数 10進数 16進数 文字列に変換する方法</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/irony/mawaru-takaya/">ラーメン店「回高屋」の読み方は？ 店舗数は？ チェーン店って本当？</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/think/human-rights-first/">レディーファーストは女性差別なのか｜盲目的善意と慈悲的差別</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/php/call-to-undefined-function/">【PHP】Fatal error: Call to undefined function f() の原因と対処</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/society/tokyo-volunteer-revolution/">五輪ボランティア批判と格差社会への不満｜オリンピックやりがい搾取</a>
+									</li>
+					</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">カテゴリー</h3>		<ul>
+	<li class="cat-item cat-item-31"><a href="http://marycore.jp/prog/cpp/" >C++</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://marycore.jp/prog/cocoa/" >Cocoa</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://marycore.jp/prog/c-lang/" >C言語</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://marycore.jp/affiliate/adsense/" >Googleアドセンス</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://marycore.jp/prog/css/" >HTML/CSS</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://marycore.jp/prog/js/" >JavaScript</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://marycore.jp/prog/mamp/" >MAMP</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://marycore.jp/news/" >News</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://marycore.jp/prog/objective-c/" >Objective-C</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://marycore.jp/prog/php/" >PHP</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://marycore.jp/prog/ruby/" >Ruby</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://marycore.jp/prog/swift/" >Swift</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://marycore.jp/wordpress/" >WordPress</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://marycore.jp/prog/xcode/" >Xcode &amp; Clang</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://marycore.jp/code/" >コード</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://marycore.jp/design/" >デザイン</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://marycore.jp/net/" >ネット文化</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://marycore.jp/mac/" >パソコン・Mac</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://marycore.jp/programmer/" >プログラマ</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://marycore.jp/coding/" >プログラミング／コーディング</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://marycore.jp/smart/" >ライフハック</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://marycore.jp/ascii-art/" >今週のAA</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://marycore.jp/yurume/" >今週の一言</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://marycore.jp/works/" >創作</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://marycore.jp/irony/" >戯言</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://marycore.jp/essay/" >日記・雑文</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://marycore.jp/anime/" >漫画・アニメ</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://marycore.jp/society/" >社会</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://marycore.jp/think/" >考察</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://marycore.jp/language/" >言語</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://marycore.jp/music/" >音楽</a>
+</li>
+		</ul>
+</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h3 class="widget-title">タグ</h3><div class="tagcloud"><a href="http://marycore.jp/tag/tag-it-culture/" class="tag-cloud-link tag-link-63 tag-link-position-1" style="font-size: 12.745762711864pt;" aria-label="IT教養 (29個の項目)">IT教養</a>
+<a href="http://marycore.jp/tag/tag-programming-technique/" class="tag-cloud-link tag-link-36 tag-link-position-2" style="font-size: 17.847457627119pt;" aria-label="テクニック (80個の項目)">テクニック</a>
+<a href="http://marycore.jp/tag/tag-programming-neta/" class="tag-cloud-link tag-link-29 tag-link-position-3" style="font-size: 16.661016949153pt;" aria-label="ネタ (63個の項目)">ネタ</a>
+<a href="http://marycore.jp/tag/tag-marketing/" class="tag-cloud-link tag-link-51 tag-link-position-4" style="font-size: 8pt;" aria-label="マーケティング (11個の項目)">マーケティング</a>
+<a href="http://marycore.jp/tag/tag-review/" class="tag-cloud-link tag-link-61 tag-link-position-5" style="font-size: 13.457627118644pt;" aria-label="レビュー (34個の項目)">レビュー</a>
+<a href="http://marycore.jp/tag/tag-programming-deal/" class="tag-cloud-link tag-link-43 tag-link-position-6" style="font-size: 18.322033898305pt;" aria-label="問題対処 (89個の項目)">問題対処</a>
+<a href="http://marycore.jp/tag/tag-programming-basic/" class="tag-cloud-link tag-link-38 tag-link-position-7" style="font-size: 20.576271186441pt;" aria-label="基礎知識 (137個の項目)">基礎知識</a>
+<a href="http://marycore.jp/tag/tag-tech-essay/" class="tag-cloud-link tag-link-52 tag-link-position-8" style="font-size: 16.067796610169pt;" aria-label="技術エッセイ (56個の項目)">技術エッセイ</a>
+<a href="http://marycore.jp/tag/tag-tech-column/" class="tag-cloud-link tag-link-34 tag-link-position-9" style="font-size: 16.779661016949pt;" aria-label="技術コラム (65個の項目)">技術コラム</a>
+<a href="http://marycore.jp/tag/tag-society/" class="tag-cloud-link tag-link-48 tag-link-position-10" style="font-size: 14.28813559322pt;" aria-label="文化社会 (40個の項目)">文化社会</a>
+<a href="http://marycore.jp/tag/tag-programming-methodology/" class="tag-cloud-link tag-link-39 tag-link-position-11" style="font-size: 17.491525423729pt;" aria-label="方法論 (75個の項目)">方法論</a>
+<a href="http://marycore.jp/tag/tag-daily/" class="tag-cloud-link tag-link-47 tag-link-position-12" style="font-size: 13.813559322034pt;" aria-label="日常 (36個の項目)">日常</a>
+<a href="http://marycore.jp/tag/tag-future/" class="tag-cloud-link tag-link-32 tag-link-position-13" style="font-size: 13.338983050847pt;" aria-label="未来考察 (33個の項目)">未来考察</a>
+<a href="http://marycore.jp/tag/tag-programming-specification/" class="tag-cloud-link tag-link-42 tag-link-position-14" style="font-size: 19.627118644068pt;" aria-label="言語仕様 (115個の項目)">言語仕様</a>
+<a href="http://marycore.jp/tag/tag-programming-detail/" class="tag-cloud-link tag-link-37 tag-link-position-15" style="font-size: 22pt;" aria-label="詳細解説 (182個の項目)">詳細解説</a>
+<a href="http://marycore.jp/tag/tag-programming-wisdom/" class="tag-cloud-link tag-link-40 tag-link-position-16" style="font-size: 21.050847457627pt;" aria-label="豆知識 (151個の項目)">豆知識</a></div>
+</aside><aside id="text-4" class="widget widget_text"><h3 class="widget-title">自作アプリ</h3>			<div class="textwidget"><h4 class="widget-sub-title">キーボード拡張アプリ</h4>
+<div style="margin-left: 12px; margin-left: 0.8571428571rem;"><a href="http://marycore.jp/mctap/" target="_blank">McTap</a></div>
+<h4 class="widget-sub-title">テキストエディタ</h4>
+<div style="margin-left: 12px; margin-left: 0.8571428571rem; margin-bottom: 6px; margin-bottom: 0.4285714286rem;"><a href="http://marycore.jp/apps/" target="_blank">McEditor</a></div></div>
+		</aside><aside id="text-7" class="widget widget_text"><h3 class="widget-title">寄付・支援</h3>			<div class="textwidget"><div style="margin:0 0 8px 0"><span>Amazon: </span><a class="inline-code-1" style="padding:4px 8px" href="http://goo.gl/R1E6WB" target="_blank">ほしい物リスト</a> <a class="inline-code-1" style="padding:4px 8px" href="http://goo.gl/8NYx4T" target="_blank">干し芋のリスト</a></div>
+<div style="margin:0 0 12px 0"><span>Bitcoin: <code class="inline-code inline-code-2 our-bitcoin-address" style="padding:4px 8px">32dzgrtFGQ1jDphJcu9iFozujbQ2JKYDXs</code></span></div>
+<div style="margin:0 0 8px 0"><a href="https://bitflyer.jp/?bf=q1by3zso" target="_blank"><img style="border-radius: unset; padding: 18px; background-color: #fff;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHUAAAB1AQAAAABYf5MRAAAAtElEQVR4AZzHoWEEQRTFMMNj7r/LB5c5JA38EROAUivgd75lGmQ9HJ2MKb7dhfR+pz2+VGha9wP+A+6vQh1W3/kmABvQ7/x0UqOx+yFwlOj9Rkk02P2Jk4i273zaGujQ3/3OaoZ7+CQIGtt3vuEGttX9ky0zhd/5pDKIenu2TVjf+aVsDfDpBdNMfucDMtfU3W85ghn77kdxOMC3N8JNf283asbDy1Aidj+guRL4zu9vKOAHABV0xOWkC7DVAAAAAElFTkSuQmCC"></a></div>
+</div>
+		</aside><aside id="mc_widget_214850853-2" class="widget widget_mc_widget_214850853"><h3 class="widget-title">よい物リスト</h3><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2F4797392584%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/51DVfjQ%2BP6L._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2F4797392584%2Fref%3Dnosim" target="_blank">やさしいC 第5版 (「やさしい」シリーズ)</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3DC%25E8%25A8%2580%25E8%25AA%259E%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FC%25E8%25A8%2580%25E8%25AA%259E%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3DC%25E8%25A8%2580%25E8%25AA%259E" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3DC%25E8%25A8%2580%25E8%25AA%259E%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">やさC 入門書</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2F4798030147%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/41NXXKmUQSL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2F4798030147%2Fref%3Dnosim" target="_blank">苦しんで覚えるC言語</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3DC%25E8%25A8%2580%25E8%25AA%259E%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FC%25E8%25A8%2580%25E8%25AA%259E%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3DC%25E8%25A8%2580%25E8%25AA%259E" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3DC%25E8%25A8%2580%25E8%25AA%259E%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">くるC 入門書</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2F4320026926%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/41W69WGATNL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2F4320026926%2Fref%3Dnosim" target="_blank">プログラミング言語C 第2版 ANSI規格準拠</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3DC%25E8%25A8%2580%25E8%25AA%259E%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FC%25E8%25A8%2580%25E8%25AA%259E%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3DC%25E8%25A8%2580%25E8%25AA%259E" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3DC%25E8%25A8%2580%25E8%25AA%259E%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">K&Rはまだ早い</div></div></div><div style="clear:both"></div></div></aside>					</div><!-- #secondary -->
+	</div><footer id="colophon" role="contentinfo"><div class="site-info">Copyright (C) 2012-2018 <a href="http://marycore.jp/" title="Think Difficult. (；･`д･´)">MaryCore</a>. All rights reserved.</div></footer></div>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-37354401-1','auto');ga('send','pageview');</script><script>
+(function(){var c=document.getElementById("site-navigation");if(c){var a=c.getElementsByTagName("button")[0];if(a){var b=c.getElementsByTagName("ul")[0];if(!b||!b.childNodes.length)return a.style.display="none";a.onclick=function(){-1===b.className.indexOf("nav-menu")&&(b.className="nav-menu");-1!==a.className.indexOf("toggled-on")?(a.className=a.className.replace(" toggled-on",""),b.className=b.className.replace(" toggled-on","")):(a.className+=" toggled-on",b.className+=" toggled-on")}}}})();</script>
+<script>function mc_social_buttons_open(a,w,h){open(a,'_blank','width='+w+',height='+h+',left='+(screen.availWidth-w)/2+',top='+(screen.availHeight-h)/2);return!1}</script>
+</body></html>

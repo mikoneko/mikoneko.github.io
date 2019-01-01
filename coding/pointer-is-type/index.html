@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<!--[if IE 7]><html class="ie ie7" lang="ja"><![endif]-->
+<!--[if IE 8]><html class="ie ie8" lang="ja"><![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!--><html lang="ja"><!--<![endif]-->
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>ポインタ型記法のススメ ─ int* p; int *p; 空白をどちらに挿入するか | MaryCore</title>
+<meta property="og:type" content="article"><meta property="og:site_name" content="MaryCore 言語知能総合研究所"><meta property="og:url" content="http://marycore.jp/coding/pointer-is-type/"><meta property="og:title" content="ポインタ型記法のススメ ─ int* p; int *p; 空白をどちらに挿入するか"><meta property="og:description" content="C言語におけるポインタ変数の書き方には複数の記法あります。 char* p = &quot;s&quot;; // ① charポインタ型の変数p ・・・"><!--[if lt IE 9]><script src="http://marycore.jp/wp/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script><![endif]-->
+<link rel='stylesheet' id='twentytwelve-style-css'  href='http://marycore.jp/wp/wp-content/themes/marycore/style.css?ver=4.9.9' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='http://marycore.jp/wp/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<link rel="canonical" href="http://marycore.jp/coding/pointer-is-type/" />
+</head>
+<body class="post-template-default single single-post postid-747 single-format-standard"><div id="page" class="hfeed site"><header id="masthead" class="site-header" role="banner"><hgroup><h1 class="site-title"><a href="http://marycore.jp/" title="ヽ( ・ω・)ノ Don&#039;t feel. THINK! ~ Presented by MaryCore ~" rel="home">MaryCore</a></h1></hgroup><nav id="site-navigation" class="main-navigation" role="navigation"><button class="menu-toggle">メニュー</button><a class="assistive-text" href="#content" title="コンテンツへ移動">コンテンツへ移動</a><div class="menu-%e3%83%a1%e3%83%8b%e3%83%a5%e3%83%bc-1-container"><ul id="menu-%e3%83%a1%e3%83%8b%e3%83%a5%e3%83%bc-1" class="nav-menu"><li id="menu-item-2763" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2763"><a title="McTap／キーボード拡張アプリ" href="http://marycore.jp/mctap/">新作ソフトウェア<sup class="badge-info-invert">New!</sup></a></li>
+<li id="menu-item-515" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-515"><a title="制作したアプリ／Our Applications" href="http://marycore.jp/apps/">アプリ</a></li>
+<li id="menu-item-86" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-86"><a title="サイトについて／About this site" href="http://marycore.jp/about/">サイトについて</a></li>
+<li id="menu-item-87" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-87"><a title="Contact／お問い合わせ" href="http://marycore.jp/contact/">お問い合わせ</a></li>
+<li id="menu-item-242" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-242"><a title="Sitemap／サイトマップ" href="http://marycore.jp/sitemap/">サイトマップ</a></li>
+<li id="menu-item-3180" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3180"><a target="_blank" href="https://cse.google.com:443/cse/publicurl?cx=009489372983289696163:xjk7xgk_hm4">検索</a></li>
+</ul></div></nav></header><div id="main" class="wrapper"><div style="margin-bottom: 18px; margin-bottom: 1.2857142857rem;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_header_00" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="5089572954" data-ad-format="horizontal"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div id="breadcrumb" class="breadcrumb"><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/" itemprop="url"><span itemprop="title">Home</span></a> › </div><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/coding/" itemprop="url"><span itemprop="title">プログラミング／コーディング</span></a></div></div>
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+						<article id="post-747" class="post-747 post type-post status-publish format-standard hentry category-coding tag-tag-it-culture tag-tag-tech-essay tag-tag-tech-column tag-tag-programming-methodology tag-tag-programming-specification tag-tag-programming-wisdom">
+				<header class="entry-header">
+									<h1 class="entry-title">ポインタ型記法のススメ ─ int* p; int *p; 空白をどちらに挿入するか</h1>
+			
+<style>.mc-social-buttons{font-family:Helvetica,Arial,sans-serif}.mc-social-buttons{margin-top:16px;margin-top:1.1428571429rem}.mc-social-buttons ul{margin:0;padding:0}.mc-social-buttons li{display:inline-block;margin:0 6px 16px 0;margin:0 0.4285714286rem 1.1428571429rem 0}.mc-social-buttons a{color:#f9f9ff;text-decoration:none}.mc-social-buttons a:visited{color:#f9f9ff}.mc-social-buttons a:hover{opacity:.7}.mc-social-button{padding:4px 6px;border-radius:3px;font-weight:700;font-size:10.5px;padding:0.2857142857rem 0.4285714286rem;border-radius:0.2142857143rem;font-size:.75rem}.a{background-color:rgba(27,149,224,0.9)}.a:after{content:'ツイート'}.c{background-color:rgba(66,103,178,0.9)}.c:after{content:'シェア'}.d{background-color:rgba(0,164,222,0.9)}.d:after{content:'Ｂ! クマ'}.e{background-color:rgba(219,68,55,0.9)}.e:after{content:'Ｇ＋'}.f{background-color:rgba(0,187,0,0.9)}.f:after{content:'LINE'}.c:before{content:"f";background-color:#f9f9ff;color:rgba(66,103,178,.9);border-radius:1px;padding:0 4px 0 6px;margin-right:3px;padding:0 0.2857142857rem 0 0.4285714286rem;margin-right:0.2142857143rem}.mc-social-buttons li:last-child{margin-right:0}@media print{.mc-social-buttons{display:none}}</style>
+<div class="mc-social-buttons"><ul><li><a target="_blank" href="https://twitter.com/share?url=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fpointer-is-type%2F&tw_p=tweetbutton&text=%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E8%A8%98%E6%B3%95%E3%81%AE%E3%82%B9%E3%82%B9%E3%83%A1+%E2%94%80+int%2A+p%3B+int+%2Ap%3B+%E7%A9%BA%E7%99%BD%E3%82%92%E3%81%A9%E3%81%A1%E3%82%89%E3%81%AB%E6%8C%BF%E5%85%A5%E3%81%99%E3%82%8B%E3%81%8B" class="mc-social-button a" onclick="return mc_social_buttons_open(this.href,550,258)"></a></li><li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fpointer-is-type%2F&t=%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E8%A8%98%E6%B3%95%E3%81%AE%E3%82%B9%E3%82%B9%E3%83%A1+%E2%94%80+int%2A+p%3B+int+%2Ap%3B+%E7%A9%BA%E7%99%BD%E3%82%92%E3%81%A9%E3%81%A1%E3%82%89%E3%81%AB%E6%8C%BF%E5%85%A5%E3%81%99%E3%82%8B%E3%81%8B" class="mc-social-button c" onclick="return mc_social_buttons_open(this.href,555,365)"></a></li><li><a target="_blank" href="http://b.hatena.ne.jp/add?mode=confirm&url=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fpointer-is-type%2F" class="mc-social-button d" onclick="return mc_social_buttons_open(this.href,550,330)"></a></li><li><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fpointer-is-type%2F" class="mc-social-button e" onclick="return mc_social_buttons_open(this.href,400,440)"></a></li><li><a target="_blank" href="https://lineit.line.me/share/ui?url=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fpointer-is-type%2F" class="mc-social-button f" onclick="return mc_social_buttons_open(this.href,550,600)"></a></li></ul></div>
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+		    			<p>C言語におけるポインタ変数の書き方には複数の記法あります。
+</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-type">char</span>* p = <span class="code-attr-string">"s"</span>; <span class="code-attr-comment">// ① charポインタ型の変数p</span>
+<span class="code-attr-type">char</span> *p = <span class="code-attr-string">"s"</span>; <span class="code-attr-comment">// ② char型のポインタ変数p</span>
+</code></pre>
+<pre class="alert alert-2">書き方や言い方が違うだけでいずれも全く同じ意味で同じ動作をします。</pre>
+<p>私自身はポインターの前にスペースを挿入する②<code class="inline-code inline-code-1">char *p</code>、いわゆる<b class="b b-2">ポインタ変数</b>記法を支持していますが、最近は①<code class="inline-code inline-code-1">char* p</code>の<b class="b b-2">ポインタ型</b>風の記法も悪くないと思うようになりました。そこで今一度ポインタ型記法の有効性を検証してみましょう。</p>
+<pre class="alert alert-3">ただし本来、ポインタは変数に対して与えられる概念であるため、アスタリスクは型側ではなく変数側に寄せるのが自然です。</pre>
+
+<h4 id="%E7%9B%AE%E6%AC%A1">目次</h4>
+<ul>
+  <li><a href="#%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E8%A8%98%E6%B3%95%E3%81%AE%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">ポインタ型記法のメリット</a></li>
+  <li><a href="#%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E8%A8%98%E6%B3%95%E3%81%AE%E3%83%87%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">ポインタ型記法のデメリット</a></li>
+  <li><a href="#%E3%81%9D%E3%82%82%E3%81%9D%E3%82%82%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E8%A8%98%E6%B3%95%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%82%8B%E4%BA%BA%E3%81%AF%E3%81%84%E3%82%8B%E3%81%AE%E3%81%8B">そもそもポインタ型記法を使ってる人はいるのか</a></li>
+  <li><a href="#%E6%9C%89%E5%90%8D%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A7%E3%81%AE%E4%BD%BF%E7%94%A8%E4%BE%8B">有名プロジェクトでの使用例</a></li>
+</ul>
+<div class="dbl-rc"><div class="content_toc content_toc_01" style="margin-bottom:18px;margin-bottom:1.2857142857rem"><style type="text/css">.slot_content_toc_01{width:300px;height:250px}@media (min-width:375px){.slot_content_toc_01{width:336px;height:280px}}@media (min-width:950px){.slot_content_toc_01{width:300px;height:250px}}@media (min-width:1075px){.slot_content_toc_01{width:336px;height:280px}}</style><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_content_toc_01" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="2558316956" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div><div class="content_toc content_toc_02" style="margin-bottom:18px;margin-bottom:1.2857142857rem"><style type="text/css">.slot_content_toc_02{width:300px;height:250px}@media (min-width:375px){.slot_content_toc_02{width:336px;height:280px}}@media (min-width:950px){.slot_content_toc_02{width:300px;height:250px}}@media (min-width:1075px){.slot_content_toc_02{width:336px;height:280px}}</style><ins class="adsbygoogle slot_content_toc_02" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="3352115982" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div></div><div style="clear:both"></div><style>.dbl-rc>div{width:50%;float:left}@media (max-width:950px){.dbl-rc>div:last-child{display:none}.dbl-rc>div{witdh:100%}}</style>
+<h1 id="%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E8%A8%98%E6%B3%95%E3%81%AE%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">ポインタ型記法のメリット</h1>
+<h2 id="%E6%96%87%E5%AD%97%E6%95%B0%E3%81%AE%E5%89%8A%E6%B8%9B%E3%81%8C%E3%81%A7%E3%81%8D%E3%82%8B">文字数の削減ができる</h2>
+<p>ポインタ型記法で統一すると文字数を若干削減できます。
+型キャスト時に有効な記法であることがわかります。
+</p>
+<pre><code class="code code-1 lang-objc"><span class="code-attr-comment">// ①</span>
+- (<span class="code-attr-object">String</span>*)<span class="code-attr-label">substring</span>:(<span class="code-attr-object">String</span>*)sub <span class="code-attr-label">start</span>:(<span class="code-attr-object">Array</span>&lt;<span class="code-attr-object">Number</span>*&gt;*)start <span class="code-attr-label">end</span>:(<span class="code-attr-object">Array</span>&lt;<span class="code-attr-object">Number</span>*&gt;*)end {
+  <span class="code-attr-object">String</span>* str = (<span class="code-attr-object">String</span>*)<span class="code-attr-method">that</span>(sub, start, end);
+  <span class="code-attr-keyword">return</span> <span class="code-attr-method">it</span>(str, <span class="code-attr-keyword">sizeof</span>(<span class="code-attr-keyword">void</span>*));
+}
+
+<span class="code-attr-comment">// ②</span>
+- (<span class="code-attr-object">String</span> *)<span class="code-attr-label">substring</span>:(<span class="code-attr-object">String</span> *)sub <span class="code-attr-label">start</span>:(<span class="code-attr-object">Array</span>&lt;<span class="code-attr-object">Number</span> *&gt; *)start <span class="code-attr-label">end</span>:(<span class="code-attr-object">Array</span>&lt;<span class="code-attr-object">Number</span> *&gt; *)end {
+  <span class="code-attr-object">String</span> *str = (<span class="code-attr-object">String</span> *)<span class="code-attr-method">that</span>(sub, start, end);
+  <span class="code-attr-keyword">return</span> <span class="code-attr-method">it</span>(str, <span class="code-attr-keyword">sizeof</span>(<span class="code-attr-keyword">void</span> *));
+}
+</code></pre>
+<h2 id="typedef%E3%81%A8%E3%81%AE%E7%9B%B8%E6%80%A7%E3%81%8C%E8%89%AF%E3%81%84">typedefとの相性が良い</h2>
+<pre><code class="code code-1 lang-c"><span class="code-attr-comment">// ①</span>
+<span class="code-attr-keyword">typedef</span> <span class="code-attr-keyword">const</span> <span class="code-attr-type">char</span>* string;
+<span class="code-attr-comment">// ②</span>
+<span class="code-attr-keyword">typedef</span> <span class="code-attr-keyword">const</span> <span class="code-attr-type">char</span> * string;
+<span class="code-attr-keyword">typedef</span> <span class="code-attr-keyword">const</span> <span class="code-attr-type">char</span> *string;
+</code></pre>
+<p>②の方法は四則演算の文法と似ており目的や意味が不明確となります。かといって<code class="inline-code inline-code-1">*string</code>を用いてしまうと誤釈や余計な解釈を引き起こすことになります。</p>
+<p>①の記法で統一すれば余計な混乱は無くなるでしょう。</p>
+<h2 id="const%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E3%81%A8%E3%81%AE%E7%9B%B8%E6%80%A7%E3%82%82%E8%89%AF%E3%81%84">constポインタとの相性も良い</h2>
+<p>また、constポインタを宣言する際も記法にブレや迷いが生じません。
+</p>
+<pre><code class="code code-1 lang-c"><span class="code-attr-comment">// ①</span>
+<span class="code-attr-type">char</span>* <span class="code-attr-keyword">const</span> string;
+<span class="code-attr-comment">// ②</span>
+<span class="code-attr-type">char</span> *<span class="code-attr-keyword">const</span> string;  <span class="code-attr-comment">// ポインタ変数記法が破綻している</span>
+<span class="code-attr-type">char</span> * <span class="code-attr-keyword">const</span> string; <span class="code-attr-comment">// 人によって書き方が異なる場合も</span>
+</code></pre>
+<p>同様に、Clangで用いられているNullability関連の属性との相性も良いです。
+</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-type">char</span>*__nonnull str;
+<span class="code-attr-type">char</span> *__nonnull str;
+</code></pre>
+<p>統一性や一貫性の観点で見ると、とても有効な記法であることがわかります。</p>
+<h2 id="%E5%AE%A3%E8%A8%80%E3%81%A8%E5%8F%82%E7%85%A7%E3%82%92%E5%8C%BA%E5%88%A5%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8%E3%81%8C%E3%81%A7%E3%81%8D%E3%82%8B">宣言と参照を区別することができる</h2>
+<p>ポインタの値を参照する際に間接演算子<code class="inline-code inline-code-1">*</code>を用いることがありますが、この記法はポインタ変数宣言時の記法と被っています。</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-object">Bar</span> <span class="code-attr-method">foobar</span>(<span class="code-attr-object">Foo</span> *foo) { <span class="code-attr-keyword">return</span> *foo; }
+</code></pre>
+<p><code class="inline-code inline-code-1">*foo</code>が二回出現しています。それぞれ異なる用途であるにもかかわらず、同一の記法が使われているのです。ソースをより直感的なものにしたいなら、以下のようにポインタ型スタイルで両者を区別させると良いでしょう。</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-object">Bar</span> <span class="code-attr-method">foobar</span>(<span class="code-attr-object">Foo</span>* foo) { <span class="code-attr-keyword">return</span> *foo; }
+</code></pre>
+<p>このような区別はソースコード検索時に大変有効です。<code class="inline-code inline-code-1">*foo</code>と検索すれば、ポインタ変数への値参照処理のみを抽出できますし、<code class="inline-code inline-code-1">* foo</code>と検索すれば仮引数宣言や変数宣言の箇所のみを抽出することが可能になるのです。</p>
+<h2 id="%E5%9E%8B%E6%83%85%E5%A0%B1%E3%81%A8%E3%82%B7%E3%83%B3%E3%83%9C%E3%83%AB%E5%90%8D%E3%81%8C%E7%B6%BA%E9%BA%97%E3%81%AB%E5%8C%BA%E5%88%86%E3%81%91%E3%81%95%E3%82%8C%E3%82%8B">型情報とシンボル名が綺麗に区分けされる</h2>
+<pre><code class="code code-1 lang-default"><span class="code-attr-type">char</span>* <span class="code-attr-method">read</span>(<span class="code-attr-type">char</span>* path) {} <span class="code-attr-comment">// ①</span>
+<span class="code-attr-type">char</span> *<span class="code-attr-method">read</span>(<span class="code-attr-type">char</span> *path) {} <span class="code-attr-comment">// ②</span>
+</code></pre>
+<p>ポインタ宣言子<code class="inline-code inline-code-1">*</code>はある種の型情報と言えなくもありません。それを型と切り離し、あまつさえ変数側に寄せるなど、不自然極まりない酷薄の所業と言えるでしょう。</p>
+<p>①の方法を取ることで、型情報（<code class="inline-code inline-code-1">char*</code>）とシンボル情報（<code class="inline-code inline-code-1">read</code>, <code class="inline-code inline-code-1">path</code>）を空白／スペースによって明確に区分けする事ができます。</p>
+<h3 id="%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">メリット</h3>
+
+<p>①の方法によって、関数名や変数名を認識しやすくなるというメリットが生まれます。変数名に付いていた余計なホクロ<code class="inline-code inline-code-1">*</code>が取れ、シンボル名がよりくっきり明瞭になりました。視認性の向上が期待できます。
+</p>
+<h3 id="%E3%83%87%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">デメリット</h3>
+<p>ただし、変数名を見ただけではそれがポインタ変数なのか、普通の変数なのかが直感的に理解できなくなくなるというデメリットが生まれます。従来の記法に慣れてしまったプログラマにとっては判読性が下がることになります。</p>
+
+<p>②のポインタ変数記法に慣れている熟練プログラマほど、これをデメリットと感じる割合は多くなるはずです。逆にJavaやSwift等のポインタ宣言子が存在しない言語に慣れているプログラマは、むしろ①の記法の方がしっくりとくるかもしれません。</p>
+<h3 id="%E3%81%A1%E3%81%AA%E3%81%BF%E3%81%AB">ちなみに</h3>
+<p>若干趣旨は異なりますが、Javaでは配列型の宣言を型側に記述することが推奨されています。
+</p>
+<pre><code class="code code-1 lang-java"><span class="code-attr-object">String</span>[] strings; <span class="code-attr-comment">// 推奨</span>
+<span class="code-attr-object">String</span> strings[]; <span class="code-attr-comment">// 型と配列宣言子が離れすぎている</span>
+</code></pre>
+<p>色々な言語に触れていると、やはり型情報とシンボル名は明確に区分けされていたほうが直感的だと感じることが多いです。</p>
+
+<h1 id="%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E8%A8%98%E6%B3%95%E3%81%AE%E3%83%87%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">ポインタ型記法のデメリット</h1>
+<pre><code class="code code-1 lang-c"><span class="code-attr-type">int</span>* a, b;
+<span class="code-attr-type">int</span> x = 0;
+a = &amp;x; <span class="code-attr-comment">// OK</span>
+b = &amp;x; <span class="code-attr-comment">// Error! "Assigning to 'int' from incompatible type 'int *'; remove &amp;"</span>
+</code></pre>
+<p>上記の変数<code class="inline-code inline-code-1">b</code>はポインタ変数ではなく通常のint型変数として解釈されています。コンパイラは<code class="inline-code inline-code-1">int*</code>宣言をポインタ型のintとしては解釈しません。<code class="inline-code inline-code-1">*</code>はあくまで変数<code class="inline-code inline-code-1">a</code>の物として解釈されるのです。
+</p>
+
+<pre><code class="code code-1 lang-default"><span class="code-attr-comment">// 理想</span>
+(<span class="code-attr-type">int</span>*) (a), (b);
+<span class="code-attr-comment">// 現実</span>
+(<span class="code-attr-type">int</span>)(* a), (b);
+</code></pre>
+<p>変数<code class="inline-code inline-code-1">b</code>をポインタにするためには以下の様に、変数bに対してもポインタ宣言子を用いる必要があります。
+</p>
+<pre><code class="code code-1 lang-c"><span class="code-attr-type">int</span>* a, *b;
+</code></pre>
+<p>アスタリスクによるポインタ宣言子はあくまで隣り合う変数に対してのみ適用されます。
+ポインタは型情報ではなく、あくまで変数に対して適用される概念なのです。</p>
+<pre class="alert alert-2">これは<b class="b b-1">ポインタが変数のアドレスを保持する変数</b>であるという解釈にも関係しています。</pre>
+<p>結局の所、C言語の世界には<code class="inline-code inline-code-1">int*</code>などというポインタ型は存在しないのです。
+</p>
+
+
+<h2 id="C%E8%A8%80%E8%AA%9E%E3%81%A7%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E3%82%92%E5%AE%9F%E7%8F%BE%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95">C言語でポインタ型を実現する方法</h2>
+<p>とは言っても、実はtypedefを用いることでポインタ型の表現が可能となります。</p>
+<pre><code class="code code-1 lang-c"><span class="code-attr-keyword">typedef</span> <span class="code-attr-type">int</span>* int_p;
+
+<span class="code-attr-comment">// a, b両方共int*型になる</span>
+int_p a, b;
+<span class="code-attr-type">int</span> x = 99;
+a = &amp;x; <span class="code-attr-comment">// OK!</span>
+b = &amp;x; <span class="code-attr-comment">// OK!</span>
+</code></pre>
+<p>またtypeofを用いる方法もあります。
+</p>
+<pre><code class="code code-1 lang-c"><span class="code-attr-method">typeof</span>(<span class="code-attr-type">int</span>*) a, b;
+
+<span class="code-attr-type">int</span> x = 99;
+a = &amp;x; <span class="code-attr-comment">// OK!</span>
+b = &amp;x; <span class="code-attr-comment">// OK!</span>
+</code></pre>
+<div class="kaerebalink-box" style="text-align:left;padding-bottom:20px;font-size:small;/zoom: 1;overflow: hidden;"><div class="kaerebalink-image" style="float:left;margin:0 15px 10px 0;"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB009HNF8P8%2Fref%3Dnosim" target="_blank" ><img src="https://images-fe.ssl-images-amazon.com/images/I/41PAZIT6MTL._SL160_.jpg" style="border: none;" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none;"></div><div class="kaerebalink-info" style="line-height:120%;/zoom: 1;overflow: hidden;"><div class="kaerebalink-name" style="margin-bottom:10px;line-height:120%"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB009HNF8P8%2Fref%3Dnosim" target="_blank" >コンパル OH・目玉くん</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none;"><div class="kaerebalink-powered-date" style="font-size:8pt;margin-top:5px;font-family:verdana;line-height:120%">posted with <a href="http://kaereba.com/" rel="nofollow" target="_blank">カエレバ</a></div></div><div class="kaerebalink-detail" style="margin-bottom:5px;"> コンパル     </div><div class="kaerebalink-link1" style="margin-top:10px;"><div class="shoplinkamazon" style="display:inline;margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E7%259B%25AE%25E7%258E%2589%25E9%25A2%25A8%25E8%2588%25B9%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank" >Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none;"></div><div class="shoplinkrakuten" style="display:inline;margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E7%259B%25AE%25E7%258E%2589%25E9%25A2%25A8%25E8%2588%25B9%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank" >楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none;"></div><div class="shoplinkseven" style="display:inline;margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E7%259B%25AE%25E7%258E%2589%25E9%25A2%25A8%25E8%2588%25B9%26searchKeywordFlg%3D1" target="_blank" ><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none;">7net</a></div></div></div><div class="booklink-footer" style="clear: left"></div></div>
+<h1 id="%E3%81%9D%E3%82%82%E3%81%9D%E3%82%82%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E8%A8%98%E6%B3%95%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%82%8B%E4%BA%BA%E3%81%AF%E3%81%84%E3%82%8B%E3%81%AE%E3%81%8B">そもそもポインタ型記法を使ってる人はいるのか</h1>
+<p>残念ながら、熟練のC言語使いでアスタリスクを型側に寄せる人達を全く見たことがありません。これは「ポインタは変数に対して適用される概念だ」という考えが根底にあるためだと思われます。</p>
+<p>ただし、C++使いにはポインタ型スタイルを採用する人たちが意外と多いように思います。そもそもC++では参照型の&を型側に<b class="b b-2">詰める</b>スタイルを取ることが多いため、ポインタにおいても同様のスタイルが自然と受け入れられているように思います<span class="s s-2">（これらの文化はC++のテンプレート機能とも深く関係しているように思える）</span>。
+</p>
+
+<pre><code class="code code-1 lang-cpp"><span class="code-attr-comment">// C++サンプル</span>
+<span class="code-attr-keyword">void</span> <span class="code-attr-method">foobar</span>(<span class="code-attr-object">Foo</span>&amp; foo, <span class="code-attr-object">Foo</span>* bar) {
+   <span class="code-attr-object">Bar</span>* a = static_cast&lt;<span class="code-attr-object">Bar</span>*&gt;(bar);
+   <span class="code-attr-object">Bar</span>&amp; b = static_cast&lt;<span class="code-attr-object">Bar</span>&amp;&gt;(foo);
+}
+
+template&lt;<span class="code-attr-keyword">class</span> T&gt; <span class="code-attr-keyword">void</span> <span class="code-attr-method">typeof_typename</span>(<span class="code-attr-type">int</span> v) {
+   T a, b;
+   a = &amp;v; <span class="code-attr-comment">// OK!</span>
+   b = &amp;v; <span class="code-attr-comment">// OK! // bはきちんとint*として解釈されている</span>
+}
+typeof_typename&lt;<span class="code-attr-type">int</span>*&gt;(9);
+</code></pre>
+
+<h1 id="%E6%9C%89%E5%90%8D%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A7%E3%81%AE%E4%BD%BF%E7%94%A8%E4%BE%8B">有名プロジェクトでの使用例</h1>
+<p>Linuxカーネル、Vim、Emacsのような古くからあるC言語系のプロジェクトでは従来のポインタ変数スタイルが採られています。</p>
+<p>逆にWebKitやBoost、人工知能関連の比較的新しいC++系プロジェクトではポインタ型記法が使われていることが多いようです。
+</p>
+
+<h2 id="%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%9E%8B%E6%B4%BE%EF%BC%88int%2A%20ptr%EF%BC%89">ポインタ型派（int* ptr）</h2>
+<ul>
+  <li>Boost, WebKit（C++）</li>
+  <li>Apple社のC++コード（JavaScriptCore、dyld、ld64）</li>
+  <li>Microsoft社のC++コード（ChakraCore、CNTK、WinObjC）</li>
+  <li>Google社のC++コード（GoogleTest、Skia）</li>
+  <li>その他C++プロジェクト（Chromium, Electron, Caffe, TensorFlow）</li>
+  <li>その他C言語プロジェクト（Kuin）</li>
+</ul>
+
+<h2 id="%E3%83%9D%E3%82%A4%E3%83%B3%E3%82%BF%E5%A4%89%E6%95%B0%E6%B4%BE%EF%BC%88int%20%2Aptr%EF%BC%89">ポインタ変数派（int *ptr）</h2>
+<ul>
+  <li>Linux, Git（C言語）</li>
+  <li>Vim, Emacs（C言語）</li>
+  <li>Ruby（C言語）※一部ポインタ型あり</li>
+  <li>GCC（C言語 ※C++コンパイラでビルドされている。C++のソースもあり）</li>
+  <li>LLVM, Swift（C++）※参照も変数側に寄せている</li>
+  <li>Google社のC++コード（mozc、Google-Glog ※一部ポインタ型あり）</li>
+  <li>Apple社のC言語コード（低レイヤー系のほとんど）</li>
+</ul>
+<h2 id="%E6%B7%B7%E5%9C%A8%E6%B4%BE">混在派</h2>
+<ul>
+  <li>HHVM（C++, Facebook社）</li>
+</ul>
+<p>HHVMについては、参照・ポインタ共に混在しています。ファイル単位ではなく、関数単位で混在しています。コントリビューターが非常に多いプロジェクトだという特徴があります。</p>
+<p>C言語系のプロジェクトは基本的にポインタ変数派が多く、C++系のプロジェクトではポインタ型派が多い傾向にあるようです。両者の違いは、やはり文化的な違いから来るもののようです。</p>
+<p>Rubyの場合はテストケース用のコードでポインタ型記法が使われている程度です。</p>
+<p>GCCは一部C++が取り入れられている特殊なプロジェクトなのですが、ポインタ変数とポインタ型記法が混在しています。ただし基本はポインタ変数のようです。</p>
+
+
+
+
+
+
+<h1 id="%E3%81%BE%E3%81%A8%E3%82%81">まとめ</h1>
+<ul>
+  <li>C言語の世界ではポインタ変数スタイルが基本</li>
+  <li>そのためポインタ型記法は非論理的な印象が強い</li>
+  <li>しかしポインタ型記法は実用面では合理的なメリットが多い</li>
+  <li>C++の世界ではポインタ型記法が取られることも多い</li>
+</ul>
+<h1 id="%E7%95%AA%E5%A4%96%E7%B7%A8">番外編</h1>
+<h2 id="%E3%83%80%E3%83%BC%E3%82%AF%E3%83%9B%E3%83%BC%E3%82%B9%E7%8F%BE%E3%82%8B">ダークホース現る</h2>
+<pre><code class="code code-1 lang-c"><span class="code-attr-type">char</span>*<span class="code-attr-method">read</span>(<span class="code-attr-type">char</span>*path){} <span class="code-attr-comment">// ③</span>
+</code></pre>
+<p>普段私がテキストエディタやターミナルで簡単なコードを書く際に使う記法です。
+慣れると意外と読みやすい事に気づきます。あまりオススメはしませんが。
+</p>					</div><!-- .entry-content -->
+				
+		<div><div style="font-size:90%;margin-bottom:5px;line-height:1.714285714">広告</div><style type="text/css">.slot_footer{width:300px;height:250px}@media (min-width:375px){.slot_footer{width:336px;height:280px}}@media (min-width:950px){.slot_footer{width:300px;height:250px}}@media (min-width:1075px){.slot_footer{width:336px;height:280px}}</style><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_footer" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="6809444154" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>				
+		<footer class="entry-meta" style="float: right;">
+			カテゴリー: <a href="http://marycore.jp/coding/" rel="category tag">プログラミング／コーディング</a> | タグ: <a href="http://marycore.jp/tag/tag-it-culture/" rel="tag">IT教養</a>, <a href="http://marycore.jp/tag/tag-tech-essay/" rel="tag">技術エッセイ</a>, <a href="http://marycore.jp/tag/tag-tech-column/" rel="tag">技術コラム</a>, <a href="http://marycore.jp/tag/tag-programming-methodology/" rel="tag">方法論</a>, <a href="http://marycore.jp/tag/tag-programming-specification/" rel="tag">言語仕様</a>, <a href="http://marycore.jp/tag/tag-programming-wisdom/" rel="tag">豆知識</a> | 投稿日: <a href="http://marycore.jp/coding/pointer-is-type/" title="14:26" rel="bookmark"><time class="entry-date" datetime="2016-01-31T14:26:35+00:00">2016.01.31</time></a><span class="updated"> | 更新日: <a href="http://marycore.jp/coding/pointer-is-type/" title="10:37" rel="bookmark"><time class="updated" datetime="2017-07-01T10:37:04+00:00">2017.07.01</time></a></span> | <span class="by-author">投稿者: <span class="author vcard" itemprop="author"><a class="url fn n" href="http://marycore.jp/author/marycore/" title="MaryCore の投稿をすべて表示" rel="author">MaryCore</a></span></span>								</footer><!-- .entry-meta -->
+		<div style="clear: both;"></div>
+	</article><!-- #post -->
+	
+				<nav class="nav-single">
+					<h3 class="assistive-text">投稿ナビゲーション</h3>
+					<span class="nav-previous"><a href="http://marycore.jp/coding/indent-using-three-spaces/" rel="prev"><span class="meta-nav">&larr;</span> ３スペース インデントのススメ｜空白３つコーディングへの考察</a></span>
+					<span class="nav-next"><a href="http://marycore.jp/coding/yoda-conditions/" rel="next">ヨーダ記法とは｜定数を左辺に記述するメリットと流行らない理由 <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				<div class="matched_content" style="margin: 16px 0; margin: 1.2857142857rem 0;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-5613714714878183" data-ad-slot="5313922550"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+				
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			「<span>ポインタ型記法のススメ ─ int* p; int *p; 空白をどちらに挿入するか</span>」への1件のフィードバック		</h2>
+
+		<ol class="commentlist">
+				<li class="pingback even thread-even depth-1" id="comment-189">
+		<p>ピンバック: <a href='http://marycore.jp/prog/objective-c/dark-side-objc-coding-standards/' rel='external nofollow' class='url'>ダークサイド Objective-C コーディング規約 | MaryCore</a> </p>
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+				<p class="nocomments">コメントは停止中です。</p>
+		
+	
+	
+</div><!-- #comments .comments-area -->
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+						<aside id="categoryrecents-2" class="widget mc_widget_category_recent_entries"><h3 class="widget-title">プログラミング／コーディング</h3><ul><li><a href="http://marycore.jp/coding/techniques-for-newtype/">コーディング時の型破りな記法やスタイル【プログラミング・テクニック】</a></li><li><a href="http://marycore.jp/coding/block-idioms/">ブロック文の活用テクニック集【コーディング／プログラミング】</a></li><li><a href="http://marycore.jp/coding/oss-style-llvm/">OSSのコーディング規約／コーディングスタイル（LLVM／Clang／Swift 編）</a></li><li><a href="http://marycore.jp/coding/oss-style-webkit/">OSSのコーディング規約／コーディングスタイル（WebKit 編）</a></li><li><a href="http://marycore.jp/coding/first-class-object-and-function/">第一級関数と第一級オブジェクト｜具体例と両者の違い【関数型プログラミング】</a></li><li><a href="http://marycore.jp/coding/new-syntax-ideas/">プログラミング言語に新たに取り入れて欲しい機能</a></li><li><a href="http://marycore.jp/coding/yoda-semantics/">ヨーダ記法の可能性に関する考察【ヨーダセマンティクスとプログラミング哲学】</a></li><li><a href="http://marycore.jp/coding/math-nan/">NaN（Not a Number）詳細解説【発生条件、定数定義、比較方法、判定方法】</a></li><li><a href="http://marycore.jp/coding/math-inf/">Inf（Infinity）詳細解説【発生条件、定数定義、比較方法、判定方法】</a></li><li><a href="http://marycore.jp/coding/assertion/">アサーションとは｜目的と活用例</a></li></ul><p class="mc_widget_category_recent_entries_more"><a href="http://marycore.jp/coding/page/2/" target="_blank">もっと見る...</a></p></aside><aside id="text-3" class="widget widget_text"><h3 class="widget-title">スポンサーリンク</h3>			<div class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<style type="text/css">
+@media (min-width:600px) { .adslot_side { width: 160px; }
+@media (min-width:1000px) { .adslot_side { width: 300px; } }</style>
+<ins class="adsbygoogle adslot_side" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="8227805750" data-ad-format="auto"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+		</aside>		<aside id="mc-recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">最近の投稿</h3>		<ul>
+											<li>
+					<a href="http://marycore.jp/net/twitter-tips-special/">ツイッター表現辞典｜番外編【なう、にゃーん、尊い、その他の表現】</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/anime/wizardbarristers/">ウィザード・バリスターズ～弁魔士セシル【アニメ紹介・レビュー・感想】</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/society/bruised-princess/">プリンセス駅伝の感動ドラマに得体の知れない恐怖を感じた</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/irony/choco-freak/">森永チョコフレークと日清シスコを食べ比べたオタクの感想</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/c-lang/convert-number-to-binary-octal-decimal-hex-c-string/">【C言語】数値を 2進数 8進数 10進数 16進数 文字列に変換する方法</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/cpp/convert-number-to-binary-octal-decimal-hex-string/">C++ 数値を 2進数 8進数 10進数 16進数 文字列に変換する方法</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/irony/mawaru-takaya/">ラーメン店「回高屋」の読み方は？ 店舗数は？ チェーン店って本当？</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/think/human-rights-first/">レディーファーストは女性差別なのか｜盲目的善意と慈悲的差別</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/php/call-to-undefined-function/">【PHP】Fatal error: Call to undefined function f() の原因と対処</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/society/tokyo-volunteer-revolution/">五輪ボランティア批判と格差社会への不満｜オリンピックやりがい搾取</a>
+									</li>
+					</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">カテゴリー</h3>		<ul>
+	<li class="cat-item cat-item-31"><a href="http://marycore.jp/prog/cpp/" >C++</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://marycore.jp/prog/cocoa/" >Cocoa</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://marycore.jp/prog/c-lang/" >C言語</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://marycore.jp/affiliate/adsense/" >Googleアドセンス</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://marycore.jp/prog/css/" >HTML/CSS</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://marycore.jp/prog/js/" >JavaScript</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://marycore.jp/prog/mamp/" >MAMP</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://marycore.jp/news/" >News</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://marycore.jp/prog/objective-c/" >Objective-C</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://marycore.jp/prog/php/" >PHP</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://marycore.jp/prog/ruby/" >Ruby</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://marycore.jp/prog/swift/" >Swift</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://marycore.jp/wordpress/" >WordPress</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://marycore.jp/prog/xcode/" >Xcode &amp; Clang</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://marycore.jp/code/" >コード</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://marycore.jp/design/" >デザイン</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://marycore.jp/net/" >ネット文化</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://marycore.jp/mac/" >パソコン・Mac</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://marycore.jp/programmer/" >プログラマ</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://marycore.jp/coding/" >プログラミング／コーディング</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://marycore.jp/smart/" >ライフハック</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://marycore.jp/ascii-art/" >今週のAA</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://marycore.jp/yurume/" >今週の一言</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://marycore.jp/works/" >創作</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://marycore.jp/irony/" >戯言</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://marycore.jp/essay/" >日記・雑文</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://marycore.jp/anime/" >漫画・アニメ</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://marycore.jp/society/" >社会</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://marycore.jp/think/" >考察</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://marycore.jp/language/" >言語</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://marycore.jp/music/" >音楽</a>
+</li>
+		</ul>
+</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h3 class="widget-title">タグ</h3><div class="tagcloud"><a href="http://marycore.jp/tag/tag-it-culture/" class="tag-cloud-link tag-link-63 tag-link-position-1" style="font-size: 12.745762711864pt;" aria-label="IT教養 (29個の項目)">IT教養</a>
+<a href="http://marycore.jp/tag/tag-programming-technique/" class="tag-cloud-link tag-link-36 tag-link-position-2" style="font-size: 17.847457627119pt;" aria-label="テクニック (80個の項目)">テクニック</a>
+<a href="http://marycore.jp/tag/tag-programming-neta/" class="tag-cloud-link tag-link-29 tag-link-position-3" style="font-size: 16.661016949153pt;" aria-label="ネタ (63個の項目)">ネタ</a>
+<a href="http://marycore.jp/tag/tag-marketing/" class="tag-cloud-link tag-link-51 tag-link-position-4" style="font-size: 8pt;" aria-label="マーケティング (11個の項目)">マーケティング</a>
+<a href="http://marycore.jp/tag/tag-review/" class="tag-cloud-link tag-link-61 tag-link-position-5" style="font-size: 13.457627118644pt;" aria-label="レビュー (34個の項目)">レビュー</a>
+<a href="http://marycore.jp/tag/tag-programming-deal/" class="tag-cloud-link tag-link-43 tag-link-position-6" style="font-size: 18.322033898305pt;" aria-label="問題対処 (89個の項目)">問題対処</a>
+<a href="http://marycore.jp/tag/tag-programming-basic/" class="tag-cloud-link tag-link-38 tag-link-position-7" style="font-size: 20.576271186441pt;" aria-label="基礎知識 (137個の項目)">基礎知識</a>
+<a href="http://marycore.jp/tag/tag-tech-essay/" class="tag-cloud-link tag-link-52 tag-link-position-8" style="font-size: 16.067796610169pt;" aria-label="技術エッセイ (56個の項目)">技術エッセイ</a>
+<a href="http://marycore.jp/tag/tag-tech-column/" class="tag-cloud-link tag-link-34 tag-link-position-9" style="font-size: 16.779661016949pt;" aria-label="技術コラム (65個の項目)">技術コラム</a>
+<a href="http://marycore.jp/tag/tag-society/" class="tag-cloud-link tag-link-48 tag-link-position-10" style="font-size: 14.28813559322pt;" aria-label="文化社会 (40個の項目)">文化社会</a>
+<a href="http://marycore.jp/tag/tag-programming-methodology/" class="tag-cloud-link tag-link-39 tag-link-position-11" style="font-size: 17.491525423729pt;" aria-label="方法論 (75個の項目)">方法論</a>
+<a href="http://marycore.jp/tag/tag-daily/" class="tag-cloud-link tag-link-47 tag-link-position-12" style="font-size: 13.813559322034pt;" aria-label="日常 (36個の項目)">日常</a>
+<a href="http://marycore.jp/tag/tag-future/" class="tag-cloud-link tag-link-32 tag-link-position-13" style="font-size: 13.338983050847pt;" aria-label="未来考察 (33個の項目)">未来考察</a>
+<a href="http://marycore.jp/tag/tag-programming-specification/" class="tag-cloud-link tag-link-42 tag-link-position-14" style="font-size: 19.627118644068pt;" aria-label="言語仕様 (115個の項目)">言語仕様</a>
+<a href="http://marycore.jp/tag/tag-programming-detail/" class="tag-cloud-link tag-link-37 tag-link-position-15" style="font-size: 22pt;" aria-label="詳細解説 (182個の項目)">詳細解説</a>
+<a href="http://marycore.jp/tag/tag-programming-wisdom/" class="tag-cloud-link tag-link-40 tag-link-position-16" style="font-size: 21.050847457627pt;" aria-label="豆知識 (151個の項目)">豆知識</a></div>
+</aside><aside id="text-4" class="widget widget_text"><h3 class="widget-title">自作アプリ</h3>			<div class="textwidget"><h4 class="widget-sub-title">キーボード拡張アプリ</h4>
+<div style="margin-left: 12px; margin-left: 0.8571428571rem;"><a href="http://marycore.jp/mctap/" target="_blank">McTap</a></div>
+<h4 class="widget-sub-title">テキストエディタ</h4>
+<div style="margin-left: 12px; margin-left: 0.8571428571rem; margin-bottom: 6px; margin-bottom: 0.4285714286rem;"><a href="http://marycore.jp/apps/" target="_blank">McEditor</a></div></div>
+		</aside><aside id="text-7" class="widget widget_text"><h3 class="widget-title">寄付・支援</h3>			<div class="textwidget"><div style="margin:0 0 8px 0"><span>Amazon: </span><a class="inline-code-1" style="padding:4px 8px" href="http://goo.gl/R1E6WB" target="_blank">ほしい物リスト</a> <a class="inline-code-1" style="padding:4px 8px" href="http://goo.gl/8NYx4T" target="_blank">干し芋のリスト</a></div>
+<div style="margin:0 0 12px 0"><span>Bitcoin: <code class="inline-code inline-code-2 our-bitcoin-address" style="padding:4px 8px">32dzgrtFGQ1jDphJcu9iFozujbQ2JKYDXs</code></span></div>
+<div style="margin:0 0 8px 0"><a href="https://bitflyer.jp/?bf=q1by3zso" target="_blank"><img style="border-radius: unset; padding: 18px; background-color: #fff;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHUAAAB1AQAAAABYf5MRAAAAtElEQVR4AZzHoWEEQRTFMMNj7r/LB5c5JA38EROAUivgd75lGmQ9HJ2MKb7dhfR+pz2+VGha9wP+A+6vQh1W3/kmABvQ7/x0UqOx+yFwlOj9Rkk02P2Jk4i273zaGujQ3/3OaoZ7+CQIGtt3vuEGttX9ky0zhd/5pDKIenu2TVjf+aVsDfDpBdNMfucDMtfU3W85ghn77kdxOMC3N8JNf283asbDy1Aidj+guRL4zu9vKOAHABV0xOWkC7DVAAAAAElFTkSuQmCC"></a></div>
+</div>
+		</aside><aside id="mc_widget_214850853-2" class="widget widget_mc_widget_214850853"><h3 class="widget-title">よい物リスト</h3><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01C0Q2WZC%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/51qiQZJeSmL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01C0Q2WZC%2Fref%3Dnosim" target="_blank">Ted2 ぬいぐるみXL プレミアム Part3</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3DTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3DTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3DTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">早くこれになりたい</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01F8M9CCQ%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/416xVIJvJLL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01F8M9CCQ%2Fref%3Dnosim" target="_blank">東プレ キーボード REALFORCE91UG-S 日本語カナなし 91keyテンキーレスUSB 静電容量無接点 昇華印刷 静音モデル ALL30g荷重 ブラック/グレー NG31BS</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3DREALFORCE%2520ALL30g%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FREALFORCE%2520ALL30g%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3DREALFORCE%2520ALL30g" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3DREALFORCE%2520ALL30g%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">ガチ勢が使うキーボード</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01MTEAV6O%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/51gOrE1xIkL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01MTEAV6O%2Fref%3Dnosim" target="_blank">【Amazon.co.jp限定】はごろも ポポロスパ7分 5kg 1.6mm</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">筋トレ用</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB00DCKF4OC%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/61fkY7esaZL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB00DCKF4OC%2Fref%3Dnosim" target="_blank">キユーピー あえるパスタソース6種 [カルボナーラ1袋(2食入)、たらこ1袋(2食入)、ミートソース フォン・ド・ヴォー1袋(2食入)、バジル1袋(2食入)、ツナマヨ1袋(2食入)、きのこの醤油バター1袋(2食入り)]</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">独身プログラマの強い味方</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB074C9NPDL%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/31ojuKtDw0L._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB074C9NPDL%2Fref%3Dnosim" target="_blank">アルタ 抱き枕 もっちり 床ごこち 添い寝  クマ ごろう AR0628121</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">休日の旦那</div></div></div><div style="clear:both"></div></div></aside>					</div><!-- #secondary -->
+	</div><footer id="colophon" role="contentinfo"><div class="site-info">Copyright (C) 2012-2018 <a href="http://marycore.jp/" title="Think Difficult. (；･`д･´)">MaryCore</a>. All rights reserved.</div></footer></div>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-37354401-1','auto');ga('send','pageview');</script><script>
+(function(){var c=document.getElementById("site-navigation");if(c){var a=c.getElementsByTagName("button")[0];if(a){var b=c.getElementsByTagName("ul")[0];if(!b||!b.childNodes.length)return a.style.display="none";a.onclick=function(){-1===b.className.indexOf("nav-menu")&&(b.className="nav-menu");-1!==a.className.indexOf("toggled-on")?(a.className=a.className.replace(" toggled-on",""),b.className=b.className.replace(" toggled-on","")):(a.className+=" toggled-on",b.className+=" toggled-on")}}}})();</script>
+<script>function mc_social_buttons_open(a,w,h){open(a,'_blank','width='+w+',height='+h+',left='+(screen.availWidth-w)/2+',top='+(screen.availHeight-h)/2);return!1}</script>
+</body></html>

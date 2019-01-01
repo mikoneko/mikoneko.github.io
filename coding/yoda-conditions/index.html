@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<!--[if IE 7]><html class="ie ie7" lang="ja"><![endif]-->
+<!--[if IE 8]><html class="ie ie8" lang="ja"><![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!--><html lang="ja"><!--<![endif]-->
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>ヨーダ記法とは｜定数を左辺に記述するメリットと流行らない理由 | MaryCore</title>
+<meta property="og:type" content="article"><meta property="og:site_name" content="MaryCore 言語知能総合研究所"><meta property="og:url" content="http://marycore.jp/coding/yoda-conditions/"><meta property="og:title" content="ヨーダ記法とは｜定数を左辺に記述するメリットと流行らない理由"><meta property="og:description" content="ヨーダ記法とは ヨーダ記法（Yoda notation）は、条件式の左辺に値や定数を記述するスタイルのことである。 // ヨーダ・・・"><!--[if lt IE 9]><script src="http://marycore.jp/wp/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script><![endif]-->
+<link rel='stylesheet' id='twentytwelve-style-css'  href='http://marycore.jp/wp/wp-content/themes/marycore/style.css?ver=4.9.9' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='http://marycore.jp/wp/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<link rel="canonical" href="http://marycore.jp/coding/yoda-conditions/" />
+</head>
+<body class="post-template-default single single-post postid-816 single-format-standard"><div id="page" class="hfeed site"><header id="masthead" class="site-header" role="banner"><hgroup><h1 class="site-title"><a href="http://marycore.jp/" title="ヽ( ・ω・)ノ Don&#039;t feel. THINK! ~ Presented by MaryCore ~" rel="home">MaryCore</a></h1></hgroup><nav id="site-navigation" class="main-navigation" role="navigation"><button class="menu-toggle">メニュー</button><a class="assistive-text" href="#content" title="コンテンツへ移動">コンテンツへ移動</a><div class="menu-%e3%83%a1%e3%83%8b%e3%83%a5%e3%83%bc-1-container"><ul id="menu-%e3%83%a1%e3%83%8b%e3%83%a5%e3%83%bc-1" class="nav-menu"><li id="menu-item-2763" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2763"><a title="McTap／キーボード拡張アプリ" href="http://marycore.jp/mctap/">新作ソフトウェア<sup class="badge-info-invert">New!</sup></a></li>
+<li id="menu-item-515" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-515"><a title="制作したアプリ／Our Applications" href="http://marycore.jp/apps/">アプリ</a></li>
+<li id="menu-item-86" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-86"><a title="サイトについて／About this site" href="http://marycore.jp/about/">サイトについて</a></li>
+<li id="menu-item-87" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-87"><a title="Contact／お問い合わせ" href="http://marycore.jp/contact/">お問い合わせ</a></li>
+<li id="menu-item-242" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-242"><a title="Sitemap／サイトマップ" href="http://marycore.jp/sitemap/">サイトマップ</a></li>
+<li id="menu-item-3180" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3180"><a target="_blank" href="https://cse.google.com:443/cse/publicurl?cx=009489372983289696163:xjk7xgk_hm4">検索</a></li>
+</ul></div></nav></header><div id="main" class="wrapper"><div style="margin-bottom: 18px; margin-bottom: 1.2857142857rem;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_header_00" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="5089572954" data-ad-format="horizontal"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div id="breadcrumb" class="breadcrumb"><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/" itemprop="url"><span itemprop="title">Home</span></a> › </div><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://marycore.jp/coding/" itemprop="url"><span itemprop="title">プログラミング／コーディング</span></a></div></div>
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+						<article id="post-816" class="post-816 post type-post status-publish format-standard hentry category-coding tag-tag-it-culture tag-tag-programming-technique tag-tag-programming-basic tag-tag-tech-column tag-tag-programming-methodology tag-tag-programming-specification tag-tag-programming-detail tag-tag-programming-wisdom">
+				<header class="entry-header">
+									<h1 class="entry-title">ヨーダ記法とは｜定数を左辺に記述するメリットと流行らない理由</h1>
+			
+<style>.mc-social-buttons{font-family:Helvetica,Arial,sans-serif}.mc-social-buttons{margin-top:16px;margin-top:1.1428571429rem}.mc-social-buttons ul{margin:0;padding:0}.mc-social-buttons li{display:inline-block;margin:0 6px 16px 0;margin:0 0.4285714286rem 1.1428571429rem 0}.mc-social-buttons a{color:#f9f9ff;text-decoration:none}.mc-social-buttons a:visited{color:#f9f9ff}.mc-social-buttons a:hover{opacity:.7}.mc-social-button{padding:4px 6px;border-radius:3px;font-weight:700;font-size:10.5px;padding:0.2857142857rem 0.4285714286rem;border-radius:0.2142857143rem;font-size:.75rem}.a{background-color:rgba(27,149,224,0.9)}.a:after{content:'ツイート'}.c{background-color:rgba(66,103,178,0.9)}.c:after{content:'シェア'}.d{background-color:rgba(0,164,222,0.9)}.d:after{content:'Ｂ! クマ'}.e{background-color:rgba(219,68,55,0.9)}.e:after{content:'Ｇ＋'}.f{background-color:rgba(0,187,0,0.9)}.f:after{content:'LINE'}.c:before{content:"f";background-color:#f9f9ff;color:rgba(66,103,178,.9);border-radius:1px;padding:0 4px 0 6px;margin-right:3px;padding:0 0.2857142857rem 0 0.4285714286rem;margin-right:0.2142857143rem}.mc-social-buttons li:last-child{margin-right:0}@media print{.mc-social-buttons{display:none}}</style>
+<div class="mc-social-buttons"><ul><li><a target="_blank" href="https://twitter.com/share?url=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fyoda-conditions%2F&tw_p=tweetbutton&text=%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%A8%E3%81%AF%EF%BD%9C%E5%AE%9A%E6%95%B0%E3%82%92%E5%B7%A6%E8%BE%BA%E3%81%AB%E8%A8%98%E8%BF%B0%E3%81%99%E3%82%8B%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88%E3%81%A8%E6%B5%81%E8%A1%8C%E3%82%89%E3%81%AA%E3%81%84%E7%90%86%E7%94%B1" class="mc-social-button a" onclick="return mc_social_buttons_open(this.href,550,258)"></a></li><li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fyoda-conditions%2F&t=%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%A8%E3%81%AF%EF%BD%9C%E5%AE%9A%E6%95%B0%E3%82%92%E5%B7%A6%E8%BE%BA%E3%81%AB%E8%A8%98%E8%BF%B0%E3%81%99%E3%82%8B%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88%E3%81%A8%E6%B5%81%E8%A1%8C%E3%82%89%E3%81%AA%E3%81%84%E7%90%86%E7%94%B1" class="mc-social-button c" onclick="return mc_social_buttons_open(this.href,555,365)"></a></li><li><a target="_blank" href="http://b.hatena.ne.jp/add?mode=confirm&url=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fyoda-conditions%2F" class="mc-social-button d" onclick="return mc_social_buttons_open(this.href,550,330)"></a></li><li><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fyoda-conditions%2F" class="mc-social-button e" onclick="return mc_social_buttons_open(this.href,400,440)"></a></li><li><a target="_blank" href="https://lineit.line.me/share/ui?url=http%3A%2F%2Fmarycore.jp%2Fcoding%2Fyoda-conditions%2F" class="mc-social-button f" onclick="return mc_social_buttons_open(this.href,550,600)"></a></li></ul></div>
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+		    			<h1 id="%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%A8%E3%81%AF">ヨーダ記法とは</h1>
+<p><b class="b b-2">ヨーダ記法（Yoda notation）</b>は、条件式の左辺に値や定数を記述するスタイルのことである。</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-comment">// ヨーダ記法</span>
+<span class="code-attr-keyword">if</span> (9 == value);
+
+<span class="code-attr-comment">// 通常の記法</span>
+<span class="code-attr-keyword">if</span> (value == 9);</code></pre>
+<p>従来「変数 is 定数」という形式で記述する所を、ヨーダ記法では「定数 is 変数」という逆の形式で記述する。この記法は「<b class="b b-2">ヨーダ条件式（Yoda conditions）</b>」や「<b class="b b-2">Left-hand comparisons（左側比較、左辺比較）</b>」と呼ばれることもある。</p>
+
+<p>ヨーダ記法の活用によって、比較処理と代入処理の誤用による問題を回避することができる。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-comment">// いずれも異なる動作となる</span>
+<span class="code-attr-keyword">if</span> (value == 9); <span class="code-attr-comment">// 比較処理</span>
+<span class="code-attr-keyword">if</span> (value = 9);  <span class="code-attr-comment">// 代入処理（おかしな処理だが動いてしまう）</span>
+
+<span class="code-attr-comment">// ヨーダ記法</span>
+<span class="code-attr-keyword">if</span> (9 = value);  <span class="code-attr-comment">// コンパイルエラーが発生する</span></code></pre>
+<p>ヨーダ記法を用いれば、比較演算子<code class="inline-code inline-code-1">==</code>を間違って代入演算子<code class="inline-code inline-code-1">=</code>として記述してしまっても、コンパイルエラーや実行時エラーが発生するため、コードのバグや問題の早期発見にも繋がる。</p>
+<p>ただしヨーダ記法は一般的な文法とは異なるため、読み手にとっては読みづらく、また違和感の強い記法に感じられる恐れがある。<!--不自然で非直感的な記述と受け止められやすいという特徴もある。--></p>
+<p>また現代では、条件式内での意図しない代入処理を検知するためのツールや仕組み、言語仕様が整備されており、ヨーダ記法の必要性は徐々に失われつつあるのが現状である。</p>
+<p>ヨーダ記法に関するより具体的かつ詳細な説明については、次節以降で行うこととする。</p>
+<hr>
+<p>本記事ではヨーダ記法の概要とそのメリット・デメリットについて説明する。</p>
+<p>左辺定数スタイルを考える上で、ヨーダ記法派の主張はもはやテクノロジーが発展した現代においては<b class="b b-2">無意味な主張</b>となってしまったように思うのだが、<b class="b b-1">スター・ウォーズ</b>的にタイムリーな話題でもあるため、これを機会に紹介したい。後半ではヨーダ記法の<b class="b b-2">意外なメリット</b>についても触れていく。</p>
+<h4 id="%E7%9B%AE%E6%AC%A1">目次</h4>
+<ul>
+  <li><a href="#%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AE%E7%94%B1%E6%9D%A5">ヨーダ記法の由来</a></li>
+  <li><a href="#%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AE%E4%BE%8B">ヨーダ記法の例</a></li>
+  <li><a href="#%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AE%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">ヨーダ記法のメリット</a></li>
+  <li><a href="#%E7%8F%BE%E4%BB%A3%E3%81%A7%E3%81%AF%E6%99%82%E4%BB%A3%E9%81%85%E3%82%8C%E3%81%AE%E8%A8%98%E6%B3%95">現代では時代遅れの記法</a></li>
+  <li><a href="#%E5%BF%85%E8%A6%81%E6%80%A7%E3%82%88%E3%82%8A%E3%82%82%E3%83%87%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88%E3%81%8C%E5%A4%A7%E3%81%8D%E3%81%84">必要性よりもデメリットが大きい</a></li>
+  <li><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E8%A8%80%E8%AA%9E%E3%81%A7%E3%81%AE%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">スクリプト言語でのメリット</a></li>
+  <li><a href="#%E7%8F%BE%E4%BB%A3%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">現代プログラミングにおけるメリット</a></li>
+  <li><a href="#%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AF%E6%B5%81%E8%A1%8C%E3%82%8B%E3%81%AE%E3%81%8B">ヨーダ記法は流行るのか</a></li>
+  <li><a href="#%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AE%E6%84%8F%E5%A4%96%E3%81%AA%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">ヨーダ記法の意外なメリット</a></li>
+</ul>
+<pre class="alert alert-2">なお本記事で言う「定数」とは、名前付き定数のことだけではなく、nullや、true、文字リテラル、数値リテラル等を含めたもののことを指す。</pre>
+<div class="dbl-rc"><div class="content_toc content_toc_01" style="margin-bottom:18px;margin-bottom:1.2857142857rem"><style type="text/css">.slot_content_toc_01{width:300px;height:250px}@media (min-width:375px){.slot_content_toc_01{width:336px;height:280px}}@media (min-width:950px){.slot_content_toc_01{width:300px;height:250px}}@media (min-width:1075px){.slot_content_toc_01{width:336px;height:280px}}</style><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_content_toc_01" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="2558316956" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div><div class="content_toc content_toc_02" style="margin-bottom:18px;margin-bottom:1.2857142857rem"><style type="text/css">.slot_content_toc_02{width:300px;height:250px}@media (min-width:375px){.slot_content_toc_02{width:336px;height:280px}}@media (min-width:950px){.slot_content_toc_02{width:300px;height:250px}}@media (min-width:1075px){.slot_content_toc_02{width:336px;height:280px}}</style><ins class="adsbygoogle slot_content_toc_02" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="3352115982" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div></div><div style="clear:both"></div><style>.dbl-rc>div{width:50%;float:left}@media (max-width:950px){.dbl-rc>div:last-child{display:none}.dbl-rc>div{witdh:100%}}</style>
+<h1 id="%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AE%E7%94%B1%E6%9D%A5">ヨーダ記法の由来</h1>
+<p>処理の目的を左辺に記述するこのスタイルは、俗に「ヨーダ記法」と呼ばれているが、これは映画「スターウォーズ」に登場する仙人「ヨーダ」が倒置法に似た特殊な文法で話すことに由来している。</p>
+<table>
+  <tr><td>一般的な表現法</td><td>我々で、シスを倒さねばならない。</td></tr>
+  <tr><td>倒置法</td><td>シスを倒さねばならない、我々で。</td></tr>
+</table>
+<aside class="double-amazon">
+<div class="link-box" style="text-align:left;padding-bottom:20px;font-size:small;/zoom: 1;overflow: hidden;"><div class="link-image" style="float:left;margin:0 15px 10px 0;"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01N5QYP91%2Fref%3Dnosim" target="_blank" ><img src="https://images-fe.ssl-images-amazon.com/images/I/41tjEi8Ah2L._SL160_.jpg" style="border: none;" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none;"></div><div class="link-info" style="line-height:120%;/zoom: 1;overflow: hidden;"><div class="link-name" style="margin-bottom:10px;line-height:120%"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01N5QYP91%2Fref%3Dnosim" target="_blank" >スター・ウォーズ ヨーダ 1/6スケール プラモデル</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none;"></div><div class="link-detail" style="margin-bottom:5px;"> バンダイ 2017-03-30    </div><div class="link-link1" style="margin-top:10px;"><div class="shoplinkamazon" style="display:inline;margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2583%25A8%25E3%2583%25BC%25E3%2583%2580%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank" >Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none;"></div><div class="shoplinkrakuten" style="display:inline;margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%25A8%25E3%2583%25BC%25E3%2583%2580%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank" >楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none;"></div><div class="shoplinkseven" style="display:inline;margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2583%25A8%25E3%2583%25BC%25E3%2583%2580%26searchKeywordFlg%3D1" target="_blank" ><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none;">7net</a></div></div></div><div class="booklink-footer" style="clear: left"></div></div>
+<div class="link-box" style="text-align:left;padding-bottom:20px;font-size:small;/zoom: 1;overflow: hidden;"><div class="link-image" style="float:left;margin:0 15px 10px 0;"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01GIKTJ34%2Fref%3Dnosim" target="_blank" ><img src="https://images-fe.ssl-images-amazon.com/images/I/51TDVB87D0L._SL160_.jpg" style="border: none;" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none;"></div><div class="link-info" style="line-height:120%;/zoom: 1;overflow: hidden;"><div class="link-name" style="margin-bottom:10px;line-height:120%"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01GIKTJ34%2Fref%3Dnosim" target="_blank" >コトブキヤ ARTFX+ STAR WARS ヨーダ &amp; R2-D2 ダゴバパック 1/10スケール PVC製 塗装済み簡易組立フィギュア</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none;"></div><div class="link-detail" style="margin-bottom:5px;"> 壽屋 2016-10-25    </div><div class="link-link1" style="margin-top:10px;"><div class="shoplinkamazon" style="display:inline;margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2583%25A8%25E3%2583%25BC%25E3%2583%2580%2520R2-D2%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank" >Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none;"></div><div class="shoplinkrakuten" style="display:inline;margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%25A8%25E3%2583%25BC%25E3%2583%2580%2520R2-D2%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank" >楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none;"></div><div class="shoplinkseven" style="display:inline;margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2583%25A8%25E3%2583%25BC%25E3%2583%2580%2520R2-D2%26searchKeywordFlg%3D1" target="_blank" ><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none;">7net</a></div><div style="margin-top:15px;">← この右のカメみたいな生物</div></div></div><div class="booklink-footer" style="clear: left"></div></div>
+<div style="clear:both"></div>
+</aside>
+<style>
+.double-amazon .link-box{float:left;width:50%}
+@media screen and (max-width:800px){.double-amazon .link-box{width:100%}}
+</style>
+<h1 id="%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AE%E4%BE%8B">ヨーダ記法の例</h1>
+<pre><code class="code code-1 lang-cpp"><span class="code-attr-keyword">if</span> (0 &gt; less);
+<span class="code-attr-keyword">if</span> (-1 != state);
+<span class="code-attr-keyword">if</span> (<span class="code-attr-object"><span class="code-attr-keyword">UTF8</span></span> == enco);
+<span class="code-attr-keyword">if</span> (<span class="code-attr-type">this</span> == *obj);
+<span class="code-attr-keyword">if</span> (<span class="code-attr-string">"Bob"</span> == name);
+<span class="code-attr-keyword">if</span> (<span class="code-attr-object">NotFound</span> != <span class="code-attr-method">find</span>());
+<span class="code-attr-keyword">if</span> (<span class="code-attr-type">false</span> === <span class="code-attr-type">this</span>.<span class="code-attr-method">isapen</span>());
+<span class="code-attr-keyword">while</span> (<span class="code-attr-type">null</span> != (line = <span class="code-attr-method">read</span>()));
+<span class="code-attr-keyword">if</span> (<span class="code-attr-object">Destroy</span> == <span class="code-attr-method">willOfForce</span>(we)) <span class="code-attr-method">free</span>(sith);
+<span class="code-attr-keyword">return</span> <span class="code-attr-character">'\n'</span> == ch || <span class="code-attr-character">'\r'</span> == ch;
+<span class="code-attr-keyword">return</span> <span class="code-attr-object">Strong</span> == vader-&gt;force;
+<span class="code-attr-keyword">return</span> E == m * <span class="code-attr-method">pow</span>(c, 2);
+<span class="code-attr-method">assert</span>(<span class="code-attr-object">Blue</span> == sky);</code></pre>
+<!-- <span class="code-attr-keyword">return</span> 1 &amp; bite; -->
+<p>ヨーダ記法のそれは要するに「B は A である」という文であり、日常生活でよく使われる「A は B である」とは大きく異なる。そのためヨーダ記法は<b class="b b-2">読みづらく不自然で直感的でない</b>と批判されることも多い。</p>
+<p>しかしヨーダ記法にはそれなりのメリットがある。</p>
+<h1 id="%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AE%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">ヨーダ記法のメリット</h1>
+<p>ヨーダ記法には<code class="inline-code inline-code-1">=</code>演算子と<code class="inline-code inline-code-1">==</code>演算子の誤用による問題を回避できるという利点がある。</p>
+<h2 id="IF%E6%96%87%E5%86%85%E3%81%A7%E3%81%AE%E8%AA%A4%E3%81%A3%E3%81%9F%E4%BB%A3%E5%85%A5%E3%82%92%E5%9B%9E%E9%81%BF%E3%81%A7%E3%81%8D%E3%82%8B">IF文内での誤った代入を回避できる</h2>
+<p>左辺派の主張としてよく聞くのが、以下の様な問題である。</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-type">int</span> <span class="code-attr-keyword">const</span> <span class="code-attr-object"><span class="code-attr-keyword">UTF8</span></span> = 4;
+<span class="code-attr-type">int</span> encoding = 9;
+<span class="code-attr-keyword">if</span> (encoding = <span class="code-attr-object"><span class="code-attr-keyword">UTF8</span></span>)
+   <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"done"</span>); <span class="code-attr-comment">// 出力されてしまう</span>
+</code></pre>
+<p>本来このコードは「<code class="inline-code inline-code-1">encoding</code>と<code class="inline-code inline-code-1">UTF8</code>の値が同じ場合のみ<code class="inline-code inline-code-1">done</code>を出力する」という趣旨で書かれたコードである。</p>
+<p>しかしながら、上記のコードでは常に<b class="b b-1">"done"</b>が出力されてしまう。上記if文内のコードが比較演算<code class="inline-code inline-code-1">==</code>ではなく代入処理<code class="inline-code inline-code-1">=</code>としてミスタイプされているためだ。</p>
+<p>if文実行時、<code class="inline-code inline-code-1">encoding</code>変数には定数<code class="inline-code inline-code-1">UTF8</code>の値<code class="inline-code inline-code-1">4</code>が代入され、if文は<code class="inline-code inline-code-1">encoding</code>変数への代入値を評価することになる。結果として条件式は真とみなされてしてしまうのだ。</p>
+<pre class="alert alert-2">C言語やJavaScriptの条件文は、0以外の結果や値を真と見なす。</pre>
+
+<p>本来意図していた動作をさせるためには<code class="inline-code inline-code-1">encoding == UTF8</code>と書かなければならない。</p>
+
+<p>このような意図しない動作は、プログラムの脆弱性や見つかりにくいバグを生み出す原因ともなるため、大変厄介な問題となっている。</p>
+
+<h2 id="%E3%81%9D%E3%81%93%E3%81%A7%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AE%E5%87%BA%E7%95%AA">そこでヨーダ記法の出番</h2>
+<p>これらの問題の対応策として、左辺派は以下の様な記法を推奨している。</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-keyword">if</span> (<span class="code-attr-object"><span class="code-attr-keyword">UTF8</span></span> == encoding) <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"done"</span>);
+</code></pre>
+<p>これなら<code class="inline-code inline-code-1">==</code>を間違って<code class="inline-code inline-code-1">=</code>と書いてしまってもコンパイラがエラーとして警告を発してくれる<span class="s s-2">（定数への代入はできないため）</span>。</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-comment">// !!!: Read-only variable is not assignable</span>
+<span class="code-attr-comment">// !!!: Cannot assign to variable 'UTF8' with const-qualified type 'const int'</span>
+<span class="code-attr-keyword">if</span> (<span class="code-attr-object"><span class="code-attr-keyword">UTF8</span></span> = encoding) <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"done"</span>);
+</code></pre>
+<p>ちなみにこのように定数を左辺に記述するスタイルにはヨーダ記法というなんとも有り難い俗称がある。なお日本では以前、このスタイルのことを左定数と呼ぶものもいた。</p>
+<h2 id="%E3%81%82%E3%81%AEWordPress%E3%82%82%E6%8E%A1%E7%94%A8">あのWordPressも採用</h2>
+<p>通販番組の謳い文句ではないが、世界的に有名なPHP製のブログシステム「WordPress」には、なんとこのヨーダ記法が取り入れられている。「あのWordPressも認めたコーディングテクニック」といったところだろうか。</p>
+
+<h2 id="Java%E3%81%AE%E4%B8%96%E7%95%8C%E3%81%A7%E3%82%82%E7%84%A1%E6%84%8F%E8%AD%98%E3%81%AE%E5%86%85%E3%81%AB%E4%BD%BF%E3%82%8F%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B">Javaの世界でも無意識の内に使われている</h2>
+<p>なお若干趣旨は異なるが、Javaの世界では安全性のためのイディオム（<code class="inline-code inline-code-1">"".equals(object)</code>）にある種のヨーダ記法が用いられている。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-object">String</span> encoding = <span class="code-attr-type">null</span>;
+<span class="code-attr-comment">// nullに対するメソッド呼び出しはクラッシュする（いわゆるヌルポ）</span>
+<span class="code-attr-keyword">if</span> (encoding.<span class="code-attr-method">equals</span>(<span class="code-attr-keyword">"UTF8"</span>));
+<span class="code-attr-comment">// クラッシュしない</span>
+<span class="code-attr-keyword">if</span> (<span class="code-attr-keyword">"UTF8"</span>.<span class="code-attr-method">equals</span>(encoding));
+</code></pre>
+<p>もっともJava 7以降では<code class="inline-code inline-code-1">boolean java.lang.Object.equals(Object a, Object b)</code>クラス・メソッドの利用が可能となっている。これによって前記のイディオムと同等の安全性が確保される。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-comment">// NullPointerExceptionが発生しない</span>
+<span class="code-attr-keyword">if</span> (<span class="code-attr-object">Object</span>.<span class="code-attr-method">equals</span>(<span class="code-attr-type">null</span>, <span class="code-attr-string">"UTF8"</span>));</code></pre>
+
+
+
+<h1 id="%E7%8F%BE%E4%BB%A3%E3%81%A7%E3%81%AF%E6%99%82%E4%BB%A3%E9%81%85%E3%82%8C%E3%81%AE%E8%A8%98%E6%B3%95">現代では時代遅れの記法</h1>
+<p>先人たちの知恵とも言えるヨーダ記法であるが、テクノロジーが発展した現代では、大したメリットの無い記法となってしまった。</p>
+<h2 id="%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%A9%E3%81%8C%E8%AD%A6%E5%91%8A%E3%81%97%E3%81%A6%E3%81%8F%E3%82%8C%E3%82%8B">コンパイラが警告してくれる</h2>
+<p>そもそも現代のコンパイラーの多くは条件式内での代入処理を事前に警告してくれる。</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-type">int</span> currentEncoding = <span class="code-attr-object"><span class="code-attr-keyword">SJIS</span></span>;
+
+<span class="code-attr-comment">// ???: Using the result of an assignment as a condition without parentheses</span>
+<span class="code-attr-keyword">if</span> (currentEncoding = <span class="code-attr-object"><span class="code-attr-keyword">UTF8</span></span>) <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"changed"</span>);
+</code></pre>
+<p>逆に、意図的に条件式内での代入処理を行いたい場合には、以下のように括弧を二重に記述する必要がある。</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-keyword">if</span> ((currentEncoding = <span class="code-attr-object"><span class="code-attr-keyword">UTF8</span></span>)) <span class="code-attr-method">printf</span>(<span class="code-attr-keyword">"changed"</span>);
+<span class="code-attr-keyword">if</span> ((next = node.<span class="code-attr-method">next</span>()));
+<span class="code-attr-keyword">while</span> ((line = file.<span class="code-attr-method">read</span>()));
+</code></pre>
+<h2 id="%E6%A7%8B%E6%96%87%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%84%E3%83%BC%E3%83%AB%E3%81%AB%E3%82%88%E3%82%8B%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%81%8C%E5%8F%AF%E8%83%BD">構文チェックツールによるチェックが可能</h2>
+<p>コンパイラ言語でなくとも、外部ツールを利用することで、条件式内での不正な代入処理を検知することが可能となっている。C言語の世界には古くから「Lint」と呼ばれるツールが存在している。現在ではプログラミング言語別に、様々な静的コード解析ツールが存在している。</p>
+<h2 id="%E6%9C%80%E8%BF%91%E3%81%AE%E8%A8%80%E8%AA%9E%E3%81%AF%E6%9D%A1%E4%BB%B6%E5%BC%8F%E3%81%AE%E8%A9%95%E4%BE%A1%E3%81%8C%E5%8E%B3%E6%A0%BC">最近の言語は条件式の評価が厳格</h2>
+<p>JavaやSwiftのような現代的な言語の多くは、そもそも<code class="inline-code inline-code-1">if (encoding = UTF8)</code>のような書き方ができなくなっている。これは条件式の評価基準がBoolean型の結果（true/false）に統一されているためである。ただ、この場合<code class="inline-code inline-code-1">if (that = false)</code>の問題は残ってしまうが、コンパイラ側のチェックを厳しく設定したり、<code class="inline-code inline-code-1">if (!that)</code>記法で統一したりすれば良いだけの話である。</p>
+<p>ちなみにSwift言語では代入演算子の戻り値がVoid型に統一されているため、上記の<code class="inline-code inline-code-1">if (that = false)</code>記法自体が無効となっている。</p>
+<p>インタプリタ言語であるPythonについても、式中での代入が制限されている。</p>
+<h2 id="%E5%AE%89%E5%85%A8%E6%80%A7%E3%81%82%E3%82%8A%E3%81%8D%E3%81%AE%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB">安全性ありきのスタイル</h2>
+<p>ヨーダ記法支持者の多くは、先程説明した<code class="inline-code inline-code-1">=</code>と<code class="inline-code inline-code-1">==</code>の誤用問題を回避する目的でヨーダ記法を推している。故に<code class="inline-code inline-code-1">&lt;</code>や<code class="inline-code inline-code-1">=&lt;</code>演算子ではこのヨーダ記法を用いる必要はない／用いるべきではないと主張するものも多い。実際にWordPressでは<code class="inline-code inline-code-1">==, !=, ===, !==</code>演算子に対するヨーダ記法の利用は推奨しているものの、<code class="inline-code inline-code-1">&lt;, &gt;, &lt;=, &gt;=</code>演算子に関しては、可読性の観点から利用を避けるよう指示している。Symfonyも同様にヨーダ記法を「==, !=, ===, !==」演算子への適用に留めている。</p>
+<p>ヨーダ記法には安全性以外のメリットが見出されていないという現状がある。</p>
+<h2 id="%E5%86%8D%E4%BB%A3%E5%85%A5%E3%82%92%E5%88%B6%E9%99%90%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8%E3%81%8C%E3%81%A7%E3%81%8D%E3%82%8B">再代入を制限することができる</h2>
+<p>多くのプログラミング言語では、一時変数や仮引数を定数として宣言することで、再代入が行えない変数や引数を定義することができる。</p>
+<p>実際にC/C++などの言語では、型名に対して「const 修飾子」を指定することで、再代入や値の変更が行えない定数を宣言することが可能となっている。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">void</span> <span class="code-attr-method">f</span>(<span class="code-attr-keyword">const</span> <span class="code-attr-type">int</span> a, <span class="code-attr-type">int</span> b) {
+   a = 1; <span class="code-attr-comment">// 再代入不可 Cannot assign to variable 'a' with const-qualified type 'const int'</span>
+   b = 2; <span class="code-attr-comment">// 再代入可　 constではないため</span>
+   <span class="code-attr-keyword">const</span> <span class="code-attr-type">int</span> c = b; <span class="code-attr-comment">// 一時変数を定数としてコピーすることも可能</span>
+   c = 3; <span class="code-attr-comment">// 再代入不可 Cannot assign to variable 'c' with const-qualified type 'const int'</span>
+}</code></pre>
+<p>現代的なプログラミング言語では、定数宣言用に<code class="inline-code inline-code-1">let</code>キーワード（Swift, Rust）や<code class="inline-code inline-code-1">val</code>キーワード（Kotlin, Scala）が用意されていることもある。またSwift言語では仮引数がデフォルトで定数として宣言される。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-type">let</span> a = <span class="code-attr-string">"a"</span>
+a = <span class="code-attr-string">"A"</span>    <span class="code-attr-comment">// Error: cannot assign to value: 'a' is a 'let' constant</span>
+
+<span class="code-attr-keyword">func</span> <span class="code-attr-method">f</span>(<span class="code-attr-label">a</span>: <span class="code-attr-object">String</span>) {
+   a = <span class="code-attr-string">"A"</span> <span class="code-attr-comment">// Error: cannot assign to value: 'a' is a 'let' constant</span>
+}</code></pre>
+<p>JavaScriptでは「const 宣言」を用いることで、ローカル内で有効な定数を宣言することができる。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">function</span> <span class="code-attr-method">f</span>() {
+   <span class="code-attr-keyword">const</span> a = <span class="code-attr-string">"a"</span>;
+   a = <span class="code-attr-string">"A"</span>;      <span class="code-attr-comment">// ERROR: 再代入できない</span>
+   <span class="code-attr-keyword">if</span> (a = <span class="code-attr-string">"A"</span>); <span class="code-attr-comment">// Uncaught TypeError: Assignment to constant variable.</span>
+   
+   <span class="code-attr-type">var</span> b = <span class="code-attr-string">"b"</span>;
+   b = <span class="code-attr-string">"B"</span>;      <span class="code-attr-comment">// OK: 再代入できてしまう</span>
+   <span class="code-attr-keyword">if</span> (b = <span class="code-attr-string">"2"</span>) <span class="code-attr-method">alert</span>(<span class="code-attr-string">"ハロー"</span>); <span class="code-attr-comment">// "ハロー"</span>
+}
+
+<span class="code-attr-keyword">function</span> <span class="code-attr-method">g</span>(a) {
+   <span class="code-attr-keyword">const</span> b = a;
+   <span class="code-attr-keyword">if</span> (b = <span class="code-attr-string">"B"</span>); <span class="code-attr-comment">// 再代入できない</span>
+   <span class="code-attr-keyword">if</span> (a = <span class="code-attr-string">"A"</span>); <span class="code-attr-comment">// 再代入できてしまう</span>
+}</code></pre>
+<h1 id="%E5%BF%85%E8%A6%81%E6%80%A7%E3%82%88%E3%82%8A%E3%82%82%E3%83%87%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88%E3%81%8C%E5%A4%A7%E3%81%8D%E3%81%84">必要性よりもデメリットが大きい</h1>
+<p>安全性を担保するためのテクニックとしては非常に有益なヨーダ記法であるが、現在ではメリットよりもデメリットのほうが上回ってしまっている。</p>
+<h2 id="%E3%81%9D%E3%82%82%E3%81%9D%E3%82%82%E7%9B%B4%E6%84%9F%E7%9A%84%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84">そもそも直感的ではない</h2>
+<p>人間が読むことを意識した場合、<code class="inline-code inline-code-1">定数 == 変数</code>は<code class="inline-code inline-code-1">目的語 ＋ 主語</code>という文法となり若干の違和感がある。日常生活では圧倒的に<code class="inline-code inline-code-1">主語 ＋ 目的語</code>の文法が使われているわけだから、<code class="inline-code inline-code-1">変数 == 定数</code>のほうが直感的だという主張は頷ける。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-comment">// 一般的な記法</span>
+<span class="code-attr-keyword">if</span> (he == <span class="code-attr-keyword">"tom"</span>); <span class="code-attr-comment">// 彼はトムです</span>
+<span class="code-attr-comment">// ヨーダ記法</span>
+<span class="code-attr-keyword">if</span> (<span class="code-attr-keyword">"tom"</span> == he); <span class="code-attr-comment">// トムは彼です ←（あまり聞き慣れない）</span>
+</code></pre>
+<pre class="alert alert-2">「トムは彼です」という言い方は「トムはどの人ですか？」という質問に対する受け答えとしてなら問題なく使えるが、一般的な他者紹介のケースでは滅多に使われることはないはずである。</pre>
+<p>コードを英文や文章のように記述するスタイルのコーディングでは、ヨーダ記法は違和感の強い記法に感じられやすいというデメリットもある。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">if</span> (<span class="code-attr-string">"tom"</span> is he) <span class="code-attr-keyword">print</span> <span class="code-attr-string">"Hello, Tom"</span>
+<span class="code-attr-keyword">if</span> (<span class="code-attr-object">Empty</span> is not it) <span class="code-attr-keyword">print</span> it</code></pre>
+<h2 id="%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E6%96%87%E8%84%88%E3%81%8C%E8%AA%AD%E3%81%BF%E5%8F%96%E3%82%8A%E3%81%A5%E3%82%89%E3%81%8F%E3%81%AA%E3%82%8B">コードの文脈が読み取りづらくなる</h2>
+
+<p>ヨーダ記法は、主語が右辺に記述されているために、複数の文の繋がりや流れが読み取りにくくなるという問題を引き起こす。</p>
+<p>一般的に、コードというのは、各行の前後の文脈やその流れを一つ一つ理解しながら読むものだが、ヨーダ記法を用いて書かれたコードは、この前後の文脈の紐付けや関係性の理解がしづらくなる傾向にある。これは前後の文脈を結びつけるための重要な要素<span class="s s-2">（この場合、変数や主語のこと）</span>が、右辺側に書かれてしまうことによって目につきにくくなってしまうためだ。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-type">int</span> value = <span class="code-attr-object"><span class="code-attr-keyword">INT_MAX</span></span>;
+value = -1 - value;
+<span class="code-attr-keyword">if</span> (<span class="code-attr-object"><span class="code-attr-keyword">INT_MIN</span></span> == value) <span class="code-attr-method">print</span>(<span class="code-attr-string">"same"</span>);</code></pre>
+<p>例えば、上記のコードの主体は変数<code class="inline-code inline-code-1">value</code>である。１行〜３行の処理はいずれもvalueに関連した処理であることがわかる。</p>
+<p>しかし３行目の処理だけは妙な違和感や、何か引っかかるものを感じるかもしれない。処理内で最初に目につく値が<code class="inline-code inline-code-1">value</code>ではなく<code class="inline-code inline-code-1">INT_MIN</code>になっているためだ。INT_MINを見た段階で、<b class="b b-1">３行の処理は１行〜２行の処理とは関係のない処理である</b>と解釈されてしまう恐れもある。</p>
+<p>実際に読み手は<code class="inline-code inline-code-1">INT_MIN</code>を見た段階で、前の行で意識していた<code class="inline-code inline-code-1">value</code>変数のことを一旦忘れて、頭を完全に切り替えてしまうかもしれない。短期記憶からvalueの情報を取り除き、まっさらな思考でその後の処理を読み解こうとしてしまうかもしれない。そしてその後の右辺でvalue変数を見かけて拍子抜けしてしまうのだ。「valueって何だったっけ？」となってしまうのだ。</p>
+<p>ヨーダ記法は前の文脈から引き継がれる前提や流れというものを崩してしまう、いわばジョーカーのような存在だとも言える。</p>
+<p>つまるところ、ヨーダ記法には<b class="b b-1">文法が不自然になる</b>という従来のデメリットに加えて、<b class="b b-1">文脈が不自然になる</b>／<b class="b b-1">文脈が読み取りにくくなる</b>というデメリットも持ち合わせているのである。</p>
+
+<p>なお、上記サンプルコードの不自然さは、以下の日本語文章の不自然さに近いものがある。</p>
+<pre><code class="code code-1 lang-default">① 彼はヨーダという名前です。フォースが使えるのは彼です。
+② 彼はヨーダという名前です。彼はフォースが使えます。
+
+<span class="code-attr-comment">// ↑ ②のほうが自然な流れで理解もしやすい</span>
+</code></pre>
+<p>前の文との繋がりを意識させるためには、②の例のように主語を最初に持ってくる必要がある。そのほうが文章の流れも自然となり理解もしやすくなる。</p>
+<p>人間が読みやすく理解のしやすいコードを意識する場合、やはり主語である変数は左辺に書くべきなのだ。</p>
+<p>ただし例外もある。「フォースが使えるのは誰か」という観点で以下の文章を読み解く場合、①の文章のほうが自然で理解のしやすい回答となるはずだ。</p>
+<pre><code class="code code-2 lang-default">① フォースが使えるのはヨーダです。
+② ヨーダはフォースが使えます。</code></pre>
+<p>そのため、ヨーダ記法は文脈に応じて適切に扱えば有益な記法ともなりうる。</p>
+<h2 id="%E5%B7%A6%E8%BE%BA%E5%80%A4%EF%BC%8F%E5%8F%B3%E8%BE%BA%E5%80%A4%E3%81%AE%E6%85%A3%E7%BF%92%E3%81%AB%E5%8F%8D%E3%81%99%E3%82%8B">左辺値／右辺値の慣習に反する</h2>
+<p>コンピュータ・サイエンスの世界には「左辺値」「右辺値」という考え方がある。そして世の中のプログラムの大半は左辺値は左側、右辺値は右側に記述するという慣習に沿って書かれている。</p>
+
+<pre><code class="code code-2 lang-default">左辺値 = 右辺値;
+左辺値 == 右辺値;
+</code></pre>
+<p>ヨーダ記法の利用はこの慣習や一貫性を壊すことに繋がる。</p>
+<pre><code class="code code-2 lang-default">左辺値 = 右辺値;
+右辺値 == 左辺値;
+</code></pre>
+<h2 id="%E6%BC%94%E7%AE%97%E5%AD%90%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%AD%E3%83%BC%E3%83%89%E3%81%AE%E6%89%8B%E9%96%93">演算子オーバーロードの手間</h2>
+<p>一般的な「演算子オーバーロード」の書き方ではヨーダ記法に対応できない。クラスの演算子オーバーロードでは、左辺側の型を基準にオーバーロード解決が行われるためだ。式の位置関係も厳格に区別される。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">struct</span> <span class="code-attr-object"><span class="code-attr-keyword">INT</span></span> {
+  <span class="code-attr-type">int</span> V;
+  <span class="code-attr-comment">// INT == int 式にしか対応できない。</span>
+  <span class="code-attr-type">bool</span> operator==(<span class="code-attr-type">int</span> v) { <span class="code-attr-keyword">return</span> V == v; }
+};
+
+<span class="code-attr-object"><span class="code-attr-keyword">INT</span></span>{1} == 2; <span class="code-attr-comment">// OK =&gt; INT{1}.operator==(2)</span>
+2 == <span class="code-attr-object"><span class="code-attr-keyword">INT</span></span>{1}; <span class="code-attr-comment">// エラー: Invalid operands to binary expression ('int' and 'INT')</span>
+</code></pre>
+<p>以下のように、ヨーダ記法向けに余計な定義を行う必要がある。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">struct</span> <span class="code-attr-object"><span class="code-attr-keyword">INT</span></span> { <span class="code-attr-type">int</span> V; };
+<span class="code-attr-type">bool</span> operator==(<span class="code-attr-keyword">const</span> <span class="code-attr-object"><span class="code-attr-keyword">INT</span></span>&amp; n, <span class="code-attr-type">int</span> v) { <span class="code-attr-keyword">return</span> n.V == v; }
+<span class="code-attr-type">bool</span> operator==(<span class="code-attr-type">int</span> v, <span class="code-attr-keyword">const</span> <span class="code-attr-object"><span class="code-attr-keyword">INT</span></span>&amp; n) { <span class="code-attr-keyword">return</span> v == n.V; }
+
+<span class="code-attr-object"><span class="code-attr-keyword">INT</span></span>{1} == 2;
+2 == <span class="code-attr-object"><span class="code-attr-keyword">INT</span></span>{1}; <span class="code-attr-comment">// ヨーダ記法OK</span>
+</code></pre>
+<h1 id="%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E8%A8%80%E8%AA%9E%E3%81%A7%E3%81%AE%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">スクリプト言語でのメリット</h1>
+<p>ならば、もう定数を左辺に記述する必要はないのではないかと思われるかも知れない。</p>
+
+<p>ただし、スクリプト言語や軽量言語を使うとなれば話は別だ。特にインタプリタ言語の中には条件式内の代入処理を警告しない物も多くある。またそもそもPHPやRubyなどの軽量言語では、if文内での変数代入をむしろテクニックとして活用することがある。</p>
+
+<h2 id="if%E6%96%87%E5%86%85%E3%81%A7%E3%81%AE%E5%A4%89%E6%95%B0%E4%BB%A3%E5%85%A5%E3%83%BB%E3%83%86%E3%82%AF%E3%83%8B%E3%83%83%E3%82%AF">if文内での変数代入・テクニック</h2>
+<pre><code class="code code-1 lang-php"><span class="code-attr-keyword">if</span> ($addr = <span class="code-attr-method">getPost</span>(<span class="code-attr-keyword">"address"</span>)) <span class="code-attr-comment">// ①</span>
+   echo <span class="code-attr-keyword">"Address: "</span> . $addr;
+</code></pre>
+<p>多くのスクリプト言語では上記のようなコードが書ける。
+<b class="b b-1">変数宣言</b>と<b class="b b-1">値チェック</b>が①のif文内一行で完結している点に注目してほしい。上記のコードは以下のコードと等価である。</p>
+<pre><code class="code code-1 lang-php">$addr = <span class="code-attr-method">getPost</span>(<span class="code-attr-keyword">"address"</span>);
+<span class="code-attr-keyword">if</span> ($addr)
+   echo <span class="code-attr-keyword">"Address: "</span> . $addr;
+</code></pre>
+<p>本来二行に分けて書かなければならない処理を一行にまとめる事ができるため、チェック項目の多い業務アプリ開発やモニターの小さな開発環境（ノートPC、零細企業）では非常に重宝するテクニックである。</p>
+<h3 id="%E3%81%97%E3%81%8B%E3%81%97%E6%AC%A0%E7%82%B9%E3%82%82">しかし欠点も</h3>
+<p>しかし、以下の記法との区別が付きにくくなるという欠点がある。</p>
+<pre><code class="code code-1 lang-default"><span class="code-attr-keyword">if</span> ($addr == <span class="code-attr-method">getPost</span>(<span class="code-attr-keyword">"address"</span>)) <span class="code-attr-comment">// ②</span>
+   echo <span class="code-attr-keyword">"Address: "</span> . $addr;
+</code></pre>
+<p>ここでいう<code class="inline-code inline-code-1">$addr</code>はすでに宣言されている変数のことである。その変数の値をgetPost関数由来の右辺値と比較しているわけだが、前回の ① のようなコードと混在すると紛らわしくなる。開発チームによってはこの紛らわしさを回避するために先ほどの ① の記法自体を認めない所もあるくらいだ。</p>
+
+<h3 id="%E4%B8%A1%E8%A8%98%E6%B3%95%E3%81%AE%E5%8C%BA%E5%88%A5%E3%81%8C%E6%98%8E%E7%A2%BA%E3%81%AB%E3%81%AA%E3%82%8B">両記法の区別が明確になる</h3>
+<p>しかしどうだろう、以下のように（関数呼び出し == 変数）や（定数 == 変数）の記法で統一すれば両者の紛らわしさは完全に払拭され、① のテクニックも躊躇なく使えるようになる。</p>
+<pre><code class="code code-1 lang-php"><span class="code-attr-keyword">if</span> (<span class="code-attr-method">getPost</span>(<span class="code-attr-keyword">"address"</span>) == $addr)
+   echo <span class="code-attr-keyword">"Address: "</span> . $addr;
+   
+<span class="code-attr-keyword">if</span> ($_POST[<span class="code-attr-keyword">"age"</span>] == $age)
+   echo <span class="code-attr-keyword">"Age: "</span> . $age;
+</code></pre>
+<p>なんとヨーダ記法には両記法の区別を明確にする意外な効果があったのだ。</p>
+<pre class="alert alert-2"><code class="inline-code inline-code-1">$_POST["age"] = $age</code>による代入処理の危険性は残るが、この点は静的コード解析でどうにでもなる。<br>ここで重要なのは、似たような記法をヨーダ記法によって区別することができたという点である。</pre>
+<p>ヨーダ記法には多様性を実現するための隠れた可能性が備わっていたのである。</p>
+
+<h1 id="%E7%8F%BE%E4%BB%A3%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">現代プログラミングにおけるメリット</h1>
+
+<p>現代のプログラミングでは、メソッドチェーンの多用や略称を用いない厳格な命名規則によって、コードの横幅が広くなる傾向にある。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">if</span> (<span class="code-attr-type">self</span>.<span class="code-attr-method">getPost</span>(<span class="code-attr-string">"main-form"</span>).<span class="code-attr-method">getInput</span>(<span class="code-attr-string">"title"</span>).<span class="code-attr-method">toString</span>() != <span class="code-attr-string">""</span>);</code></pre>
+<p>上記のようなコードは意外と読みづらい。なかなか結論にたどり着かない長ったらしいコードであり、何をしたいコードなのかが、ぱっと見では理解できない。左辺の<code class="inline-code inline-code-1"> != ""</code>まで読んでやっと全体像が掴めるような構成になっている。実に効率の悪い一文である。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-keyword">if</span> (<span class="code-attr-string">""</span> != <span class="code-attr-type">self</span>.<span class="code-attr-method">getPost</span>(<span class="code-attr-string">"main-form"</span>).<span class="code-attr-method">getInput</span>(<span class="code-attr-string">"title"</span>).<span class="code-attr-method">toString</span>());</code></pre>
+<p>しかし上記コードのように、ヨーダ記法を用いて結論を先に示すことで「どんな処理をしたいコードなのか」を早期に明確に示す事ができる。右辺のコードもこの結論（<code class="inline-code inline-code-1">"" !=</code>）を前提に読み解くことができるため、読解性の向上や可読性の向上が期待できる。</p>
+<p>ヨーダ記法にはコードの目的を明確化するための意外な活用方法があったのである。ノイズたる大きな主語への理解を後回しにすることで、コードの本質をより優先的に示すことができるというわけである。ヨーダ記法によって文章をより抽象的なものとして捉えることができる。</p>
+<pre class="alert alert-2">関連： <a href="http://marycore.jp/coding/constant-is-variable/#%E7%B5%90%E8%AB%96%E3%82%92%E5%85%88%E3%81%AB%E6%9B%B8%E3%81%8F%E3%81%93%E3%81%A8%E3%81%AE%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88" target="_blank">ヨーダ記法のススメ - #結論を先に書くことのメリット</a></pre>
+<p>もっとも、一時変数をこまめに活用することで複雑な比較処理を避けることもできる。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-object">String</span> title = <span class="code-attr-type">self</span>.<span class="code-attr-method">getPost</span>(<span class="code-attr-string">"main-form"</span>).<span class="code-attr-method">getInput</span>(<span class="code-attr-string">"title"</span>).<span class="code-attr-method">toString</span>();
+<span class="code-attr-keyword">if</span> (title != <span class="code-attr-string">""</span>);</code></pre>
+<p>また今回のようなヨーダ記法の活用方法には、目的語と述語のセットが主語から極端に離れてしまうという別の問題もある。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-comment">// メインフォームの性別《主語》が女性なら《述語》</span>
+<span class="code-attr-keyword">if</span> (<span class="code-attr-method">getPost</span>(<span class="code-attr-string">"main-form"</span>).<span class="code-attr-method">getInteger</span>(<span class="code-attr-string">"sex"</span>) == <span class="code-attr-keyword">FEMALE</span>);
+
+<span class="code-attr-comment">// 女性なら《述語》（メインフォームの性別《主語》が）</span>
+<span class="code-attr-keyword">if</span> (<span class="code-attr-keyword">FEMALE</span> == <span class="code-attr-method">getPost</span>(<span class="code-attr-string">"main-form"</span>).<span class="code-attr-method">getInteger</span>(<span class="code-attr-string">"sex"</span>));</code></pre>
+<p>この場合も一時変数による名前付けが有効な対処となる。</p>
+<pre><code class="code code-2 lang-default"><span class="code-attr-comment">// 対処方法１</span>
+<span class="code-attr-object">Integer</span> sex = <span class="code-attr-method">getPost</span>(<span class="code-attr-string">"main-form"</span>).<span class="code-attr-method">getInteger</span>(<span class="code-attr-string">"sex"</span>);
+<span class="code-attr-keyword">if</span> (<span class="code-attr-keyword">FEMALE</span> == sex);
+
+<span class="code-attr-comment">// 対処方法２（C/C++）</span>
+<span class="code-attr-keyword">const</span> <span class="code-attr-object">Integer</span> sex = <span class="code-attr-method">getPost</span>(<span class="code-attr-string">"main-form"</span>).<span class="code-attr-method">getInteger</span>(<span class="code-attr-string">"sex"</span>);
+<span class="code-attr-keyword">if</span> (sex == <span class="code-attr-keyword">FEMALE</span>);
+<span class="code-attr-keyword">if</span> (sex = <span class="code-attr-keyword">FEMALE</span>); <span class="code-attr-comment">// 一時変数を定数として宣言すれば適切なエラーに繋がる</span></code></pre>
+
+
+
+<h2 id="%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%B8%E3%81%AE%E6%9C%9F%E5%BE%85">ヨーダ記法への期待</h2>
+<p>現代プログラミングではメソッドチェーンや、ラムダ式、関数型プログラミングの乱用によってコードのセマンティクスが複雑化しやすい傾向にあり、今後はこの問題への対応が大きな課題となっていくと考えられる。</p>
+<p>一時変数の利用やサブルーチン化はその問題への対処として有効ではあるが、今後はこれらに加えて、ヨーダ記法の特性にも注目したいところである。</p>
+
+<h1 id="%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AF%E6%B5%81%E8%A1%8C%E3%82%8B%E3%81%AE%E3%81%8B">ヨーダ記法は流行るのか</h1>
+<p>ヨーダ記法が受け入れられない主な要因は<a href="#%E5%BF%85%E8%A6%81%E6%80%A7%E3%82%88%E3%82%8A%E3%82%82%E3%83%87%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88%E3%81%8C%E5%A4%A7%E3%81%8D%E3%81%84"># 必要性よりもデメリットが大きい</a>で既に述べた。ここではヨーダ記法をより実践的な世界に当てはめて考えてみる。</p>
+<p>ヨーダ記法は、先程の軽量言語の世界では非常に有効な発想になりえるものの、静的な型付け言語とIDEが主流の現代では当面の間は流行らないと思われる。というのも、定数を左辺に記述するスタイルはIDEの入力支援が受けづらい。</p>
+<pre><code class="code code-1 lang-c"><span class="code-attr-keyword">if</span> (align == <span class="code-attr-object">TextAlignLeft</span>) {}
+</code></pre>
+<p>上記のコードを書く際、高性能なIDEは<code class="inline-code inline-code-1">align == </code>と入力した時点で、左辺の変数に対応する定数<code class="inline-code inline-code-1">TextAlignLeft</code>や<code class="inline-code inline-code-1">TextAlignRight</code>をサジェスト／自動補完してくれる。逆に<code class="inline-code inline-code-1">TextAlignLeft == </code>と入力した際に変数<code class="inline-code inline-code-1">align</code>をサジェストしてくれるIDEは稀である。</p>
+<p>そもそもヨーダ記法の場合は<code class="inline-code inline-code-1">TextAlignLeft</code>を手入力する手間がある。IDEによってはインテリセンス機能によって<code class="inline-code inline-code-1">tal</code>から<code class="inline-code inline-code-1">TextAlignLeft</code>をサジェストしてくれるものもあるが、Swift言語のように定数に対して名前空間とその推論をサポートしている言語では<code class="inline-code inline-code-1">.Left</code>や<code class="inline-code inline-code-1">.Right</code>等の省略記法を用いることが多く、またこの記法は左辺側でのサジェストがまだ弱い。</p>
+
+<p>IDEの入力支援を意識した場合、ヨーダ記法はいろいろと面倒なのである。
+IDEがより賢くなり、ヨーダ記法への対応も意識されるようになれば、状況は変わるかもしれない。</p>
+
+<h1 id="%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AE%E6%84%8F%E5%A4%96%E3%81%AA%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">ヨーダ記法の意外なメリット</h1>
+<p>一つ目の意外なメリットは「<a href="#%E4%B8%A1%E8%A8%98%E6%B3%95%E3%81%AE%E5%8C%BA%E5%88%A5%E3%81%8C%E6%98%8E%E7%A2%BA%E3%81%AB%E3%81%AA%E3%82%8B"># 両記法の区別が明確になる</a>」で既に取り上げている。ヨーダ記法は多様性を実現するためのメカニズムにもなり得るというという話であった。</p>
+<p>「<a href="#%E7%8F%BE%E4%BB%A3%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88"># 現代プログラミングにおけるメリット</a>」についても一読の価値がある。こちらはヨーダ記法の活用によって、処理の目的を明確化することができるようになる、というメリットが示されている。</p>
+<p>その他、ヨーダ記法に関するメリットや可能性については、以下の記事の内容が参考になるかもしれない。</p>
+<pre class="alert alert-2">関連： <a href="http://marycore.jp/coding/yoda-semantics/" target="_blank">ヨーダ記法の可能性【ヨーダセマンティクスとプログラミング哲学】</a></pre>
+<h1 id="%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AF%E4%BA%BA%E3%81%A8%E7%94%A8%E9%80%94%E3%82%92%E9%81%B8%E3%81%B6">ヨーダ記法は人と用途を選ぶ</h1>
+これまで挙げてきたメリットをメリットと感じるプログラマはごく少数かもしれない。これは結局の所、好みと用途の問題なのである。「<b class="b b-2">結果に注目するか、要因に注目するか</b>」によって意見が分かれるはずだ。</p>
+
+<pre class="alert alert-2">チェック処理の多い業務ソフトウェア開発や、構文解析・データ解析プログラムの開発ではこのヨーダー記法によるメリットを受けやすいと感じる。</pre>
+<pre class="alert alert-2">またヨーダ記法が用いられたソースコードは、初めて読む際には違和感を感じやすいが、二回目以降にコードを保守ないしデバッグする際には、目的の処理を見つけ出しやすいと感じることがある。ヨーダ記法は、読み慣れたコードの中から目的の処理を見つけ出す作業に適しているように思える。</pre>
+
+<h1 id="%E3%83%A8%E3%83%BC%E3%83%80%E8%A8%98%E6%B3%95%E3%81%AF%E7%B5%90%E6%9E%9C%E3%81%AB%E6%B3%A8%E7%9B%AE%E3%81%99%E3%82%8B%E9%9A%9B%E3%81%AB%E7%9C%9F%E3%81%AE%E5%A8%81%E5%8A%9B%E3%82%92%E7%99%BA%E6%8F%AE%E3%81%99%E3%82%8B">ヨーダ記法は結果に注目する際に真の威力を発揮する</h1>
+<p>ヨーダ記法は比較処理の結果の部分に注目する際に大変有効な記法となる。この「結果に注目する」という考え方については以下の記事でより深く考察されているため参考にされたい。</p>
+<pre class="alert alert-2">関連: <a href="http://marycore.jp/coding/constant-is-variable/" target="_blank">ヨーダ記法のススメ ─ 比較対象を左辺に記述するメリット </a></pre>					</div><!-- .entry-content -->
+				
+		<div><div style="font-size:90%;margin-bottom:5px;line-height:1.714285714">広告</div><style type="text/css">.slot_footer{width:300px;height:250px}@media (min-width:375px){.slot_footer{width:336px;height:280px}}@media (min-width:950px){.slot_footer{width:300px;height:250px}}@media (min-width:1075px){.slot_footer{width:336px;height:280px}}</style><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle slot_footer" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="6809444154" data-ad-format="auto"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>				
+		<footer class="entry-meta" style="float: right;">
+			カテゴリー: <a href="http://marycore.jp/coding/" rel="category tag">プログラミング／コーディング</a> | タグ: <a href="http://marycore.jp/tag/tag-it-culture/" rel="tag">IT教養</a>, <a href="http://marycore.jp/tag/tag-programming-technique/" rel="tag">テクニック</a>, <a href="http://marycore.jp/tag/tag-programming-basic/" rel="tag">基礎知識</a>, <a href="http://marycore.jp/tag/tag-tech-column/" rel="tag">技術コラム</a>, <a href="http://marycore.jp/tag/tag-programming-methodology/" rel="tag">方法論</a>, <a href="http://marycore.jp/tag/tag-programming-specification/" rel="tag">言語仕様</a>, <a href="http://marycore.jp/tag/tag-programming-detail/" rel="tag">詳細解説</a>, <a href="http://marycore.jp/tag/tag-programming-wisdom/" rel="tag">豆知識</a> | 投稿日: <a href="http://marycore.jp/coding/yoda-conditions/" title="23:59" rel="bookmark"><time class="entry-date" datetime="2016-02-23T23:59:07+00:00">2016.02.23</time></a><span class="updated"> | 更新日: <a href="http://marycore.jp/coding/yoda-conditions/" title="20:10" rel="bookmark"><time class="updated" datetime="2018-06-26T20:10:29+00:00">2018.06.26</time></a></span> | <span class="by-author">投稿者: <span class="author vcard" itemprop="author"><a class="url fn n" href="http://marycore.jp/author/marycore/" title="MaryCore の投稿をすべて表示" rel="author">MaryCore</a></span></span>								</footer><!-- .entry-meta -->
+		<div style="clear: both;"></div>
+	</article><!-- #post -->
+	
+				<nav class="nav-single">
+					<h3 class="assistive-text">投稿ナビゲーション</h3>
+					<span class="nav-previous"><a href="http://marycore.jp/coding/pointer-is-type/" rel="prev"><span class="meta-nav">&larr;</span> ポインタ型記法のススメ ─ int* p; int *p; 空白をどちらに挿入するか</a></span>
+					<span class="nav-next"><a href="http://marycore.jp/coding/constant-is-variable/" rel="next">ヨーダ記法のススメ ─ 比較対象を左辺に記述するメリット <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				<div class="matched_content" style="margin: 16px 0; margin: 1.2857142857rem 0;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-5613714714878183" data-ad-slot="5313922550"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+				
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			「<span>ヨーダ記法とは｜定数を左辺に記述するメリットと流行らない理由</span>」への1件のフィードバック		</h2>
+
+		<ol class="commentlist">
+				<li class="pingback even thread-even depth-1" id="comment-192">
+		<p>ピンバック: <a href='http://marycore.jp/coding/constant-is-variable/' rel='external nofollow' class='url'>ヨーダ記法のススメ 〜比較対象を左辺に記述するメリット〜 | MaryCore</a> </p>
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+				<p class="nocomments">コメントは停止中です。</p>
+		
+	
+	
+</div><!-- #comments .comments-area -->
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+						<aside id="categoryrecents-2" class="widget mc_widget_category_recent_entries"><h3 class="widget-title">プログラミング／コーディング</h3><ul><li><a href="http://marycore.jp/coding/techniques-for-newtype/">コーディング時の型破りな記法やスタイル【プログラミング・テクニック】</a></li><li><a href="http://marycore.jp/coding/block-idioms/">ブロック文の活用テクニック集【コーディング／プログラミング】</a></li><li><a href="http://marycore.jp/coding/oss-style-llvm/">OSSのコーディング規約／コーディングスタイル（LLVM／Clang／Swift 編）</a></li><li><a href="http://marycore.jp/coding/oss-style-webkit/">OSSのコーディング規約／コーディングスタイル（WebKit 編）</a></li><li><a href="http://marycore.jp/coding/first-class-object-and-function/">第一級関数と第一級オブジェクト｜具体例と両者の違い【関数型プログラミング】</a></li><li><a href="http://marycore.jp/coding/new-syntax-ideas/">プログラミング言語に新たに取り入れて欲しい機能</a></li><li><a href="http://marycore.jp/coding/yoda-semantics/">ヨーダ記法の可能性に関する考察【ヨーダセマンティクスとプログラミング哲学】</a></li><li><a href="http://marycore.jp/coding/math-nan/">NaN（Not a Number）詳細解説【発生条件、定数定義、比較方法、判定方法】</a></li><li><a href="http://marycore.jp/coding/math-inf/">Inf（Infinity）詳細解説【発生条件、定数定義、比較方法、判定方法】</a></li><li><a href="http://marycore.jp/coding/assertion/">アサーションとは｜目的と活用例</a></li></ul><p class="mc_widget_category_recent_entries_more"><a href="http://marycore.jp/coding/page/2/" target="_blank">もっと見る...</a></p></aside><aside id="text-3" class="widget widget_text"><h3 class="widget-title">スポンサーリンク</h3>			<div class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<style type="text/css">
+@media (min-width:600px) { .adslot_side { width: 160px; }
+@media (min-width:1000px) { .adslot_side { width: 300px; } }</style>
+<ins class="adsbygoogle adslot_side" style="display:block" data-ad-client="ca-pub-5613714714878183" data-ad-slot="8227805750" data-ad-format="auto"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+		</aside>		<aside id="mc-recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">最近の投稿</h3>		<ul>
+											<li>
+					<a href="http://marycore.jp/net/twitter-tips-special/">ツイッター表現辞典｜番外編【なう、にゃーん、尊い、その他の表現】</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/anime/wizardbarristers/">ウィザード・バリスターズ～弁魔士セシル【アニメ紹介・レビュー・感想】</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/society/bruised-princess/">プリンセス駅伝の感動ドラマに得体の知れない恐怖を感じた</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/irony/choco-freak/">森永チョコフレークと日清シスコを食べ比べたオタクの感想</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/c-lang/convert-number-to-binary-octal-decimal-hex-c-string/">【C言語】数値を 2進数 8進数 10進数 16進数 文字列に変換する方法</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/cpp/convert-number-to-binary-octal-decimal-hex-string/">C++ 数値を 2進数 8進数 10進数 16進数 文字列に変換する方法</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/irony/mawaru-takaya/">ラーメン店「回高屋」の読み方は？ 店舗数は？ チェーン店って本当？</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/think/human-rights-first/">レディーファーストは女性差別なのか｜盲目的善意と慈悲的差別</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/prog/php/call-to-undefined-function/">【PHP】Fatal error: Call to undefined function f() の原因と対処</a>
+									</li>
+											<li>
+					<a href="http://marycore.jp/society/tokyo-volunteer-revolution/">五輪ボランティア批判と格差社会への不満｜オリンピックやりがい搾取</a>
+									</li>
+					</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">カテゴリー</h3>		<ul>
+	<li class="cat-item cat-item-31"><a href="http://marycore.jp/prog/cpp/" >C++</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://marycore.jp/prog/cocoa/" >Cocoa</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://marycore.jp/prog/c-lang/" >C言語</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://marycore.jp/affiliate/adsense/" >Googleアドセンス</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://marycore.jp/prog/css/" >HTML/CSS</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://marycore.jp/prog/js/" >JavaScript</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://marycore.jp/prog/mamp/" >MAMP</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://marycore.jp/news/" >News</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://marycore.jp/prog/objective-c/" >Objective-C</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://marycore.jp/prog/php/" >PHP</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://marycore.jp/prog/ruby/" >Ruby</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://marycore.jp/prog/swift/" >Swift</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://marycore.jp/wordpress/" >WordPress</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://marycore.jp/prog/xcode/" >Xcode &amp; Clang</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://marycore.jp/code/" >コード</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://marycore.jp/design/" >デザイン</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://marycore.jp/net/" >ネット文化</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://marycore.jp/mac/" >パソコン・Mac</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://marycore.jp/programmer/" >プログラマ</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://marycore.jp/coding/" >プログラミング／コーディング</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://marycore.jp/smart/" >ライフハック</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://marycore.jp/ascii-art/" >今週のAA</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://marycore.jp/yurume/" >今週の一言</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://marycore.jp/works/" >創作</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://marycore.jp/irony/" >戯言</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://marycore.jp/essay/" >日記・雑文</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://marycore.jp/anime/" >漫画・アニメ</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://marycore.jp/society/" >社会</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://marycore.jp/think/" >考察</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://marycore.jp/language/" >言語</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://marycore.jp/music/" >音楽</a>
+</li>
+		</ul>
+</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h3 class="widget-title">タグ</h3><div class="tagcloud"><a href="http://marycore.jp/tag/tag-it-culture/" class="tag-cloud-link tag-link-63 tag-link-position-1" style="font-size: 12.745762711864pt;" aria-label="IT教養 (29個の項目)">IT教養</a>
+<a href="http://marycore.jp/tag/tag-programming-technique/" class="tag-cloud-link tag-link-36 tag-link-position-2" style="font-size: 17.847457627119pt;" aria-label="テクニック (80個の項目)">テクニック</a>
+<a href="http://marycore.jp/tag/tag-programming-neta/" class="tag-cloud-link tag-link-29 tag-link-position-3" style="font-size: 16.661016949153pt;" aria-label="ネタ (63個の項目)">ネタ</a>
+<a href="http://marycore.jp/tag/tag-marketing/" class="tag-cloud-link tag-link-51 tag-link-position-4" style="font-size: 8pt;" aria-label="マーケティング (11個の項目)">マーケティング</a>
+<a href="http://marycore.jp/tag/tag-review/" class="tag-cloud-link tag-link-61 tag-link-position-5" style="font-size: 13.457627118644pt;" aria-label="レビュー (34個の項目)">レビュー</a>
+<a href="http://marycore.jp/tag/tag-programming-deal/" class="tag-cloud-link tag-link-43 tag-link-position-6" style="font-size: 18.322033898305pt;" aria-label="問題対処 (89個の項目)">問題対処</a>
+<a href="http://marycore.jp/tag/tag-programming-basic/" class="tag-cloud-link tag-link-38 tag-link-position-7" style="font-size: 20.576271186441pt;" aria-label="基礎知識 (137個の項目)">基礎知識</a>
+<a href="http://marycore.jp/tag/tag-tech-essay/" class="tag-cloud-link tag-link-52 tag-link-position-8" style="font-size: 16.067796610169pt;" aria-label="技術エッセイ (56個の項目)">技術エッセイ</a>
+<a href="http://marycore.jp/tag/tag-tech-column/" class="tag-cloud-link tag-link-34 tag-link-position-9" style="font-size: 16.779661016949pt;" aria-label="技術コラム (65個の項目)">技術コラム</a>
+<a href="http://marycore.jp/tag/tag-society/" class="tag-cloud-link tag-link-48 tag-link-position-10" style="font-size: 14.28813559322pt;" aria-label="文化社会 (40個の項目)">文化社会</a>
+<a href="http://marycore.jp/tag/tag-programming-methodology/" class="tag-cloud-link tag-link-39 tag-link-position-11" style="font-size: 17.491525423729pt;" aria-label="方法論 (75個の項目)">方法論</a>
+<a href="http://marycore.jp/tag/tag-daily/" class="tag-cloud-link tag-link-47 tag-link-position-12" style="font-size: 13.813559322034pt;" aria-label="日常 (36個の項目)">日常</a>
+<a href="http://marycore.jp/tag/tag-future/" class="tag-cloud-link tag-link-32 tag-link-position-13" style="font-size: 13.338983050847pt;" aria-label="未来考察 (33個の項目)">未来考察</a>
+<a href="http://marycore.jp/tag/tag-programming-specification/" class="tag-cloud-link tag-link-42 tag-link-position-14" style="font-size: 19.627118644068pt;" aria-label="言語仕様 (115個の項目)">言語仕様</a>
+<a href="http://marycore.jp/tag/tag-programming-detail/" class="tag-cloud-link tag-link-37 tag-link-position-15" style="font-size: 22pt;" aria-label="詳細解説 (182個の項目)">詳細解説</a>
+<a href="http://marycore.jp/tag/tag-programming-wisdom/" class="tag-cloud-link tag-link-40 tag-link-position-16" style="font-size: 21.050847457627pt;" aria-label="豆知識 (151個の項目)">豆知識</a></div>
+</aside><aside id="text-4" class="widget widget_text"><h3 class="widget-title">自作アプリ</h3>			<div class="textwidget"><h4 class="widget-sub-title">キーボード拡張アプリ</h4>
+<div style="margin-left: 12px; margin-left: 0.8571428571rem;"><a href="http://marycore.jp/mctap/" target="_blank">McTap</a></div>
+<h4 class="widget-sub-title">テキストエディタ</h4>
+<div style="margin-left: 12px; margin-left: 0.8571428571rem; margin-bottom: 6px; margin-bottom: 0.4285714286rem;"><a href="http://marycore.jp/apps/" target="_blank">McEditor</a></div></div>
+		</aside><aside id="text-7" class="widget widget_text"><h3 class="widget-title">寄付・支援</h3>			<div class="textwidget"><div style="margin:0 0 8px 0"><span>Amazon: </span><a class="inline-code-1" style="padding:4px 8px" href="http://goo.gl/R1E6WB" target="_blank">ほしい物リスト</a> <a class="inline-code-1" style="padding:4px 8px" href="http://goo.gl/8NYx4T" target="_blank">干し芋のリスト</a></div>
+<div style="margin:0 0 12px 0"><span>Bitcoin: <code class="inline-code inline-code-2 our-bitcoin-address" style="padding:4px 8px">32dzgrtFGQ1jDphJcu9iFozujbQ2JKYDXs</code></span></div>
+<div style="margin:0 0 8px 0"><a href="https://bitflyer.jp/?bf=q1by3zso" target="_blank"><img style="border-radius: unset; padding: 18px; background-color: #fff;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHUAAAB1AQAAAABYf5MRAAAAtElEQVR4AZzHoWEEQRTFMMNj7r/LB5c5JA38EROAUivgd75lGmQ9HJ2MKb7dhfR+pz2+VGha9wP+A+6vQh1W3/kmABvQ7/x0UqOx+yFwlOj9Rkk02P2Jk4i273zaGujQ3/3OaoZ7+CQIGtt3vuEGttX9ky0zhd/5pDKIenu2TVjf+aVsDfDpBdNMfucDMtfU3W85ghn77kdxOMC3N8JNf283asbDy1Aidj+guRL4zu9vKOAHABV0xOWkC7DVAAAAAElFTkSuQmCC"></a></div>
+</div>
+		</aside><aside id="mc_widget_214850853-2" class="widget widget_mc_widget_214850853"><h3 class="widget-title">よい物リスト</h3><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01C0Q2WZC%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/51qiQZJeSmL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01C0Q2WZC%2Fref%3Dnosim" target="_blank">Ted2 ぬいぐるみXL プレミアム Part3</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3DTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3DTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3DTed2%2520%25E3%2581%25AC%25E3%2581%2584%25E3%2581%2590%25E3%2582%258B%25E3%2581%25BF%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">早くこれになりたい</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01F8M9CCQ%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/416xVIJvJLL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01F8M9CCQ%2Fref%3Dnosim" target="_blank">東プレ キーボード REALFORCE91UG-S 日本語カナなし 91keyテンキーレスUSB 静電容量無接点 昇華印刷 静音モデル ALL30g荷重 ブラック/グレー NG31BS</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3DREALFORCE%2520ALL30g%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FREALFORCE%2520ALL30g%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3DREALFORCE%2520ALL30g" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3DREALFORCE%2520ALL30g%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">ガチ勢が使うキーボード</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01MTEAV6O%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/51gOrE1xIkL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB01MTEAV6O%2Fref%3Dnosim" target="_blank">【Amazon.co.jp限定】はごろも ポポロスパ7分 5kg 1.6mm</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2583%259D%25E3%2583%259D%25E3%2583%25AD%25E3%2582%25B9%25E3%2583%2591%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">筋トレ用</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB00DCKF4OC%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/61fkY7esaZL._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB00DCKF4OC%2Fref%3Dnosim" target="_blank">キユーピー あえるパスタソース6種 [カルボナーラ1袋(2食入)、たらこ1袋(2食入)、ミートソース フォン・ド・ヴォー1袋(2食入)、バジル1袋(2食入)、ツナマヨ1袋(2食入)、きのこの醤油バター1袋(2食入り)]</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2583%2591%25E3%2582%25B9%25E3%2582%25BF%25E3%2582%25BD%25E3%2583%25BC%25E3%2582%25B9%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">独身プログラマの強い味方</div></div></div><div style="clear:both"></div></div><div style="text-align:left;padding-bottom:20px;font-size:small"><div style="float:left;margin:0 15px 10px 0"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB074C9NPDL%2Fref%3Dnosim" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/31ojuKtDw0L._SL160_.jpg" style="border:none" /></a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="line-height:120%"><div style="margin-bottom:10px;line-height:120%;overflow:hidden"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fexec%2Fobidos%2FASIN%2FB074C9NPDL%2Fref%3Dnosim" target="_blank">アルタ 抱き枕 もっちり 床ごこち 添い寝  クマ ごろう AR0628121</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></div><div style="margin-top:10px;overflow:hidden"><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371288&p_id=170&pc_id=185&pl_id=4062&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fsearch%3Fkeywords%3D%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A" target="_blank">Amazon</a><img src="//i.moshimo.com/af/i/impression?a_id=371288&p_id=170&pc_id=185&pl_id=4062" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=371293&p_id=54&pc_id=54&pl_id=616&s_v=b5Rz2P0601xu&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0" target="_blank">楽天市場</a><img src="//i.moshimo.com/af/i/impression?a_id=371293&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none"></span><span style="margin-right:5px"><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3058386&pid=881893837&vc_url=http%3A%2F%2Fsearch.shopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595" target="_blank">Yahooショッピング<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3058386&pid=881893837" height="1" width="1" border="0"></a></span><span style="margin-right:5px"><a href="//af.moshimo.com/af/c/click?a_id=623330&p_id=932&pc_id=1188&pl_id=12456&s_v=b5Rz2P0601xu&url=http%3A%2F%2F7net.omni7.jp%2Fsearch%2F%3Fkeyword%3D%25E3%2582%25AF%25E3%2583%259E%2520%25E6%258A%25B1%25E3%2581%258D%25E6%259E%2595%26searchKeywordFlg%3D1" target="_blank"><img src="//i.moshimo.com/af/i/impression?a_id=623330&p_id=932&pc_id=1188&pl_id=12456" width="1" height="1" style="border:none">7net</a></span><div style="margin-top:15px">休日の旦那</div></div></div><div style="clear:both"></div></div></aside>					</div><!-- #secondary -->
+	</div><footer id="colophon" role="contentinfo"><div class="site-info">Copyright (C) 2012-2018 <a href="http://marycore.jp/" title="Think Difficult. (；･`д･´)">MaryCore</a>. All rights reserved.</div></footer></div>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-37354401-1','auto');ga('send','pageview');</script><script>
+(function(){var c=document.getElementById("site-navigation");if(c){var a=c.getElementsByTagName("button")[0];if(a){var b=c.getElementsByTagName("ul")[0];if(!b||!b.childNodes.length)return a.style.display="none";a.onclick=function(){-1===b.className.indexOf("nav-menu")&&(b.className="nav-menu");-1!==a.className.indexOf("toggled-on")?(a.className=a.className.replace(" toggled-on",""),b.className=b.className.replace(" toggled-on","")):(a.className+=" toggled-on",b.className+=" toggled-on")}}}})();</script>
+<script>function mc_social_buttons_open(a,w,h){open(a,'_blank','width='+w+',height='+h+',left='+(screen.availWidth-w)/2+',top='+(screen.availHeight-h)/2);return!1}</script>
+</body></html>
